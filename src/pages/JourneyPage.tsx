@@ -1,3 +1,3 @@
 export const JourneyPage = () => {
-    return <h1>JourneyPage</h1>
-}
+    return <h1>JourneyPage</h1>;
+};

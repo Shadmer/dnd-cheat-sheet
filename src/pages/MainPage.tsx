@@ -1,64 +1,9 @@
-import React, { ReactElement } from 'react';
-import { Outlet, Link as RouterLink, useLocation } from 'react-router-dom';
-import {
-    BottomNavigation,
-    BottomNavigationAction,
-    Box,
-    Button,
-    Container,
-    Dialog,
-    Drawer,
-    Stack,
-} from '@mui/material';
-import {
-    AutoStories,
-    Extension,
-    HelpCenter,
-    Route,
-    SportsKabaddi,
-} from '@mui/icons-material';
-
-interface InavigationAction {
-    value: string;
-    label: string;
-    icon: ReactElement;
-}
-
-const navigationActionList: InavigationAction[] = [
-    {
-        value: '/game/plot',
-        label: 'Сюжет',
-        icon: <AutoStories />,
-    },
-    {
-        value: '/game/journey',
-        label: 'Путешествие',
-        icon: <Route />,
-    },
-    {
-        value: '/game/battle',
-        label: 'Битва',
-        icon: <SportsKabaddi />,
-    },
-    {
-        value: '/game/codex',
-        label: 'Кодекс',
-        icon: <HelpCenter />,
-    },
-    {
-        value: '/game/interactive',
-        label: 'Интерактив',
-        icon: <Extension />,
-    },
-];
+import React from 'react';
+import { Outlet } from 'react-router-dom';
+import { Box, Button, Container, Dialog, Drawer, Stack } from '@mui/material';
+import { MainNavigation } from '@src/components/MainNavigation';
 
 export const MainPage = () => {
-    const { pathname } = useLocation();
-    const activeTab = React.useMemo(() => {
-        return navigationActionList.find((action) =>
-            pathname.startsWith(action.value)
-        );
-    }, [pathname]);
     const [drawerOpen, setDrawerOpen] = React.useState(false);
     const [dialogOpen, setDialogOpen] = React.useState(false);
     return (
@@ -83,19 +28,7 @@ export const MainPage = () => {
                         height: '55px',
                     }}
                 >
-                    <BottomNavigation value={activeTab?.value ?? ''}>
-                        {navigationActionList.map((action) => (
-                            <BottomNavigationAction
-                                key={action.value}
-                                component={RouterLink}
-                                to={action.value}
-                                value={action.value}
-                                label={action.label}
-                                icon={action.icon}
-                                sx={{ minWidth: '20px' }}
-                            />
-                        ))}
-                    </BottomNavigation>
+                    <MainNavigation />
                 </Container>
             </Box>
             <Drawer open={drawerOpen} onClose={() => setDrawerOpen(false)}>

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { HashRouter } from 'react-router-dom';
 
 import {
+    Theme,
     ThemeProvider,
     createTheme,
     responsiveFontSizes,
@@ -24,8 +25,12 @@ const getCreateTheme = createTheme({
         background: {
             default: '#f0f0f0',
         },
+        primary: {
+            main: '#1976d2',
+        },
     },
 });
+
 const theme = responsiveFontSizes(getCreateTheme);
 
 const root = ReactDOM.createRoot(

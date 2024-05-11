@@ -1,22 +1,18 @@
 import React from 'react';
-import { Typography } from '@mui/material';
+import { useParams } from 'react-router-dom';
 
-interface PlotCardProps {
-    scene: string;
-}
+import { StyledPaper } from '@src/components/StyledPaper';
+import { PlotScene } from '@src/components/PlotScene';
+import { Box } from '@mui/material';
 
-export const PlotCard = ({ scene }: PlotCardProps) => {
+export const PlotCard = () => {
+    const { scene } = useParams();
+
     return (
-        <>
-            <Typography variant="h4" component="h2">
-                Сцена: {scene}
-            </Typography>
-            <Typography variant="body1" style={{ height: '110vh' }}>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe,
-                eveniet ratione. Dolore nulla soluta neque ex officiis mollitia
-                sit obcaecati rerum, eligendi ut laboriosam placeat quasi
-                voluptatem, delectus vero commodi.
-            </Typography>
-        </>
+        <StyledPaper>
+            <Box p="2rem">
+                <PlotScene scene={scene ?? ''} />
+            </Box>
+        </StyledPaper>
     );
 };

@@ -12,32 +12,34 @@ import {
 import { ArrowForwardIos, ExpandMore, Info } from '@mui/icons-material';
 
 interface PlotMenuItemProps {
-    item: string;
+    sceneId: string;
+    title: string;
+    info: string;
 }
 
-export const PlotMenuItem = ({ item }: PlotMenuItemProps) => {
+export const PlotMenuItem = ({ sceneId, title, info }: PlotMenuItemProps) => {
     const { scene } = useParams();
     const navigate = useNavigate();
     // const [expanded, setExpanded] = React.useState(false);
 
     return (
         <Card
-            raised={scene === item}
+            raised={scene === sceneId}
             sx={{
                 backgroundColor: (theme) =>
-                    scene === item
+                    scene === sceneId
                         ? theme.palette.grey[300]
                         : theme.palette.background.paper,
                 transition: 'background .3s',
                 cursor: 'pointer',
             }}
-            onClick={() => navigate(`./${item}`)}
+            onClick={() => navigate(`./${sceneId}`)}
         >
             <CardContent>
                 <Typography variant="body2" color="text.secondary">
-                    Сцена {item}
+                    {info}
                 </Typography>
-                <Typography variant="h5">У Золтара</Typography>
+                <Typography variant="body1">{title}</Typography>
             </CardContent>
             {/* <CardActions>
                 <IconButton

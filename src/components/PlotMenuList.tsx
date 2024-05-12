@@ -5,13 +5,19 @@ import { Unstable_Grid2 as Grid } from '@mui/material';
 import { StyledPaper } from '@src/components/StyledPaper';
 import { PlotMenuItem } from '@src/components/PlotMenuItem';
 
-export const PlotMenuList = () => {
+export const PlotMenuList = ({ plots }: any) => {
     const { scene } = useParams();
 
     const menuGridWidth = React.useMemo(
         () => (scene ? { xs: 12 } : { xs: 12, md: 6, lg: 4 }),
         [scene]
     );
+
+    const getMarginBottom = (index: number, length: number) => {
+        if (!scene) return 0;
+
+        return index === length - 1 ? 0 : '1rem';
+    };
 
     return (
         <StyledPaper
@@ -20,13 +26,19 @@ export const PlotMenuList = () => {
             disableCustomScroll={!scene}
         >
             <Grid container spacing={scene ? 0 : 2}>
-                {['1', '2', '3', '4', '5', '6'].map((item, index, array) => (
+                {plots.map((item: any, index: number, array: any) => (
                     <Grid
-                        key={item}
+                        key={item.sceneId}
                         {...menuGridWidth}
-                        sx={{ mb: index === array.length - 1 ? 0 : '2rem' }}
+                        sx={{
+                            mb: getMarginBottom(index, array.length),
+                        }}
                     >
-                        <PlotMenuItem item={item} />
+                        <PlotMenuItem
+                            sceneId={item.sceneId}
+                            title={item.title}
+                            info={item.info}
+                        />
                     </Grid>
                 ))}
             </Grid>

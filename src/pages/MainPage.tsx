@@ -6,6 +6,7 @@ import { MainNavigation } from '@src/components/MainNavigation';
 export const MainPage = () => {
     const [drawerOpen, setDrawerOpen] = React.useState(false);
     const [dialogOpen, setDialogOpen] = React.useState(false);
+
     return (
         <Stack pt="20px" pb="80px">
             <Box component="main">

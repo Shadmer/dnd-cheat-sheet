@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import { HashRouter } from 'react-router-dom';
 
 import {
-    Theme,
     ThemeProvider,
     createTheme,
     responsiveFontSizes,
@@ -16,6 +15,9 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
 import './index.css';
+
+import { RootStoreContext } from '@src/rootStoreContext';
+import RootStore from '@src/store/RootStore';
 
 import { App } from './App';
 
@@ -38,12 +40,12 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-    <React.StrictMode>
+    <RootStoreContext.Provider value={new RootStore()}>
         <ThemeProvider theme={theme}>
             <CssBaseline />
             <HashRouter>
                 <App />
             </HashRouter>
         </ThemeProvider>
-    </React.StrictMode>
+    </RootStoreContext.Provider>
 );

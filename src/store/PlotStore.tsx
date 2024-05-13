@@ -1,21 +1,34 @@
-import { makeAutoObservable } from 'mobx';
+import { makeAutoObservable, runInAction } from 'mobx';
 import { PlotService } from '@src/services/PlotService';
+import { IPlotMenuItem } from '@src/interfaces';
 
 class Plot {
-    plots = [];
+    plotService = PlotService();
+    plotMenuList: IPlotMenuItem[] = [];
+    filteredPlotMenuList: IPlotMenuItem[] = [];
 
     constructor() {
         makeAutoObservable(this);
     }
 
-    async loadPlots() {
-        try {
-            const plots = await PlotService().fetchPlots();
-            this.plots = plots;
-        } catch (error) {
-            console.error('Error loading plots:', error);
-        }
-    }
+    filterPlotMenuList = (searchTitle: string) => {
+        runInAction(() => {
+            this.filteredPlotMenuList = this.plotMenuList.filter((item) => {
+                const lowercaseTitle = item.title.toLowerCase();
+                const lowercaseSearchTitle = searchTitle.toLowerCase();
+                return lowercaseTitle.includes(lowercaseSearchTitle);
+            });
+        });
+    };
+
+    loadPlotMenuList = async () => {
+        const menuList = await this.plotService.fetchPlotMenuList();
+
+        runInAction(() => {
+            this.plotMenuList = menuList;
+            this.filteredPlotMenuList = menuList;
+        });
+    };
 }
 
 const PlotStore = new Plot();

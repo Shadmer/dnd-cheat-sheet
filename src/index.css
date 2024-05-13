@@ -1,3 +1,4 @@
 :root {
     --index: calc(1vw + 1vh);
+    --border-width: 6px;
 }

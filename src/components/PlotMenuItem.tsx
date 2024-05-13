@@ -1,62 +1,84 @@
 import React from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import {
     Card,
-    CardActions,
+    CardActionArea,
     CardContent,
     Collapse,
     IconButton,
     Typography,
 } from '@mui/material';
-import { ArrowForwardIos, ExpandMore, Info } from '@mui/icons-material';
+import { ExpandMore } from '@mui/icons-material';
+import { IPlotMenuItem } from '@src/interfaces';
 
 interface PlotMenuItemProps {
-    sceneId: string;
-    title: string;
-    info: string;
+    scene: IPlotMenuItem;
 }
 
-export const PlotMenuItem = ({ sceneId, title, info }: PlotMenuItemProps) => {
+export const PlotMenuItem = ({
+    scene: { sceneId, title, subTitle, desc },
+}: PlotMenuItemProps) => {
     const { scene } = useParams();
     const navigate = useNavigate();
-    // const [expanded, setExpanded] = React.useState(false);
+    const [expanded, setExpanded] = React.useState(false);
 
     return (
         <Card
             raised={scene === sceneId}
             sx={{
+                position: 'relative',
                 backgroundColor: (theme) =>
                     scene === sceneId
                         ? theme.palette.grey[300]
                         : theme.palette.background.paper,
                 transition: 'background .3s',
-                cursor: 'pointer',
             }}
-            onClick={() => navigate(`./${sceneId}`)}
         >
-            <CardContent>
-                <Typography variant="body2" color="text.secondary">
-                    {info}
-                </Typography>
-                <Typography variant="body1">{title}</Typography>
-            </CardContent>
-            {/* <CardActions>
-                <IconButton
-                    sx={{
-                        transform: !expanded
-                            ? 'rotate(0deg)'
-                            : 'rotate(180deg)',
-                        transition: 'transform .3s',
-                    }}
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        setExpanded(!expanded);
-                    }}
-                >
-                    <ExpandMore />
-                </IconButton>
-            </CardActions>
+            <CardActionArea onClick={() => navigate(`./${sceneId}`)}>
+                <CardContent>
+                    <Typography
+                        variant="body2"
+                        color="text.secondary"
+                        sx={{
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            whiteSpace: 'nowrap',
+                            width: 'calc(100% - 40px)',
+                        }}
+                    >
+                        {subTitle}
+                    </Typography>
+                    <Typography
+                        variant="body1"
+                        sx={{
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            whiteSpace: 'nowrap',
+                            width: 'calc(100% - 40px)',
+                        }}
+                    >
+                        {title}
+                    </Typography>
+                </CardContent>
+            </CardActionArea>
+
+            <IconButton
+                sx={{
+                    position: 'absolute',
+                    top: 6,
+                    right: 6,
+                    transform: !expanded ? 'rotate(0deg)' : 'rotate(180deg)',
+                    transition: 'transform .3s',
+                }}
+                onClick={(e) => {
+                    e.stopPropagation();
+                    setExpanded(!expanded);
+                }}
+            >
+                <ExpandMore />
+            </IconButton>
+
             <Collapse
                 in={expanded}
                 timeout="auto"
@@ -65,14 +87,10 @@ export const PlotMenuItem = ({ sceneId, title, info }: PlotMenuItemProps) => {
             >
                 <CardContent>
                     <Typography variant="body2" color="text.secondary">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing
-                        elit. Dolores culpa, blanditiis tempora ut doloribus
-                        commodi ex praesentium cupiditate sapiente soluta
-                        reiciendis quidem iure porro quam. Alias harum quam
-                        velit ad!
+                        {desc}
                     </Typography>
                 </CardContent>
-            </Collapse> */}
+            </Collapse>
         </Card>
     );
 };

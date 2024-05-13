@@ -16,7 +16,7 @@ import '@fontsource/roboto/700.css';
 
 import './index.css';
 
-import { RootStoreContext } from '@src/rootStoreContext';
+import { RootStoreContext } from '@src/providers/rootStoreContext';
 import RootStore from '@src/store/RootStore';
 
 import { App } from './App';

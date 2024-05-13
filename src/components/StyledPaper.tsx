@@ -39,18 +39,19 @@ export const StyledPaper: React.FC<StyledPaperProps> = ({
                     maxHeight: disableCustomScroll
                         ? 'auto'
                         : 'calc(100vh - 100px)',
-                    overflow: disableCustomScroll ? 'hidden' : 'auto',
+                    overflow: disableCustomScroll ? 'hidden' : 'scroll',
+                    overflowX: 'hidden',
                     background: (theme) => theme.palette.background[bgcolor],
-                    '&::-webkit-scrollbar': {
-                        width: '6px',
-                        display: 'none',
-                    },
-                    '&:hover::-webkit-scrollbar': {
-                        display: 'block',
-                    },
                     '&::-webkit-scrollbar-thumb': {
                         background: (theme) => theme.palette.primary.main,
                         borderRadius: '3px',
+                        display: 'none',
+                    },
+                    '&::-webkit-scrollbar': {
+                        width: 'var(--border-width)',
+                    },
+                    '&:hover::-webkit-scrollbar-thumb': {
+                        display: 'block',
                     },
                 }}
                 {...rest}

@@ -5,20 +5,20 @@ type ScrollableBoxProps = {
     children: React.ReactNode;
     bgcolor?: 'paper' | 'default';
     disableCustomScroll?: boolean;
-    maxHeight?: string;
+    height?: string;
 };
 
 export const ScrollableBox: React.FC<ScrollableBoxProps> = ({
     children,
     bgcolor = 'paper',
     disableCustomScroll,
-    maxHeight = 'inherit',
+    height = 'inherit',
 }) => {
     return (
         <Box
             sx={{
                 position: 'relative',
-                maxHeight,
+                height,
                 '&::before, &::after': {
                     content: '""',
                     position: 'absolute',
@@ -40,7 +40,7 @@ export const ScrollableBox: React.FC<ScrollableBoxProps> = ({
         >
             <Box
                 sx={{
-                    maxHeight: disableCustomScroll ? 'auto' : 'inherit',
+                    height: disableCustomScroll ? 'auto' : 'inherit',
                     overflow: disableCustomScroll ? 'hidden' : 'scroll',
                     overflowX: 'hidden',
                     background: (theme) => theme.palette.background[bgcolor],

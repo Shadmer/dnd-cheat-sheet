@@ -32,6 +32,7 @@
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
+    "@babel/plugin-transform-private-property-in-object": "^7.24.6",
     "@types/markdown-it": "^14.1.1",
     "@types/webpack-env": "^1.18.4",
     "@typescript-eslint/eslint-plugin": "^5.26.0",

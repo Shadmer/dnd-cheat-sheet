@@ -37,6 +37,10 @@ class Plot {
             this.currentScene = scene;
         });
     };
+
+    clearScene = () => {
+        this.currentScene = '';
+    };
 }
 
 const PlotStore = new Plot();

@@ -1,4 +1,5 @@
 import { Navigate, useRoutes } from 'react-router-dom';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { EntryPage } from '@src/pages/EntryPage';
 import { MainPage } from '@src/pages/MainPage';
 import { PlotPage } from '@src/pages/PlotPage';

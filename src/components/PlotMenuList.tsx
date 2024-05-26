@@ -2,14 +2,31 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
-import { Unstable_Grid2 as Grid, Typography } from '@mui/material';
-import { StyledPaper } from '@src/components/StyledPaper';
-import { PlotMenuItem } from '@src/components/PlotMenuItem';
+import {
+    Box,
+    Unstable_Grid2 as Grid,
+    IconButton,
+    InputAdornment,
+    Stack,
+    TextField,
+    Typography,
+} from '@mui/material';
+import { Clear } from '@mui/icons-material';
 import { useStores } from '@src/providers/rootStoreContext';
+import { ScrollableBox } from '@src/components/ScrollableBox';
+import { PlotMenuItem } from '@src/components/PlotMenuItem';
+import { FlexHeightContainer } from '@src/components/FlexHeightContainer';
 import { IPlotMenuItem } from '@src/interfaces';
 
 export const PlotMenuList = observer(() => {
     const { scene } = useParams();
+
+    const {
+        plot: { filterPlotMenuList, loadPlotMenuList, filteredPlotMenuList },
+    } = useStores();
+
+    const searchInputRef = React.useRef<HTMLInputElement>(null);
+    const [searchTitle, setSearchTitle] = React.useState('');
 
     const menuGridWidth = React.useMemo(
         () => (scene ? { xs: 12 } : { xs: 12, md: 6, lg: 4 }),
@@ -22,20 +39,63 @@ export const PlotMenuList = observer(() => {
         return index === length - 1 ? 0 : '1rem';
     };
 
-    const {
-        plot: { loadPlotMenuList, filteredPlotMenuList },
-    } = useStores();
+    const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const { value } = event.target;
+        setSearchTitle(value);
+        filterPlotMenuList(value);
+    };
+
+    const handleReset = () => {
+        setSearchTitle('');
+        filterPlotMenuList('');
+        if (searchInputRef.current) {
+            searchInputRef.current.focus();
+        }
+    };
 
     React.useEffect(() => {
         loadPlotMenuList();
     }, [loadPlotMenuList]);
 
-    return (
-        <StyledPaper
-            elevation={0}
-            bgcolor="default"
-            disableCustomScroll={!scene}
-        >
+    const searchIcon = (
+        <InputAdornment position="start">
+            <IconButton onClick={handleReset} color="primary">
+                <Clear fontSize="small" />
+            </IconButton>
+        </InputAdornment>
+    );
+
+    const header = (
+        <Stack spacing={2} pb={2}>
+            <Typography variant="h3" component="h3">
+                Сцены
+            </Typography>
+            <Stack
+                direction="row"
+                alignItems="flex-end"
+                spacing={1}
+                sx={{
+                    width: scene ? 'calc(100% - var(--border-width))' : '100%',
+                }}
+            >
+                <TextField
+                    inputRef={searchInputRef}
+                    placeholder="Поиск..."
+                    size="small"
+                    variant="standard"
+                    sx={{ width: '100%' }}
+                    value={searchTitle}
+                    onChange={handleSearchChange}
+                    InputProps={{
+                        startAdornment: searchIcon,
+                    }}
+                />
+            </Stack>
+        </Stack>
+    );
+
+    const content = (
+        <ScrollableBox bgcolor="default" disableCustomScroll={!scene}>
             <Grid container spacing={scene ? 0 : 2}>
                 {filteredPlotMenuList.length ? (
                     filteredPlotMenuList.map(
@@ -62,6 +122,12 @@ export const PlotMenuList = observer(() => {
                     </Grid>
                 )}
             </Grid>
-        </StyledPaper>
+        </ScrollableBox>
+    );
+
+    return (
+        <Box>
+            <FlexHeightContainer header={header} content={content} />
+        </Box>
     );
 });

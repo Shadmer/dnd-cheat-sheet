@@ -9,26 +9,31 @@ type RequestOptions = {
 export const BaseService = async <T>(
     endpoint: string,
     options?: RequestOptions
-): Promise<T | []> => {
+): Promise<T> => {
     const url = BASE_URL + endpoint;
-    const defaultHeaders = {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-    };
+    const defaultHeaders = options?.headers || {};
 
     try {
         const response = await fetch(url, {
-            headers: { ...defaultHeaders, ...options?.headers },
+            headers: { ...defaultHeaders },
             ...options,
         });
 
         if (!response.ok) {
             throw new Error('Failed to fetch');
         }
+        const contentType = response.headers.get('Content-Type');
+
+        if (
+            contentType?.includes('text/markdown') ||
+            contentType?.includes('text/plain')
+        ) {
+            return response.text() as unknown as T;
+        }
 
         return response.json();
     } catch (error) {
         console.error('Error fetching:', error);
-        return [];
+        return Promise.reject(error);
     }
 };

@@ -12,9 +12,9 @@ import {
 import { ExpandMore } from '@mui/icons-material';
 import { IPlotMenuItem } from '@src/interfaces';
 
-interface PlotMenuItemProps {
+type PlotMenuItemProps = {
     scene: IPlotMenuItem;
-}
+};
 
 export const PlotMenuItem = ({
     scene: { sceneId, title, subTitle, desc },
@@ -35,7 +35,7 @@ export const PlotMenuItem = ({
                 transition: 'background .3s',
             }}
         >
-            <CardActionArea onClick={() => navigate(`./${sceneId}`)}>
+            <CardActionArea onClick={() => navigate(`../plot/${sceneId}`)}>
                 <CardContent>
                     <Typography
                         variant="body2"
@@ -54,7 +54,7 @@ export const PlotMenuItem = ({
                         sx={{
                             overflow: 'hidden',
                             textOverflow: 'ellipsis',
-                            whiteSpace: 'nowrap',
+                            whiteSpace: expanded ? 'wrap' : 'nowrap',
                             width: 'calc(100% - 40px)',
                         }}
                     >
@@ -64,6 +64,7 @@ export const PlotMenuItem = ({
             </CardActionArea>
 
             <IconButton
+                color="primary"
                 sx={{
                     position: 'absolute',
                     top: 6,

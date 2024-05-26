@@ -1,20 +1,24 @@
-import { Box, Paper, PaperProps } from '@mui/material';
+import React from 'react';
+import { Box } from '@mui/material';
 
-type StyledPaperProps = PaperProps & {
+type ScrollableBoxProps = {
+    children: React.ReactNode;
     bgcolor?: 'paper' | 'default';
     disableCustomScroll?: boolean;
+    maxHeight?: string;
 };
 
-export const StyledPaper: React.FC<StyledPaperProps> = ({
+export const ScrollableBox: React.FC<ScrollableBoxProps> = ({
+    children,
     bgcolor = 'paper',
     disableCustomScroll,
-    children,
-    ...rest
+    maxHeight = 'inherit',
 }) => {
     return (
         <Box
             sx={{
                 position: 'relative',
+                maxHeight,
                 '&::before, &::after': {
                     content: '""',
                     position: 'absolute',
@@ -34,11 +38,9 @@ export const StyledPaper: React.FC<StyledPaperProps> = ({
                 },
             }}
         >
-            <Paper
+            <Box
                 sx={{
-                    maxHeight: disableCustomScroll
-                        ? 'auto'
-                        : 'calc(100vh - 100px)',
+                    maxHeight: disableCustomScroll ? 'auto' : 'inherit',
                     overflow: disableCustomScroll ? 'hidden' : 'scroll',
                     overflowX: 'hidden',
                     background: (theme) => theme.palette.background[bgcolor],
@@ -54,10 +56,9 @@ export const StyledPaper: React.FC<StyledPaperProps> = ({
                         display: 'block',
                     },
                 }}
-                {...rest}
             >
                 {children}
-            </Paper>
+            </Box>
         </Box>
     );
 };

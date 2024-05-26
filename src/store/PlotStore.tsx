@@ -6,6 +6,7 @@ class Plot {
     plotService = PlotService();
     plotMenuList: IPlotMenuItem[] = [];
     filteredPlotMenuList: IPlotMenuItem[] = [];
+    currentScene = '';
 
     constructor() {
         makeAutoObservable(this);
@@ -27,6 +28,13 @@ class Plot {
         runInAction(() => {
             this.plotMenuList = menuList;
             this.filteredPlotMenuList = menuList;
+        });
+    };
+
+    loadScene = async (sceneId: string) => {
+        const scene = await this.plotService.fetchScene(sceneId);
+        runInAction(() => {
+            this.currentScene = scene;
         });
     };
 }

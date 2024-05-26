@@ -6,7 +6,6 @@ import { JourneyPage } from '@src/pages/JourneyPage';
 import { BattlePage } from '@src/pages/BattlePage';
 import { CodexPage } from '@src/pages/CodexPage';
 import { InteractivePage } from '@src/pages/InteractivePage';
-import { PlotCard } from '@src/components/PlotCard';
 
 export const App = () =>
     useRoutes([
@@ -16,11 +15,7 @@ export const App = () =>
             path: 'game',
             element: <MainPage />,
             children: [
-                {
-                    path: 'plot',
-                    element: <PlotPage />,
-                    children: [{ path: ':scene', element: <PlotCard /> }],
-                },
+                { path: 'plot/:scene?', element: <PlotPage /> },
                 { path: 'journey', element: <JourneyPage /> },
                 { path: 'battle', element: <BattlePage /> },
                 { path: 'codex', element: <CodexPage /> },
@@ -28,5 +23,5 @@ export const App = () =>
                 { path: '*', element: <Navigate to="" /> },
             ],
         },
-        { path: '*', element: <Navigate to="/" /> },
+        // { path: '*', element: <Navigate to="/" /> },
     ]);

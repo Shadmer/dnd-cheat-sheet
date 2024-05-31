@@ -24,11 +24,21 @@ import { App } from './App';
 const getCreateTheme = createTheme({
     palette: {
         mode: 'light',
+        primary: {
+            main: '#5c6bc0',
+            light: '#8e99f3',
+            dark: '#26418f',
+            contrastText: '#fff',
+        },
+        secondary: {
+            main: '#f57c00',
+            light: '#ffb74d',
+            dark: '#bb4d00',
+            contrastText: '#fff',
+        },
         background: {
             default: '#f0f0f0',
-        },
-        primary: {
-            main: '#1976d2',
+            paper: '#fff',
         },
     },
     typography: {

@@ -3,9 +3,8 @@ import { useParams } from 'react-router-dom';
 
 import { Unstable_Grid2 as Grid } from '@mui/material';
 
-import { PlotMenuList } from '@src/components/PlotMenuList';
-
-import { PlotCard } from '@src/components/PlotCard';
+import { PlotMenuList } from '@src/components/plot/PlotMenuList';
+import { PlotCard } from '@src/components/plot/PlotCard';
 
 export const PlotPage = () => {
     const { scene } = useParams();

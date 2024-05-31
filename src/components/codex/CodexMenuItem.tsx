@@ -10,15 +10,15 @@ import {
     Typography,
 } from '@mui/material';
 import { ExpandMore } from '@mui/icons-material';
-import { IPlotMenuItem } from '@src/interfaces';
+import { ICodexMenuItem } from '@src/interfaces';
 
-type PlotMenuItemProps = {
-    scene: IPlotMenuItem;
+type CodexMenuItemProps = {
+    scene: ICodexMenuItem;
 };
 
-export const PlotMenuItem = ({
+export const CodexMenuItem = ({
     scene: { sceneId, title, subTitle, desc },
-}: PlotMenuItemProps) => {
+}: CodexMenuItemProps) => {
     const { scene } = useParams();
     const navigate = useNavigate();
     const [expanded, setExpanded] = React.useState(false);
@@ -31,11 +31,11 @@ export const PlotMenuItem = ({
                 backgroundColor: (theme) =>
                     scene === sceneId
                         ? theme.palette.grey[300]
-                        : theme.palette.background.paper,
+                        : theme.palette.background.default,
                 transition: 'background .3s',
             }}
         >
-            <CardActionArea onClick={() => navigate(`../plot/${sceneId}`)}>
+            <CardActionArea onClick={() => navigate(`../codex/${sceneId}`)}>
                 <CardContent>
                     <Typography
                         variant="body2"

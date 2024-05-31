@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { Box, Button, Container, Dialog, Drawer, Stack } from '@mui/material';
-import { MainNavigation } from '@src/components/MainNavigation';
+import { MainNavigation } from '@src/components/common/MainNavigation';
 
 export const MainPage = () => {
     const [drawerOpen, setDrawerOpen] = React.useState(false);

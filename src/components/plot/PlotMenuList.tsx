@@ -48,10 +48,15 @@ export const PlotMenuList = observer(() => {
         return Object.values(groupedParts);
     }, [filteredPlotMenuList]);
 
-    const getMarginBottom = (index: number, length: number) => {
-        if (!scene) return 0;
+    const getMarginBottom = (
+        index: number,
+        length: number,
+        value: string,
+        isPart = false
+    ) => {
+        if (!scene && !isPart) return 0;
 
-        return index === length - 1 ? 0 : '1rem';
+        return index === length - 1 ? 0 : value;
     };
 
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -114,11 +119,22 @@ export const PlotMenuList = observer(() => {
             <Box>
                 {groupedPlotMenuList.length ? (
                     groupedPlotMenuList.map((part) => (
-                        <Box key={part.partTitle} mb={4}>
+                        <Box
+                            key={part.partTitle}
+                            mb="2rem"
+                            sx={{
+                                mb: getMarginBottom(
+                                    groupedPlotMenuList.indexOf(part),
+                                    groupedPlotMenuList.length,
+                                    '2rem',
+                                    true
+                                ),
+                            }}
+                        >
                             <Box
                                 sx={{
                                     mb: 1,
-                                    p: 1,
+                                    p: '.7rem',
                                     borderRadius: 1,
                                     background: (theme) =>
                                         theme.palette.primary.main,
@@ -138,7 +154,8 @@ export const PlotMenuList = observer(() => {
                                         sx={{
                                             mb: getMarginBottom(
                                                 part.scenes.indexOf(sceneItem),
-                                                part.scenes.length
+                                                part.scenes.length,
+                                                '1rem'
                                             ),
                                         }}
                                     >

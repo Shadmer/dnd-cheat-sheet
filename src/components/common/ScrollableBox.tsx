@@ -55,6 +55,11 @@ export const ScrollableBox: React.FC<ScrollableBoxProps> = ({
                     '&:hover::-webkit-scrollbar-thumb': {
                         display: 'block',
                     },
+                    '@media (hover: none)': {
+                        '&::-webkit-scrollbar-thumb': {
+                            display: 'block',
+                        },
+                    },
                 }}
             >
                 {children}

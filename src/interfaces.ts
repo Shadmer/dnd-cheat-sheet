@@ -7,14 +7,12 @@ export interface IPlotMenuItem {
 }
 
 export interface ICodexMenuItem {
-    sceneId: string;
-    title: string;
-    subTitle: string;
-    desc: string;
+    id: string;
+    name: string;
 }
 
 export interface ICodexMenuList {
-    part: string;
+    section: string;
     title: string;
     content: ICodexMenuItem[];
 }

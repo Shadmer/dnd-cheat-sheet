@@ -23,6 +23,8 @@ export const MainPage = () => {
                     background: (theme) => theme.palette.background.paper,
                 }}
             >
+                {/* <button onClick={() => setDrawerOpen(true)}>drawerOpen</button> */}
+                {/* <button onClick={() => setDialogOpen(true)}>dialogOpen</button> */}
                 <Container
                     maxWidth="xl"
                     sx={{

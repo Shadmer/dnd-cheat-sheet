@@ -1,69 +1,146 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
 import {
-    Accordion,
-    AccordionDetails,
-    AccordionSummary,
-    Box,
-    Unstable_Grid2 as Grid,
+    Collapse,
     IconButton,
     InputAdornment,
+    List,
+    ListItem,
+    ListItemButton,
+    ListItemIcon,
+    ListItemText,
     Stack,
     TextField,
     Typography,
 } from '@mui/material';
-import { Clear, ExpandMore } from '@mui/icons-material';
+import { Clear, ExpandMore, Star, StarBorder } from '@mui/icons-material';
 import { useStores } from '@src/providers/rootStoreContext';
 import { ScrollableBox } from '@src/components/common/ScrollableBox';
-import { CodexMenuItem } from '@src/components/codex/CodexMenuItem';
 import { FlexHeightContainer } from '@src/components/common/FlexHeightContainer';
-import { ICodexMenuItem } from '@src/interfaces';
+import {
+    FaUserFriends,
+    FaUserTie,
+    FaDragon,
+    FaMapMarkedAlt,
+    FaGavel,
+    FaStickyNote,
+} from 'react-icons/fa';
+
+const iconMap: Record<string, React.ReactNode> = {
+    players: <FaUserFriends />,
+    characters: <FaUserTie />,
+    bestiary: <FaDragon />,
+    places: <FaMapMarkedAlt />,
+    artifacts: <FaGavel />,
+    notes: <FaStickyNote />,
+};
 
 export const CodexMenuList = observer(() => {
-    const { scene } = useParams();
+    const params = useParams();
+    const navigate = useNavigate();
 
     const {
         codex: {
             filterCodexMenuList,
             loadCodexMenuList,
-            codexMenuList,
             filteredCodexMenuList,
         },
     } = useStores();
 
     const searchInputRef = React.useRef<HTMLInputElement>(null);
     const [searchTitle, setSearchTitle] = React.useState('');
+    const [openSections, setOpenSections] = React.useState<
+        Record<string, boolean>
+    >({});
+    const [prevOpenSections, setPrevOpenSections] = React.useState<
+        Record<string, boolean>
+    >({});
 
-    const menuGridWidth = React.useMemo(
-        () => (scene ? { xs: 12 } : { xs: 12, md: 6, lg: 4 }),
-        [scene]
-    );
+    const [favorites, setFavorites] = React.useState<
+        Record<string, Record<string, boolean>>
+    >({});
 
-    const getMarginBottom = (index: number, length: number) => {
-        if (!scene) return 0;
-
-        return index === length - 1 ? 0 : '1rem';
+    const isSelected = (section: string, id: string) => {
+        return params.section === section && params.id === id;
     };
 
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
+
         setSearchTitle(value);
+
+        if (!value) {
+            setOpenSections(prevOpenSections);
+        }
+
         filterCodexMenuList(value);
     };
 
     const handleReset = () => {
         setSearchTitle('');
         filterCodexMenuList('');
+        setOpenSections(prevOpenSections);
+
         if (searchInputRef.current) {
             searchInputRef.current.focus();
         }
     };
 
+    const handleToggleOpeningItem = (section: string) => {
+        setOpenSections((prevState) => {
+            const updatedOpenSections = {
+                ...prevState,
+                [section]: !prevState[section],
+            };
+
+            if (!searchTitle) {
+                setPrevOpenSections(updatedOpenSections);
+            }
+
+            return updatedOpenSections;
+        });
+    };
+
+    const handleIconClick = (section: string, id: string) => {
+        setFavorites((prevState) => {
+            const newState = { ...prevState };
+
+            if (newState[section]?.[id]) {
+                delete newState[section][id];
+                if (Object.keys(newState[section]).length === 0) {
+                    delete newState[section];
+                }
+            } else {
+                if (!newState[section]) {
+                    newState[section] = {};
+                }
+                newState[section][id] = true;
+            }
+
+            return newState;
+        });
+    };
+
+    // TODO: создать стор для favorites
+    React.useEffect(() => {
+        console.log('favorites', favorites);
+    }, [favorites]);
+
     React.useEffect(() => {
         loadCodexMenuList();
     }, [loadCodexMenuList]);
+
+    React.useEffect(() => {
+        if (searchTitle) {
+            const newOpenSections: Record<string, boolean> = {};
+            filteredCodexMenuList.forEach((category) => {
+                newOpenSections[category.section] = true;
+            });
+            setOpenSections(newOpenSections);
+        }
+    }, [searchTitle, filteredCodexMenuList]);
 
     const searchIcon = (
         <InputAdornment position="start">
@@ -76,14 +153,14 @@ export const CodexMenuList = observer(() => {
     const header = (
         <Stack spacing={2} pb={2}>
             <Typography variant="h3" component="h3">
-                Сцены
+                Кодекс
             </Typography>
             <Stack
                 direction="row"
                 alignItems="flex-end"
                 spacing={1}
                 sx={{
-                    width: scene ? 'calc(100% - var(--border-width))' : '100%',
+                    width: 'calc(100% - var(--border-width))',
                 }}
             >
                 <TextField
@@ -102,80 +179,115 @@ export const CodexMenuList = observer(() => {
         </Stack>
     );
 
-    // const content = (
-    //     <ScrollableBox bgcolor="default" disableCustomScroll={!scene}>
-    //         <Grid container spacing={scene ? 0 : 2}>
-    //             {filteredCodexMenuList.length ? (
-    //                 filteredCodexMenuList.map(
-    //                     (scene: ICodexMenuItem, index: number) => (
-    //                         <Grid
-    //                             key={scene.sceneId}
-    //                             {...menuGridWidth}
-    //                             sx={{
-    //                                 mb: getMarginBottom(
-    //                                     index,
-    //                                     filteredCodexMenuList.length
-    //                                 ),
-    //                             }}
-    //                         >
-    //                             <CodexMenuItem scene={scene} />
-    //                         </Grid>
-    //                     )
-    //                 )
-    //             ) : (
-    //                 <Grid py={2}>
-    //                     <Typography variant="body2" color="text.secondary">
-    //                         Ничего не найдено
-    //                     </Typography>
-    //                 </Grid>
-    //             )}
-    //         </Grid>
-    //     </ScrollableBox>
-    // );
-
     const content = (
-        <ScrollableBox bgcolor="default" disableCustomScroll={!scene}>
-            <Box>
-                {codexMenuList.length ? (
-                    codexMenuList.map((part) => (
-                        <Accordion key={part.part}>
-                            <AccordionSummary expandIcon={<ExpandMore />}>
-                                <Typography variant="h5">
-                                    {part.title}
-                                </Typography>
-                            </AccordionSummary>
-                            <AccordionDetails>
-                                <Grid container spacing={scene ? 0 : 2}>
-                                    {part.content.map((scene, index) => (
-                                        <Grid
-                                            key={scene.sceneId}
-                                            {...menuGridWidth}
+        <ScrollableBox bgcolor="default">
+            <List component="nav" sx={{ bgcolor: 'background.paper' }}>
+                {filteredCodexMenuList.length ? (
+                    filteredCodexMenuList.map((category) => (
+                        <React.Fragment key={category.section}>
+                            {category.content.length ? (
+                                <>
+                                    <ListItemButton
+                                        onClick={() =>
+                                            handleToggleOpeningItem(
+                                                category.section
+                                            )
+                                        }
+                                    >
+                                        <ListItemIcon
                                             sx={{
-                                                mb: getMarginBottom(
-                                                    index,
-                                                    filteredCodexMenuList.length
-                                                ),
+                                                color: 'primary.main',
                                             }}
                                         >
-                                            <CodexMenuItem scene={scene} />
-                                        </Grid>
-                                    ))}
-                                </Grid>
-                            </AccordionDetails>
-                        </Accordion>
+                                            {iconMap[category.section] || (
+                                                <FaStickyNote />
+                                            )}
+                                        </ListItemIcon>
+                                        <ListItemText
+                                            primary={category.title}
+                                            primaryTypographyProps={{
+                                                fontWeight: 'medium',
+                                            }}
+                                        />
+                                        <ExpandMore
+                                            sx={{
+                                                transform: openSections[
+                                                    category.section
+                                                ]
+                                                    ? 'rotate(180deg)'
+                                                    : 'rotate(0deg)',
+                                                transition:
+                                                    'transform 0.3s ease',
+                                                color: 'primary.main',
+                                            }}
+                                        />
+                                    </ListItemButton>
+                                    <Collapse
+                                        in={openSections[category.section]}
+                                        timeout="auto"
+                                        unmountOnExit
+                                    >
+                                        <List component="div" disablePadding>
+                                            {category.content.map((item) => (
+                                                <ListItemButton
+                                                    key={item.id}
+                                                    sx={{
+                                                        pl: 4,
+                                                    }}
+                                                    selected={isSelected(
+                                                        category.section,
+                                                        item.id
+                                                    )}
+                                                    onClick={() =>
+                                                        navigate(
+                                                            `../codex/${category.section}/${item.id}`
+                                                        )
+                                                    }
+                                                >
+                                                    <ListItemIcon>
+                                                        <IconButton
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                handleIconClick(
+                                                                    category.section,
+                                                                    item.id
+                                                                );
+                                                            }}
+                                                        >
+                                                            {favorites[
+                                                                category.section
+                                                            ]?.[item.id] ? (
+                                                                <Star
+                                                                    sx={{
+                                                                        color: 'secondary.main',
+                                                                    }}
+                                                                />
+                                                            ) : (
+                                                                <StarBorder />
+                                                            )}
+                                                        </IconButton>
+                                                    </ListItemIcon>
+                                                    <ListItemText
+                                                        primary={item.name}
+                                                    />
+                                                </ListItemButton>
+                                            ))}
+                                        </List>
+                                    </Collapse>
+                                </>
+                            ) : null}
+                        </React.Fragment>
                     ))
                 ) : (
-                    <Typography variant="body2" color="text.secondary">
-                        Ничего не найдено
-                    </Typography>
+                    <ListItem>
+                        <Typography variant="body2" color="text.secondary">
+                            Ничего не найдено
+                        </Typography>
+                    </ListItem>
                 )}
-            </Box>
+            </List>
         </ScrollableBox>
     );
 
-    return (
-        <Box>
-            <FlexHeightContainer header={header} content={content} />
-        </Box>
-    );
+    return <FlexHeightContainer header={header} content={content} />;
 });

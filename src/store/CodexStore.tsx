@@ -6,6 +6,8 @@ class Codex {
     codexService = CodexService();
     codexMenuList: ICodexMenuList[] = [];
     filteredCodexMenuList: ICodexMenuList[] = [];
+
+    // TODO: адаптировать под кодекс
     currentScene = '';
 
     constructor() {
@@ -14,11 +16,16 @@ class Codex {
 
     filterCodexMenuList = (searchTitle: string) => {
         runInAction(() => {
-            this.filteredCodexMenuList = this.codexMenuList.filter((item) => {
-                const lowercaseTitle = item.title.toLowerCase();
-                const lowercaseSearchTitle = searchTitle.toLowerCase();
-                return lowercaseTitle.includes(lowercaseSearchTitle);
-            });
+            this.filteredCodexMenuList = this.codexMenuList
+                .map((category) => ({
+                    ...category,
+                    content: category.content.filter((item) =>
+                        item.name
+                            .toLowerCase()
+                            .includes(searchTitle.toLowerCase())
+                    ),
+                }))
+                .filter((category) => category.content.length > 0);
         });
     };
 
@@ -31,6 +38,7 @@ class Codex {
         });
     };
 
+    // TODO: адаптировать под кодекс
     loadScene = async (sceneId: string) => {
         const scene = await this.codexService.fetchScene(sceneId);
         runInAction(() => {
@@ -38,6 +46,7 @@ class Codex {
         });
     };
 
+    // TODO: адаптировать под кодекс
     clearScene = () => {
         this.currentScene = '';
     };

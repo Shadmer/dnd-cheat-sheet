@@ -19,7 +19,7 @@ export const App = () =>
                 { path: 'plot/:scene?', element: <PlotPage /> },
                 { path: 'journey', element: <JourneyPage /> },
                 { path: 'battle', element: <BattlePage /> },
-                { path: 'codex', element: <CodexPage /> },
+                { path: 'codex/:section?/:id?', element: <CodexPage /> },
                 { path: 'interactive', element: <InteractivePage /> },
                 { path: '*', element: <Navigate to="" /> },
             ],

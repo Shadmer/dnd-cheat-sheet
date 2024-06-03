@@ -115,13 +115,12 @@ export const PlotMenuList = observer(() => {
     );
 
     const content = (
-        <ScrollableBox bgcolor="default" disableCustomScroll={!scene}>
-            <Box>
+        <ScrollableBox bgcolor="default">
+            <React.Fragment>
                 {groupedPlotMenuList.length ? (
                     groupedPlotMenuList.map((part) => (
                         <Box
                             key={part.partTitle}
-                            mb="2rem"
                             sx={{
                                 mb: getMarginBottom(
                                     groupedPlotMenuList.indexOf(part),
@@ -166,17 +165,13 @@ export const PlotMenuList = observer(() => {
                         </Box>
                     ))
                 ) : (
-                    <Typography variant="body2" color="text.secondary">
+                    <Typography mt={2} variant="body2" color="text.secondary">
                         Ничего не найдено
                     </Typography>
                 )}
-            </Box>
+            </React.Fragment>
         </ScrollableBox>
     );
 
-    return (
-        <Box>
-            <FlexHeightContainer header={header} content={content} />
-        </Box>
-    );
+    return <FlexHeightContainer header={header} content={content} />;
 });

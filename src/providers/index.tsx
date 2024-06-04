@@ -1,8 +1,5 @@
 import React, { ReactNode } from 'react';
 
-import { RootStoreContext } from '@src/providers/rootStoreContext';
-import RootStore from '@src/store/RootStore';
-
 import { PaletteMode, CssBaseline } from '@mui/material';
 
 import {
@@ -10,6 +7,13 @@ import {
     createTheme,
     responsiveFontSizes,
 } from '@mui/material/styles';
+
+import RootStore from '@src/store/RootStore';
+import { RootStoreContext } from '@src/providers/RootStoreContext';
+import { DrawerProvider } from '@src/providers/DrawerProvider';
+import { DialogProvider } from '@src/providers/DialogProvider';
+import { DrawerComponent } from '@src/components/common/DrawerComponent';
+import { DialogComponent } from '@src/components/common/DialogComponent';
 
 type ProvidersProps = Readonly<{
     children: ReactNode;
@@ -93,7 +97,13 @@ export const Providers = ({ children }: ProvidersProps) => {
         <RootStoreContext.Provider value={new RootStore()}>
             <ThemeProvider theme={responsiveFontSizes(theme)}>
                 <CssBaseline />
-                {children}
+                <DrawerProvider>
+                    <DialogProvider>
+                        <DrawerComponent />
+                        <DialogComponent />
+                        {children}
+                    </DialogProvider>
+                </DrawerProvider>
             </ThemeProvider>
         </RootStoreContext.Provider>
     );

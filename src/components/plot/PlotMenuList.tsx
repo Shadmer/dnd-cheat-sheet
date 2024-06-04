@@ -12,7 +12,7 @@ import {
     Typography,
 } from '@mui/material';
 import { Clear } from '@mui/icons-material';
-import { useStores } from '@src/providers/rootStoreContext';
+import { useStores } from '@src/providers/RootStoreContext';
 import { ScrollableBox } from '@src/components/common/ScrollableBox';
 import { PlotMenuItem } from '@src/components/plot/PlotMenuItem';
 import { FlexHeightContainer } from '@src/components/common/FlexHeightContainer';

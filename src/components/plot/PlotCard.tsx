@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite';
 
 import { Box, IconButton, Paper, Stack, Typography } from '@mui/material';
 import { ArrowBack, ArrowForward, Clear } from '@mui/icons-material';
-import { useStores } from '@src/providers/rootStoreContext';
+import { useStores } from '@src/providers/RootStoreContext';
 import { ScrollableBox } from '@src/components/common/ScrollableBox';
 import { MarkdownRenderer } from '@src/components/common/MarkdownRenderer';
 import { FlexHeightContainer } from '@src/components/common/FlexHeightContainer';

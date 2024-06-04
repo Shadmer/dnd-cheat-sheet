@@ -1,11 +1,30 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import { Box, Button, Container, Dialog, Drawer, Stack } from '@mui/material';
+import { Box, Container, Stack } from '@mui/material';
 import { MainNavigation } from '@src/components/common/MainNavigation';
+import { useDrawer } from '@src/providers/DrawerProvider';
+import { useDialog } from '@src/providers/DialogProvider';
 
 export const MainPage = () => {
-    const [drawerOpen, setDrawerOpen] = React.useState(false);
-    const [dialogOpen, setDialogOpen] = React.useState(false);
+    const { openDrawer } = useDrawer();
+    const { openDialog } = useDialog();
+
+    const dialogContent = (
+        <div>
+            <h2>Заголовок</h2>
+            <p>Это контент диалога.</p>
+        </div>
+    );
+
+    const drawerContent = (
+        <div>
+            <h2>Заголовок</h2>
+            <p>Это выдвижной контент.</p>
+            <button onClick={() => openDialog(dialogContent)}>
+                Открыть диалог
+            </button>
+        </div>
+    );
 
     return (
         <Stack pt="20px" pb="80px">
@@ -23,8 +42,9 @@ export const MainPage = () => {
                     background: (theme) => theme.palette.background.paper,
                 }}
             >
-                {/* <button onClick={() => setDrawerOpen(true)}>drawerOpen</button> */}
-                {/* <button onClick={() => setDialogOpen(true)}>dialogOpen</button> */}
+                {/* <button onClick={() => openDrawer(drawerContent)}>
+                    drawerOpen
+                </button> */}
                 <Container
                     maxWidth="xl"
                     sx={{
@@ -34,13 +54,6 @@ export const MainPage = () => {
                     <MainNavigation />
                 </Container>
             </Box>
-            <Drawer open={drawerOpen} onClose={() => setDrawerOpen(false)}>
-                Контент меню
-                <Button onClick={() => setDialogOpen(true)}>Диалог</Button>
-            </Drawer>
-            <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
-                Диалог контент
-            </Dialog>
         </Stack>
     );
 };

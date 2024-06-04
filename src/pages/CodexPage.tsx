@@ -10,6 +10,11 @@ export const CodexPage = () => {
     const { section, id } = useParams();
     const navigate = useNavigate();
 
+    const menuGridWidth = React.useMemo(
+        () => (section ? { xs: 12, md: 3 } : { xs: 12 }),
+        [section]
+    );
+
     React.useEffect(() => {
         if (section && !id) {
             navigate('/game/codex');

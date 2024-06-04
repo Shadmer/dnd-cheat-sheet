@@ -14,9 +14,16 @@ import {
     Stack,
     TextField,
     Typography,
+    Tooltip,
 } from '@mui/material';
-import { Clear, ExpandMore, Star, StarBorder } from '@mui/icons-material';
-import { useStores } from '@src/providers/rootStoreContext';
+import {
+    Clear,
+    ExpandMore,
+    DirectionsOff,
+    Star,
+    StarBorder,
+} from '@mui/icons-material';
+import { useStores } from '@src/providers/RootStoreContext';
 import { ScrollableBox } from '@src/components/common/ScrollableBox';
 import { FlexHeightContainer } from '@src/components/common/FlexHeightContainer';
 import {
@@ -103,6 +110,11 @@ export const CodexMenuList = observer(() => {
         });
     };
 
+    const handleCloseAllSections = () => {
+        setOpenSections({});
+        setPrevOpenSections({});
+    };
+
     const handleIconClick = (section: string, id: string) => {
         setFavorites((prevState) => {
             const newState = { ...prevState };
@@ -175,6 +187,17 @@ export const CodexMenuList = observer(() => {
                         startAdornment: searchIcon,
                     }}
                 />
+                <Tooltip title="Закрыть все">
+                    <IconButton
+                        sx={{
+                            color: 'primary.main',
+                        }}
+                        onClick={handleCloseAllSections}
+                        size="small"
+                    >
+                        <DirectionsOff />
+                    </IconButton>
+                </Tooltip>
             </Stack>
         </Stack>
     );

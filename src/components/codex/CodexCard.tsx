@@ -16,7 +16,7 @@ export const CodexCard = observer(() => {
     const {
         codex: { currentScene, codexMenuList },
     } = useStores();
-    const { openDrawer } = useDrawer();
+    const { openDrawer, closeDrawer } = useDrawer();
 
     const currentSection = codexMenuList.find(
         (section) => section.section === params.section
@@ -29,28 +29,46 @@ export const CodexCard = observer(() => {
         'Кодекс мастера';
 
     const header = (
-        <Stack
-            direction="row"
-            alignItems="flex-start"
-            justifyContent="space-between"
-            p="1rem 2rem"
-            bgcolor="background.paper"
-            boxShadow={1}
-        >
-            <Box>
+        <Stack>
+            <Stack direction="row" alignItems="center">
+                <IconButton
+                    color="primary"
+                    sx={{
+                        display: {
+                            xs: 'block',
+                            md: 'none',
+                        },
+                    }}
+                    onClick={() =>
+                        openDrawer(
+                            <CodexMenuList
+                                bgColor="paper"
+                                onItemSelect={closeDrawer}
+                            />
+                        )
+                    }
+                >
+                    <MenuOpen />
+                </IconButton>
+                {currentSection && (
+                    <IconButton
+                        component={Link}
+                        to="../codex"
+                        color="primary"
+                        sx={{ ml: 'auto' }}
+                    >
+                        <Clear />
+                    </IconButton>
+                )}
+            </Stack>
+            <Stack p="1rem 2rem">
                 <Typography variant="body2" component="p">
                     {codexSectionTitle}
                 </Typography>
                 <Typography fontWeight="500" variant="h2" component="h1">
                     {codexItemTitle}
                 </Typography>
-            </Box>
-
-            {currentSection && (
-                <IconButton component={Link} to="../codex" color="primary">
-                    <Clear />
-                </IconButton>
-            )}
+            </Stack>
         </Stack>
     );
 
@@ -131,30 +149,9 @@ export const CodexCard = observer(() => {
         </ScrollableBox>
     );
 
-    const footer = (
-        <Stack p="1rem 2rem" alignItems="flex-start">
-            <IconButton
-                color="primary"
-                sx={{
-                    display: {
-                        xs: 'block',
-                        md: 'none',
-                    },
-                }}
-                onClick={() => openDrawer(<CodexMenuList bgColor="paper" />)}
-            >
-                <MenuOpen />
-            </IconButton>
-        </Stack>
-    );
-
     return (
         <Paper>
-            <FlexHeightContainer
-                header={header}
-                content={content}
-                footer={footer}
-            />
+            <FlexHeightContainer header={header} content={content} />
         </Paper>
     );
 });

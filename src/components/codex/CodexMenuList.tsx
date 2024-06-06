@@ -47,10 +47,11 @@ const iconMap: Record<string, React.ReactNode> = {
 
 type CodexMenuListProps = {
     bgColor?: 'default' | 'paper';
+    onItemSelect?: () => void;
 };
 
 export const CodexMenuList = observer(
-    ({ bgColor = 'default' }: CodexMenuListProps) => {
+    ({ bgColor = 'default', onItemSelect }: CodexMenuListProps) => {
         const params = useParams();
         const navigate = useNavigate();
 
@@ -168,7 +169,7 @@ export const CodexMenuList = observer(
 
         // TODO: создать стор для favorites
         React.useEffect(() => {
-            console.log('favorites', favorites);
+            // console.log('favorites', favorites);
         }, [favorites]);
 
         React.useEffect(() => {
@@ -304,11 +305,13 @@ export const CodexMenuList = observer(
                                                                 category.section,
                                                                 item.id
                                                             )}
-                                                            onClick={() =>
+                                                            onClick={() => {
+                                                                onItemSelect &&
+                                                                    onItemSelect();
                                                                 navigate(
                                                                     `/game/codex/${category.section}/${item.id}`
-                                                                )
-                                                            }
+                                                                );
+                                                            }}
                                                         >
                                                             <ListItemIcon>
                                                                 <IconButton

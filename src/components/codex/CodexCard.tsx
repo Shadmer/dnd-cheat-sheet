@@ -30,7 +30,7 @@ export const CodexCard = observer(() => {
 
     const header = (
         <Stack>
-            <Stack direction="row" alignItems="center">
+            <Stack direction="row" alignItems="center" p=".5rem">
                 <IconButton
                     color="primary"
                     sx={{
@@ -61,7 +61,7 @@ export const CodexCard = observer(() => {
                     </IconButton>
                 )}
             </Stack>
-            <Stack p="1rem 2rem">
+            <Stack p="0 1rem">
                 <Typography variant="body2" component="p">
                     {codexSectionTitle}
                 </Typography>

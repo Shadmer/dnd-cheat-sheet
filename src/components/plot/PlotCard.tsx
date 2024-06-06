@@ -48,7 +48,7 @@ export const PlotCard = observer(() => {
             direction="row"
             alignItems="flex-start"
             justifyContent="space-between"
-            p="1rem 2rem"
+            p="1rem"
             bgcolor="background.paper"
             boxShadow={1}
         >
@@ -80,7 +80,7 @@ export const PlotCard = observer(() => {
             direction="row"
             alignItems="center"
             justifyContent="space-between"
-            p="1rem 2rem"
+            p="1rem"
             bgcolor="background.paper"
         >
             <IconButton

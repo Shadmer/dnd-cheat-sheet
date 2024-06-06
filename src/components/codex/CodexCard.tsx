@@ -3,17 +3,20 @@ import { Link, useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
 import { Box, IconButton, Paper, Stack, Typography } from '@mui/material';
-import { Clear } from '@mui/icons-material';
+import { Clear, MenuOpen } from '@mui/icons-material';
 import { useStores } from '@src/providers/RootStoreContext';
+import { useDrawer } from '@src/providers/DrawerProvider';
 import { ScrollableBox } from '@src/components/common/ScrollableBox';
 import { MarkdownRenderer } from '@src/components/common/MarkdownRenderer';
 import { FlexHeightContainer } from '@src/components/common/FlexHeightContainer';
+import { CodexMenuList } from '@src/components/codex/CodexMenuList';
 
 export const CodexCard = observer(() => {
     const params = useParams();
     const {
-        codex: { loadScene, clearScene, currentScene, codexMenuList },
+        codex: { currentScene, codexMenuList },
     } = useStores();
+    const { openDrawer } = useDrawer();
 
     const currentSection = codexMenuList.find(
         (section) => section.section === params.section
@@ -119,15 +122,39 @@ export const CodexCard = observer(() => {
     const content = (
         <ScrollableBox>
             <Box p="2rem">
-                {/* <MarkdownRenderer markdown={currentScene} /> */}
-                {currentSection ? 'Контент' : defaultContentText}
+                {currentSection ? (
+                    <MarkdownRenderer markdown={currentScene} />
+                ) : (
+                    defaultContentText
+                )}
             </Box>
         </ScrollableBox>
     );
 
+    const footer = (
+        <Stack p="1rem 2rem" alignItems="flex-start">
+            <IconButton
+                color="primary"
+                sx={{
+                    display: {
+                        xs: 'block',
+                        md: 'none',
+                    },
+                }}
+                onClick={() => openDrawer(<CodexMenuList bgColor="paper" />)}
+            >
+                <MenuOpen />
+            </IconButton>
+        </Stack>
+    );
+
     return (
         <Paper>
-            <FlexHeightContainer header={header} content={content} />
+            <FlexHeightContainer
+                header={header}
+                content={content}
+                footer={footer}
+            />
         </Paper>
     );
 });

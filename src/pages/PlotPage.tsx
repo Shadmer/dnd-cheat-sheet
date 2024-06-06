@@ -10,7 +10,7 @@ export const PlotPage = () => {
     const { scene } = useParams();
 
     const menuGridWidth = React.useMemo(
-        () => (scene ? { xs: 12, md: 3 } : { xs: 12 }),
+        () => (scene ? { xs: 12, md: 4 } : { xs: 12 }),
         [scene]
     );
 
@@ -28,7 +28,7 @@ export const PlotPage = () => {
                 <PlotMenuList />
             </Grid>
             {scene && (
-                <Grid xs={12} md={9}>
+                <Grid xs={12} md={8}>
                     <PlotCard />
                 </Grid>
             )}

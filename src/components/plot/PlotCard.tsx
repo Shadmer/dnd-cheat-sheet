@@ -80,7 +80,7 @@ export const PlotCard = observer(() => {
             direction="row"
             alignItems="center"
             justifyContent="space-between"
-            p={1}
+            p="1rem 2rem"
             bgcolor="background.paper"
         >
             <IconButton

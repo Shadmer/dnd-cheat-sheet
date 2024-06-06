@@ -11,7 +11,7 @@ import {
     TextField,
     Typography,
 } from '@mui/material';
-import { Clear } from '@mui/icons-material';
+import { SearchOff } from '@mui/icons-material';
 import { useStores } from '@src/providers/RootStoreContext';
 import { ScrollableBox } from '@src/components/common/ScrollableBox';
 import { PlotMenuItem } from '@src/components/plot/PlotMenuItem';
@@ -80,7 +80,7 @@ export const PlotMenuList = observer(() => {
     const searchIcon = (
         <InputAdornment position="start">
             <IconButton onClick={handleReset} color="primary">
-                <Clear fontSize="small" />
+                <SearchOff fontSize="small" />
             </IconButton>
         </InputAdornment>
     );

@@ -1,3 +1,7 @@
+export interface IPlotItemResponse {
+    content: string;
+}
+
 export interface IPlotMenuItem {
     sceneId: string;
     part: string;
@@ -15,4 +19,11 @@ export interface ICodexMenuList {
     section: string;
     title: string;
     content: ICodexMenuItem[];
+}
+
+export interface ICodexCard<T = unknown> {
+    content: T;
+    description: string;
+    images: string[];
+    maps: string[];
 }

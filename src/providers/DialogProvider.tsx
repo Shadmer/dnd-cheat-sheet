@@ -39,7 +39,6 @@ export const DialogProvider = ({ children }: { children: ReactNode }) => {
 
     const closeDialog = () => {
         setDialogOpen(false);
-        setDialogContent(null);
     };
 
     return (

@@ -34,7 +34,7 @@ class Plot {
     loadScene = async (sceneId: string) => {
         const scene = await this.plotService.fetchScene(sceneId);
         runInAction(() => {
-            this.currentScene = scene;
+            this.currentScene = scene.content;
         });
     };
 

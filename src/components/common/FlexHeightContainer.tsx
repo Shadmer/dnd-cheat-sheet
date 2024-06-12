@@ -27,7 +27,7 @@ export const FlexHeightContainer: React.FC<FlexHeightContainerProps> = ({
         }
     }, [header, footer]);
 
-    const height = `calc(100vh - ${FOOTER_HEIGHT}px - ${headerHeight}px - ${footerHeight}px)`;
+    const height = `calc(100dvh - ${FOOTER_HEIGHT}px - ${headerHeight}px - ${footerHeight}px)`;
 
     const clonedHeader = header
         ? React.cloneElement(header, { ref: headerRef })

@@ -2,7 +2,17 @@ import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
-import { Box, IconButton, Paper, Stack, Typography } from '@mui/material';
+import {
+    Box,
+    IconButton,
+    Paper,
+    Stack,
+    Tab,
+    Tabs,
+    Tooltip,
+    Typography,
+} from '@mui/material';
+import { styled } from '@mui/system';
 import { Clear, MenuOpen } from '@mui/icons-material';
 import { useStores } from '@src/providers/RootStoreContext';
 import { useDrawer } from '@src/providers/DrawerProvider';
@@ -11,66 +21,31 @@ import { MarkdownRenderer } from '@src/components/common/MarkdownRenderer';
 import { FlexHeightContainer } from '@src/components/common/FlexHeightContainer';
 import { CodexMenuList } from '@src/components/codex/CodexMenuList';
 
+const FullWidthTabs = styled(Tabs)(({ theme }) => ({
+    '& .MuiTabs-flexContainer': {
+        width: '100%',
+    },
+    '& .MuiTab-root': {
+        flexGrow: 1,
+        maxWidth: 'none',
+    },
+}));
+
 export const CodexCard = observer(() => {
     const params = useParams();
     const {
         codex: { currentScene, codexMenuList },
     } = useStores();
+
     const { openDrawer, closeDrawer } = useDrawer();
+
+    const [tabValue, setTabValue] = React.useState(0);
 
     const currentSection = codexMenuList.find(
         (section) => section.section === params.section
     );
 
     const codexSectionTitle = currentSection?.title ?? '';
-
-    const codexItemTitle =
-        currentSection?.content.find((item) => item.id === params.id)?.name ??
-        'Кодекс мастера';
-
-    const header = (
-        <Stack>
-            <Stack direction="row" alignItems="center" p=".5rem">
-                <IconButton
-                    color="primary"
-                    sx={{
-                        display: {
-                            xs: 'block',
-                            md: 'none',
-                        },
-                    }}
-                    onClick={() =>
-                        openDrawer(
-                            <CodexMenuList
-                                bgColor="paper"
-                                onItemSelect={closeDrawer}
-                            />
-                        )
-                    }
-                >
-                    <MenuOpen />
-                </IconButton>
-                {currentSection && (
-                    <IconButton
-                        component={Link}
-                        to="../codex"
-                        color="primary"
-                        sx={{ ml: 'auto' }}
-                    >
-                        <Clear />
-                    </IconButton>
-                )}
-            </Stack>
-            <Stack p="0 1rem">
-                <Typography variant="body2" component="p">
-                    {codexSectionTitle}
-                </Typography>
-                <Typography fontWeight="500" variant="h2" component="h1">
-                    {codexItemTitle}
-                </Typography>
-            </Stack>
-        </Stack>
-    );
 
     const defaultContentText = (
         <Stack spacing={2}>
@@ -137,11 +112,91 @@ export const CodexCard = observer(() => {
         </Stack>
     );
 
+    const codexItemTitle =
+        currentSection?.content.find((item) => item.id === params.id)?.name ??
+        'Кодекс мастера';
+
+    const tabData = [
+        { label: 'Характеристики', content: 'Характеристики' },
+        { label: 'Описание', content: 'Описание' },
+        { label: 'Изображения', content: 'Изображения' },
+        { label: 'Карты', content: 'Карты' },
+    ];
+
+    const header = (
+        <Stack p="1rem" bgcolor="background.paper" boxShadow={1} spacing={1}>
+            <Stack
+                direction="row"
+                alignItems="flex-start"
+                justifyContent="space-between"
+            >
+                <Box>
+                    <Typography variant="body2">{codexSectionTitle}</Typography>
+                    <Typography fontWeight="500" variant="h2" component="h1">
+                        {codexItemTitle}
+                    </Typography>
+                </Box>
+                <Stack direction="row" alignItems="center">
+                    <Tooltip title="Открыть меню">
+                        <IconButton
+                            color="primary"
+                            sx={{
+                                display: {
+                                    xs: 'flex',
+                                    md: 'none',
+                                },
+                            }}
+                            onClick={() =>
+                                openDrawer(
+                                    <CodexMenuList
+                                        bgColor="paper"
+                                        onItemSelect={closeDrawer}
+                                    />
+                                )
+                            }
+                        >
+                            <MenuOpen />
+                        </IconButton>
+                    </Tooltip>
+                    {currentSection && (
+                        <IconButton
+                            component={Link}
+                            to="../codex"
+                            color="primary"
+                            sx={{ ml: 'auto' }}
+                        >
+                            <Clear />
+                        </IconButton>
+                    )}
+                </Stack>
+            </Stack>
+            {currentSection && (
+                <FullWidthTabs
+                    value={tabValue}
+                    onChange={(_, newValue) => setTabValue(newValue)}
+                    variant="scrollable"
+                    scrollButtons
+                    allowScrollButtonsMobile
+                >
+                    {tabData.map((tab, index) => (
+                        <Tab key={index} label={tab.label} value={index} />
+                    ))}
+                </FullWidthTabs>
+            )}
+        </Stack>
+    );
+
     const content = (
         <ScrollableBox>
             <Box p="2rem">
                 {currentSection ? (
-                    <MarkdownRenderer markdown={currentScene} />
+                    <Box>
+                        {tabData.map((tab, index) => (
+                            <Box key={index} p={3} hidden={tabValue !== index}>
+                                <Typography>{tab.content}</Typography>
+                            </Box>
+                        ))}
+                    </Box>
                 ) : (
                     defaultContentText
                 )}

@@ -1,27 +1,27 @@
 [
     {
-        "sceneId": "prologue.md",
+        "sceneId": "prologue",
         "part": "Вступление",
         "title": "Приключения Мистера Markdown",
         "subTitle": "Пролог",
         "description": "Начало приключений"
     },
     {
-        "sceneId": "chapter_1.md",
+        "sceneId": "chapter_1",
         "part": "История",
         "title": "Таинственная Ссылка",
         "subTitle": "Глава 1",
         "description": "Развитие событий"
     },
     {
-        "sceneId": "chapter_2.md",
+        "sceneId": "chapter_2",
         "part": "История",
         "title": "Загадка Кода",
         "subTitle": "Глава 2",
         "description": "Основные действия"
     },
     {
-        "sceneId": "last_chapter.md",
+        "sceneId": "last_chapter",
         "part": "Окончание",
         "title": "Мастерство Markdown",
         "subTitle": "Последняя Глава",

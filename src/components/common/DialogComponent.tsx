@@ -20,7 +20,7 @@ export const DialogComponent = () => {
                 >
                     <Close />
                 </IconButton>
-                {dialogContent}
+                <Box pt={4}>{dialogContent}</Box>
             </Box>
         </Dialog>
     );

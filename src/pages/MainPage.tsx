@@ -2,29 +2,12 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { Box, Container, Stack } from '@mui/material';
 import { MainNavigation } from '@src/components/common/MainNavigation';
-import { useDrawer } from '@src/providers/DrawerProvider';
 import { useDialog } from '@src/providers/DialogProvider';
+import { PlotCard } from '@src/components/plot/PlotCard';
 
 export const MainPage = () => {
-    const { openDrawer } = useDrawer();
     const { openDialog } = useDialog();
-
-    const dialogContent = (
-        <div>
-            <h2>Заголовок</h2>
-            <p>Это контент диалога.</p>
-        </div>
-    );
-
-    const drawerContent = (
-        <div>
-            <h2>Заголовок</h2>
-            <p>Это выдвижной контент.</p>
-            <button onClick={() => openDialog(dialogContent)}>
-                Открыть диалог
-            </button>
-        </div>
-    );
+    const dialogContent = <PlotCard />;
 
     return (
         <Stack pt="20px" pb="80px">
@@ -42,8 +25,8 @@ export const MainPage = () => {
                     background: (theme) => theme.palette.background.paper,
                 }}
             >
-                {/* <button onClick={() => openDrawer(drawerContent)}>
-                    drawerOpen
+                {/* <button onClick={() => openDialog(dialogContent)}>
+                    Открыть диалог
                 </button> */}
                 <Container
                     maxWidth="xl"

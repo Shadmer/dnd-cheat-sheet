@@ -2,13 +2,7 @@ import React, { ReactElement } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 
 import { BottomNavigation, BottomNavigationAction } from '@mui/material';
-import {
-    AutoStories,
-    Extension,
-    HelpCenter,
-    Route,
-    SportsKabaddi,
-} from '@mui/icons-material';
+import { AutoStories, Extension, HelpCenter, Route } from '@mui/icons-material';
 
 interface INavigationAction {
     value: string;
@@ -29,18 +23,13 @@ const navigationActionList: INavigationAction[] = [
     },
     {
         value: '/game/battle',
-        label: 'Битва',
-        icon: <SportsKabaddi />,
+        label: 'Поле битвы',
+        icon: <Extension />,
     },
     {
         value: '/game/codex',
         label: 'Кодекс',
         icon: <HelpCenter />,
-    },
-    {
-        value: '/game/interactive',
-        label: 'Интерактив',
-        icon: <Extension />,
     },
 ];
 

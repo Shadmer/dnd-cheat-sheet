@@ -49,10 +49,6 @@ export const PlotMenuList = observer(() => {
         return Object.values(groupedParts);
     }, [filteredPlotMenuList]);
 
-    const getMarginBottom = (index: number, length: number, value: string) => {
-        return index === length - 1 ? 0 : value;
-    };
-
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
         setSearchTitle(value);
@@ -113,16 +109,7 @@ export const PlotMenuList = observer(() => {
             <React.Fragment>
                 {groupedPlotMenuList.length ? (
                     groupedPlotMenuList.map((part) => (
-                        <Box
-                            key={part.partTitle}
-                            sx={{
-                                mb: getMarginBottom(
-                                    groupedPlotMenuList.indexOf(part),
-                                    groupedPlotMenuList.length,
-                                    '1rem'
-                                ),
-                            }}
-                        >
+                        <Box key={part.partTitle}>
                             <Box
                                 sx={{
                                     mb: 1,
@@ -155,7 +142,7 @@ export const PlotMenuList = observer(() => {
                                 ))}
                             </Grid>
 
-                            <Divider sx={{ pt: 1 }} />
+                            <Divider sx={{ mt: 1 }} />
                         </Box>
                     ))
                 ) : (

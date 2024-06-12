@@ -22,12 +22,16 @@ import { FlexHeightContainer } from '@src/components/common/FlexHeightContainer'
 import { CodexMenuList } from '@src/components/codex/CodexMenuList';
 
 const FullWidthTabs = styled(Tabs)(({ theme }) => ({
+    backgroundColor: theme.palette.grey[200],
     '& .MuiTabs-flexContainer': {
         width: '100%',
     },
     '& .MuiTab-root': {
         flexGrow: 1,
         maxWidth: 'none',
+    },
+    '& .Mui-disabled': {
+        opacity: 0.3,
     },
 }));
 
@@ -124,11 +128,12 @@ export const CodexCard = observer(() => {
     ];
 
     const header = (
-        <Stack p="1rem" bgcolor="background.paper" boxShadow={1} spacing={1}>
+        <Stack p="1rem 0" bgcolor="background.paper" boxShadow={1} spacing={2}>
             <Stack
                 direction="row"
                 alignItems="flex-start"
                 justifyContent="space-between"
+                p="0 1rem"
             >
                 <Box>
                     <Typography variant="body2">{codexSectionTitle}</Typography>
@@ -175,7 +180,7 @@ export const CodexCard = observer(() => {
                     value={tabValue}
                     onChange={(_, newValue) => setTabValue(newValue)}
                     variant="scrollable"
-                    scrollButtons
+                    scrollButtons="auto"
                     allowScrollButtonsMobile
                 >
                     {tabData.map((tab, index) => (
@@ -188,11 +193,11 @@ export const CodexCard = observer(() => {
 
     const content = (
         <ScrollableBox>
-            <Box p="2rem">
+            <Box p="1rem">
                 {currentSection ? (
                     <Box>
                         {tabData.map((tab, index) => (
-                            <Box key={index} p={3} hidden={tabValue !== index}>
+                            <Box key={index} hidden={tabValue !== index}>
                                 <Typography>{tab.content}</Typography>
                             </Box>
                         ))}

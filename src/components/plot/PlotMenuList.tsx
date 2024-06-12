@@ -4,6 +4,7 @@ import { observer } from 'mobx-react-lite';
 
 import {
     Box,
+    Divider,
     Unstable_Grid2 as Grid,
     IconButton,
     InputAdornment,
@@ -48,14 +49,7 @@ export const PlotMenuList = observer(() => {
         return Object.values(groupedParts);
     }, [filteredPlotMenuList]);
 
-    const getMarginBottom = (
-        index: number,
-        length: number,
-        value: string,
-        isPart = false
-    ) => {
-        if (!scene && !isPart) return 0;
-
+    const getMarginBottom = (index: number, length: number, value: string) => {
         return index === length - 1 ? 0 : value;
     };
 
@@ -125,8 +119,7 @@ export const PlotMenuList = observer(() => {
                                 mb: getMarginBottom(
                                     groupedPlotMenuList.indexOf(part),
                                     groupedPlotMenuList.length,
-                                    '2rem',
-                                    true
+                                    '1rem'
                                 ),
                             }}
                         >
@@ -145,23 +138,24 @@ export const PlotMenuList = observer(() => {
                                     {part.partTitle}
                                 </Typography>
                             </Box>
-                            <Grid container spacing={scene ? 0 : 2}>
+                            <Grid
+                                container
+                                spacing={{ xs: 0, md: scene ? 0 : 2 }}
+                            >
                                 {part.scenes.map((sceneItem) => (
                                     <Grid
                                         key={sceneItem.sceneId}
                                         {...menuGridWidth}
                                         sx={{
-                                            mb: getMarginBottom(
-                                                part.scenes.indexOf(sceneItem),
-                                                part.scenes.length,
-                                                '1rem'
-                                            ),
+                                            mb: '1rem',
                                         }}
                                     >
                                         <PlotMenuItem scene={sceneItem} />
                                     </Grid>
                                 ))}
                             </Grid>
+
+                            <Divider sx={{ pt: 1 }} />
                         </Box>
                     ))
                 ) : (

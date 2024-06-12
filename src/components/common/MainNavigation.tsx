@@ -23,7 +23,7 @@ const navigationActionList: INavigationAction[] = [
     },
     {
         value: '/game/battle',
-        label: 'Поле битвы',
+        label: 'Сражение',
         icon: <Extension />,
     },
     {

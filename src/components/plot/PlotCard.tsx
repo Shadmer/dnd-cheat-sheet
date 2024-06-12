@@ -69,7 +69,7 @@ export const PlotCard = observer(() => {
 
     const content = (
         <ScrollableBox>
-            <Box p="2rem">
+            <Box p="1rem">
                 <MarkdownRenderer markdown={currentScene} />
             </Box>
         </ScrollableBox>

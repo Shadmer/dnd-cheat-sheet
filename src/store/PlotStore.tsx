@@ -1,3 +1,4 @@
+import { NavigateFunction } from 'react-router-dom';
 import { makeAutoObservable, runInAction } from 'mobx';
 import { PlotService } from '@src/services/PlotService';
 import { IPlotMenuItem } from '@src/interfaces';
@@ -7,10 +8,15 @@ class Plot {
     plotMenuList: IPlotMenuItem[] = [];
     filteredPlotMenuList: IPlotMenuItem[] = [];
     currentScene = '';
+    navigate: NavigateFunction | null = null;
 
     constructor() {
         makeAutoObservable(this);
     }
+
+    setNavigate = (navigate: NavigateFunction) => {
+        this.navigate = navigate;
+    };
 
     filterPlotMenuList = (searchTitle: string) => {
         runInAction(() => {
@@ -32,10 +38,16 @@ class Plot {
     };
 
     loadScene = async (sceneId: string) => {
-        const scene = await this.plotService.fetchScene(sceneId);
-        runInAction(() => {
-            this.currentScene = scene.content;
-        });
+        try {
+            const scene = await this.plotService.fetchScene(sceneId);
+            runInAction(() => {
+                this.currentScene = scene.content;
+            });
+        } catch {
+            if (this.navigate) {
+                this.navigate('/game/plot');
+            }
+        }
     };
 
     clearScene = () => {

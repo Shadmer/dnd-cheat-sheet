@@ -1,18 +1,22 @@
+import { NavigateFunction } from 'react-router-dom';
 import { makeAutoObservable, runInAction } from 'mobx';
 import { CodexService } from '@src/services/CodexService';
-import { ICodexMenuList } from '@src/interfaces';
+import { ICodexCard, ICodexMenuList } from '@src/interfaces';
 
 class Codex {
     codexService = CodexService();
     codexMenuList: ICodexMenuList[] = [];
     filteredCodexMenuList: ICodexMenuList[] = [];
-
-    // TODO: адаптировать под кодекс
-    currentScene = '';
+    currentPage: ICodexCard<any> | null = null;
+    navigate: NavigateFunction | null = null;
 
     constructor() {
         makeAutoObservable(this);
     }
+
+    setNavigate = (navigate: NavigateFunction) => {
+        this.navigate = navigate;
+    };
 
     filterCodexMenuList = (searchTitle: string) => {
         runInAction(() => {
@@ -38,17 +42,21 @@ class Codex {
         });
     };
 
-    // TODO: адаптировать под кодекс
-    loadScene = async (sceneId: string) => {
-        const scene = await this.codexService.fetchScene(sceneId);
-        runInAction(() => {
-            this.currentScene = scene;
-        });
+    loadPage = async (id: string) => {
+        try {
+            const page = await this.codexService.fetchPage(id);
+            runInAction(() => {
+                this.currentPage = page;
+            });
+        } catch {
+            if (this.navigate) {
+                this.navigate('/game/codex');
+            }
+        }
     };
 
-    // TODO: адаптировать под кодекс
-    clearScene = () => {
-        this.currentScene = '';
+    clearPage = () => {
+        this.currentPage = null;
     };
 }
 

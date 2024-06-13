@@ -271,7 +271,6 @@ export const CodexMenuList = observer(
                                             />
                                             <ExpandMore
                                                 sx={{
-                                                    // background: 'red',
                                                     transform: openSections?.[
                                                         category.section
                                                     ]

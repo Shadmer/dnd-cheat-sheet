@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
 import {
@@ -8,11 +8,9 @@ import {
     Paper,
     Stack,
     Tab,
-    Tabs,
     Tooltip,
     Typography,
 } from '@mui/material';
-import { styled } from '@mui/system';
 import { Clear, MenuOpen } from '@mui/icons-material';
 import { useStores } from '@src/providers/RootStoreContext';
 import { useDrawer } from '@src/providers/DrawerProvider';
@@ -20,25 +18,13 @@ import { ScrollableBox } from '@src/components/common/ScrollableBox';
 import { MarkdownRenderer } from '@src/components/common/MarkdownRenderer';
 import { FlexHeightContainer } from '@src/components/common/FlexHeightContainer';
 import { CodexMenuList } from '@src/components/codex/CodexMenuList';
-
-const FullWidthTabs = styled(Tabs)(({ theme }) => ({
-    backgroundColor: theme.palette.grey[200],
-    '& .MuiTabs-flexContainer': {
-        width: '100%',
-    },
-    '& .MuiTab-root': {
-        flexGrow: 1,
-        maxWidth: 'none',
-    },
-    '& .Mui-disabled': {
-        opacity: 0.3,
-    },
-}));
+import { FullWidthTabs } from '@src/components/common/FullWidthTabs';
 
 export const CodexCard = observer(() => {
     const params = useParams();
+    const navigate = useNavigate();
     const {
-        codex: { currentScene, codexMenuList },
+        codex: { currentPage, codexMenuList, loadPage, clearPage, setNavigate },
     } = useStores();
 
     const { openDrawer, closeDrawer } = useDrawer();
@@ -46,7 +32,7 @@ export const CodexCard = observer(() => {
     const [tabValue, setTabValue] = React.useState(0);
 
     const currentSection = codexMenuList.find(
-        (section) => section.section === params.section
+        (item) => item.section === params.section
     );
 
     const codexSectionTitle = currentSection?.title ?? '';
@@ -208,6 +194,23 @@ export const CodexCard = observer(() => {
             </Box>
         </ScrollableBox>
     );
+
+    React.useEffect(() => {
+        setNavigate(navigate);
+    }, [navigate, setNavigate]);
+
+    React.useEffect(() => {
+        const { section, id } = params;
+
+        if (section && id) {
+            const fullPage = `${section}/${id}`;
+            loadPage(fullPage);
+
+            return () => {
+                clearPage();
+            };
+        }
+    }, [clearPage, loadPage, params]);
 
     return (
         <Paper>

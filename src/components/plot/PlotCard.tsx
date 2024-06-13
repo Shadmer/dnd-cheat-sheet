@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
 import { Box, IconButton, Paper, Stack, Typography } from '@mui/material';
@@ -11,8 +11,15 @@ import { FlexHeightContainer } from '@src/components/common/FlexHeightContainer'
 
 export const PlotCard = observer(() => {
     const { scene } = useParams();
+    const navigate = useNavigate();
     const {
-        plot: { loadScene, clearScene, currentScene, plotMenuList },
+        plot: {
+            loadScene,
+            clearScene,
+            setNavigate,
+            currentScene,
+            plotMenuList,
+        },
     } = useStores();
 
     const plotMenuTitle =
@@ -34,6 +41,10 @@ export const PlotCard = observer(() => {
         currentIndex < plotMenuList.length - 1
             ? `../plot/${plotMenuList[currentIndex + 1].sceneId}`
             : '';
+
+    React.useEffect(() => {
+        setNavigate(navigate);
+    }, [navigate, setNavigate]);
 
     React.useEffect(() => {
         if (scene) loadScene(scene);

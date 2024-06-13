@@ -45,6 +45,7 @@ export const MainNavigation = () => {
         <BottomNavigation value={activeTab?.value ?? ''}>
             {navigationActionList.map((action) => (
                 <BottomNavigationAction
+                    title={action.label}
                     key={action.value}
                     component={RouterLink}
                     to={action.value}

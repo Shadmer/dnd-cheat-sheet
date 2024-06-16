@@ -2,6 +2,7 @@ import { NavigateFunction } from 'react-router-dom';
 import { makeAutoObservable, runInAction } from 'mobx';
 import { PlotService } from '@src/services/PlotService';
 import { IPlotMenuItem } from '@src/interfaces';
+import { NavigationRoute } from '@src/enums';
 
 class Plot {
     plotService = PlotService();
@@ -45,7 +46,7 @@ class Plot {
             });
         } catch {
             if (this.navigate) {
-                this.navigate('/game/plot');
+                this.navigate(NavigationRoute.plot);
             }
         }
     };

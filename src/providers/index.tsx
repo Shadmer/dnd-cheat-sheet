@@ -10,6 +10,7 @@ import {
 
 import RootStore from '@src/store/RootStore';
 import { RootStoreContext } from '@src/providers/RootStoreContext';
+import { NavigateWithSaveProvider } from '@src/providers/NavigateWithSaveProvider';
 import { DrawerProvider } from '@src/providers/DrawerProvider';
 import { DialogProvider } from '@src/providers/DialogProvider';
 import { DrawerComponent } from '@src/components/common/DrawerComponent';
@@ -97,13 +98,15 @@ export const Providers = ({ children }: ProvidersProps) => {
         <RootStoreContext.Provider value={new RootStore()}>
             <ThemeProvider theme={responsiveFontSizes(theme)}>
                 <CssBaseline />
-                <DrawerProvider>
-                    <DialogProvider>
-                        <DrawerComponent />
-                        <DialogComponent />
-                        {children}
-                    </DialogProvider>
-                </DrawerProvider>
+                <NavigateWithSaveProvider>
+                    <DrawerProvider>
+                        <DialogProvider>
+                            <DrawerComponent />
+                            <DialogComponent />
+                            {children}
+                        </DialogProvider>
+                    </DrawerProvider>
+                </NavigateWithSaveProvider>
             </ThemeProvider>
         </RootStoreContext.Provider>
     );

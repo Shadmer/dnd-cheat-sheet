@@ -7,18 +7,7 @@ type DialogContextProps = {
     closeDialog: () => void;
 };
 
-const defaultContext: DialogContextProps = {
-    dialogOpen: false,
-    dialogContent: null,
-    openDialog: () => {
-        /* пустая функция */
-    },
-    closeDialog: () => {
-        /* пустая функция */
-    },
-};
-
-const DialogContext = React.createContext<DialogContextProps>(defaultContext);
+const DialogContext = React.createContext<DialogContextProps | null>(null);
 
 export const useDialog = () => {
     const context = React.useContext(DialogContext);

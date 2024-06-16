@@ -7,18 +7,7 @@ type DrawerContextProps = {
     closeDrawer: () => void;
 };
 
-const defaultContext: DrawerContextProps = {
-    drawerOpen: false,
-    drawerContent: null,
-    openDrawer: () => {
-        /* пустая функция */
-    },
-    closeDrawer: () => {
-        /* пустая функция */
-    },
-};
-
-const DrawerContext = React.createContext<DrawerContextProps>(defaultContext);
+const DrawerContext = React.createContext<DrawerContextProps | null>(null);
 
 export const useDrawer = () => {
     const context = React.useContext(DrawerContext);

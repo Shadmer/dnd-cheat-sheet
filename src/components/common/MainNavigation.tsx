@@ -1,8 +1,10 @@
 import React, { ReactElement } from 'react';
-import { Link as RouterLink, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { BottomNavigation, BottomNavigationAction } from '@mui/material';
 import { AutoStories, Extension, HelpCenter, Route } from '@mui/icons-material';
+import { useNavigateWithSave } from '@src/providers/NavigateWithSaveProvider';
+import { NavigationRoute } from '@src/enums';
 
 interface INavigationAction {
     value: string;
@@ -12,22 +14,22 @@ interface INavigationAction {
 
 const navigationActionList: INavigationAction[] = [
     {
-        value: '/game/plot',
+        value: NavigationRoute.plot,
         label: 'Сюжет',
         icon: <AutoStories />,
     },
     {
-        value: '/game/journey',
+        value: NavigationRoute.journey,
         label: 'Путешествие',
         icon: <Route />,
     },
     {
-        value: '/game/battle',
+        value: NavigationRoute.battle,
         label: 'Сражение',
         icon: <Extension />,
     },
     {
-        value: '/game/codex',
+        value: NavigationRoute.codex,
         label: 'Кодекс',
         icon: <HelpCenter />,
     },
@@ -35,20 +37,37 @@ const navigationActionList: INavigationAction[] = [
 
 export const MainNavigation = () => {
     const { pathname } = useLocation();
+    const navigate = useNavigate();
+    const { getLastPlotPage, getLastCodexPage } = useNavigateWithSave();
+
     const activeTab = React.useMemo(() => {
         return navigationActionList.find((action) =>
             pathname.startsWith(action.value)
         );
     }, [pathname]);
 
+    const handleNavigation = (value: string) => {
+        const lastPages = [
+            { route: NavigationRoute.plot, getLastPage: getLastPlotPage },
+            { route: NavigationRoute.codex, getLastPage: getLastCodexPage },
+        ];
+
+        const lastPageEntry = lastPages.find((entry) => entry.route === value);
+        const navigateTo = lastPageEntry
+            ? lastPageEntry.getLastPage() ?? value
+            : value;
+        navigate(navigateTo);
+    };
+
     return (
-        <BottomNavigation value={activeTab?.value ?? ''}>
+        <BottomNavigation
+            value={activeTab?.value ?? ''}
+            onChange={(_, newValue: string) => handleNavigation(newValue)}
+        >
             {navigationActionList.map((action) => (
                 <BottomNavigationAction
                     title={action.label}
                     key={action.value}
-                    component={RouterLink}
-                    to={action.value}
                     value={action.value}
                     label={action.label}
                     icon={action.icon}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
 import { Box, IconButton, Paper, Stack, Typography } from '@mui/material';
@@ -8,10 +8,13 @@ import { useStores } from '@src/providers/RootStoreContext';
 import { ScrollableBox } from '@src/components/common/ScrollableBox';
 import { MarkdownRenderer } from '@src/components/common/MarkdownRenderer';
 import { FlexHeightContainer } from '@src/components/common/FlexHeightContainer';
+import { useNavigateWithSave } from '@src/providers/NavigateWithSaveProvider';
+import { LastPageType } from '@src/enums';
 
 export const PlotCard = observer(() => {
     const { scene } = useParams();
     const navigate = useNavigate();
+    const { navigateWithSave } = useNavigateWithSave();
     const {
         plot: {
             loadScene,
@@ -34,17 +37,13 @@ export const PlotCard = observer(() => {
 
     const prevScene =
         currentIndex > 0
-            ? `../plot/${plotMenuList[currentIndex - 1].sceneId}`
+            ? `/game/plot/${plotMenuList[currentIndex - 1].sceneId}`
             : '';
 
     const nextScene =
         currentIndex < plotMenuList.length - 1
-            ? `../plot/${plotMenuList[currentIndex + 1].sceneId}`
+            ? `/game/plot/${plotMenuList[currentIndex + 1].sceneId}`
             : '';
-
-    React.useEffect(() => {
-        setNavigate(navigate);
-    }, [navigate, setNavigate]);
 
     React.useEffect(() => {
         if (scene) loadScene(scene);
@@ -53,6 +52,10 @@ export const PlotCard = observer(() => {
             clearScene();
         };
     }, [clearScene, loadScene, scene]);
+
+    React.useEffect(() => {
+        setNavigate(navigate);
+    }, [navigate, setNavigate]);
 
     const header = (
         <Stack
@@ -72,7 +75,12 @@ export const PlotCard = observer(() => {
                 </Typography>
             </Box>
 
-            <IconButton component={Link} to="../plot" color="primary">
+            <IconButton
+                onClick={() =>
+                    navigateWithSave('/game/plot', LastPageType.scene)
+                }
+                color="primary"
+            >
                 <Clear />
             </IconButton>
         </Stack>
@@ -95,17 +103,15 @@ export const PlotCard = observer(() => {
             bgcolor="background.paper"
         >
             <IconButton
-                component={Link}
                 disabled={currentIndex === 0}
-                to={prevScene}
+                onClick={() => navigateWithSave(prevScene, LastPageType.scene)}
                 color="primary"
             >
                 <ArrowBack />
             </IconButton>
             <IconButton
-                component={Link}
                 disabled={currentIndex === plotMenuList.length - 1}
-                to={nextScene}
+                onClick={() => navigateWithSave(nextScene, LastPageType.scene)}
                 color="primary"
             >
                 <ArrowForward />

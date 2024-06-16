@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import {
     Card,
@@ -11,6 +11,8 @@ import {
 } from '@mui/material';
 import { ExpandMore } from '@mui/icons-material';
 import { IPlotMenuItem } from '@src/interfaces';
+import { LastPageType } from '@src/enums';
+import { useNavigateWithSave } from '@src/providers/NavigateWithSaveProvider';
 
 type PlotMenuItemProps = {
     scene: IPlotMenuItem;
@@ -20,8 +22,12 @@ export const PlotMenuItem = ({
     scene: { sceneId, title, subTitle, description },
 }: PlotMenuItemProps) => {
     const { scene } = useParams();
-    const navigate = useNavigate();
+    const { navigateWithSave } = useNavigateWithSave();
     const [expanded, setExpanded] = React.useState(false);
+    const navigateHandler = (id: string) => {
+        const url = `/game/plot/${id}`;
+        navigateWithSave(url, LastPageType.scene);
+    };
 
     return (
         <Card
@@ -35,7 +41,7 @@ export const PlotMenuItem = ({
                 transition: 'background .3s',
             }}
         >
-            <CardActionArea onClick={() => navigate(`../plot/${sceneId}`)}>
+            <CardActionArea onClick={() => navigateHandler(sceneId)}>
                 <CardContent>
                     <Typography
                         variant="body2"

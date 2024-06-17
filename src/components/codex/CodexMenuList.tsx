@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Params, useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
 import {
@@ -35,6 +35,8 @@ import {
     FaGavel,
     FaStickyNote,
 } from 'react-icons/fa';
+import { useNavigateWithSave } from '@src/providers/NavigateWithSaveProvider';
+import { LastPageType, NavigationRoute } from '@src/enums';
 
 const iconMap: Record<string, React.ReactNode> = {
     players: <FaUserFriends />,
@@ -46,14 +48,15 @@ const iconMap: Record<string, React.ReactNode> = {
 };
 
 type CodexMenuListProps = {
+    params: Params<string>;
     bgColor?: 'default' | 'paper';
     onItemSelect?: () => void;
 };
 
 export const CodexMenuList = observer(
-    ({ bgColor = 'default', onItemSelect }: CodexMenuListProps) => {
-        const params = useParams();
-        const navigate = useNavigate();
+    ({ params, bgColor = 'default', onItemSelect }: CodexMenuListProps) => {
+        // const params = useParams();
+        const { navigateWithSave } = useNavigateWithSave();
 
         const {
             codex: {
@@ -68,7 +71,7 @@ export const CodexMenuList = observer(
         const [openSections, setOpenSections] = React.useState<Record<
             string,
             boolean
-        > | null>(null);
+        > | null>(params.section ? { [params.section]: true } : null);
         // const [prevOpenSections, setPrevOpenSections] = React.useState<
         //     Record<string, boolean>
         // >({});
@@ -85,9 +88,10 @@ export const CodexMenuList = observer(
         );
 
         const isSelected = (section: string, id: string) => {
+            // return true;
+            // console.log(savedSection, savedId);
             return params.section === section && params.id === id;
         };
-
         const openAllSections = React.useCallback(() => {
             const newOpenSections: Record<string, boolean> = {};
             filteredCodexMenuList.forEach((category) => {
@@ -307,8 +311,9 @@ export const CodexMenuList = observer(
                                                             onClick={() => {
                                                                 onItemSelect &&
                                                                     onItemSelect();
-                                                                navigate(
-                                                                    `/game/codex/${category.section}/${item.id}`
+                                                                navigateWithSave(
+                                                                    `${NavigationRoute.codex}/${category.section}/${item.id}`,
+                                                                    LastPageType.codex
                                                                 );
                                                             }}
                                                         >

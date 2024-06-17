@@ -9,7 +9,7 @@ import { ScrollableBox } from '@src/components/common/ScrollableBox';
 import { MarkdownRenderer } from '@src/components/common/MarkdownRenderer';
 import { FlexHeightContainer } from '@src/components/common/FlexHeightContainer';
 import { useNavigateWithSave } from '@src/providers/NavigateWithSaveProvider';
-import { LastPageType } from '@src/enums';
+import { LastPageType, NavigationRoute } from '@src/enums';
 
 export const PlotCard = observer(() => {
     const { scene } = useParams();
@@ -37,12 +37,16 @@ export const PlotCard = observer(() => {
 
     const prevScene =
         currentIndex > 0
-            ? `/game/plot/${plotMenuList[currentIndex - 1].sceneId}`
+            ? `${NavigationRoute.plot}/${
+                  plotMenuList[currentIndex - 1].sceneId
+              }`
             : '';
 
     const nextScene =
         currentIndex < plotMenuList.length - 1
-            ? `/game/plot/${plotMenuList[currentIndex + 1].sceneId}`
+            ? `${NavigationRoute.plot}/${
+                  plotMenuList[currentIndex + 1].sceneId
+              }`
             : '';
 
     React.useEffect(() => {
@@ -77,7 +81,7 @@ export const PlotCard = observer(() => {
 
             <IconButton
                 onClick={() =>
-                    navigateWithSave('/game/plot', LastPageType.scene)
+                    navigateWithSave(NavigationRoute.plot, LastPageType.scene)
                 }
                 color="primary"
             >

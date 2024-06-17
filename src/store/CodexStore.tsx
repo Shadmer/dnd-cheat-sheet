@@ -2,6 +2,7 @@ import { NavigateFunction } from 'react-router-dom';
 import { makeAutoObservable, runInAction } from 'mobx';
 import { CodexService } from '@src/services/CodexService';
 import { ICodexCard, ICodexMenuList } from '@src/interfaces';
+import { NavigationRoute } from '@src/enums';
 
 class Codex {
     codexService = CodexService();
@@ -49,9 +50,7 @@ class Codex {
                 this.currentPage = page;
             });
         } catch {
-            if (this.navigate) {
-                this.navigate('/game/codex');
-            }
+            this.navigate && this.navigate(NavigationRoute.codex);
         }
     };
 

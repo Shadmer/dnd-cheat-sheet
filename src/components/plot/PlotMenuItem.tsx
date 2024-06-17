@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import { ExpandMore } from '@mui/icons-material';
 import { IPlotMenuItem } from '@src/interfaces';
-import { LastPageType } from '@src/enums';
+import { LastPageType, NavigationRoute } from '@src/enums';
 import { useNavigateWithSave } from '@src/providers/NavigateWithSaveProvider';
 
 type PlotMenuItemProps = {
@@ -25,7 +25,7 @@ export const PlotMenuItem = ({
     const { navigateWithSave } = useNavigateWithSave();
     const [expanded, setExpanded] = React.useState(false);
     const navigateHandler = (id: string) => {
-        const url = `/game/plot/${id}`;
+        const url = `${NavigationRoute.plot}/${id}`;
         navigateWithSave(url, LastPageType.scene);
     };
 

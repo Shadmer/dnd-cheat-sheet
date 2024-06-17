@@ -45,9 +45,7 @@ class Plot {
                 this.currentScene = scene.content;
             });
         } catch {
-            if (this.navigate) {
-                this.navigate(NavigationRoute.plot);
-            }
+            this.navigate && this.navigate(NavigationRoute.plot);
         }
     };
 

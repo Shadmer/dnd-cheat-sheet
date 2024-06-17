@@ -8,8 +8,10 @@ import {
     Paper,
     Stack,
     Tab,
+    Theme,
     Tooltip,
     Typography,
+    useMediaQuery,
 } from '@mui/material';
 import { Clear, MenuOpen } from '@mui/icons-material';
 import { useStores } from '@src/providers/RootStoreContext';
@@ -19,10 +21,16 @@ import { MarkdownRenderer } from '@src/components/common/MarkdownRenderer';
 import { FlexHeightContainer } from '@src/components/common/FlexHeightContainer';
 import { CodexMenuList } from '@src/components/codex/CodexMenuList';
 import { FullWidthTabs } from '@src/components/common/FullWidthTabs';
+import { LastPageType, NavigationRoute } from '@src/enums';
+import { useNavigateWithSave } from '@src/providers/NavigateWithSaveProvider';
 
 export const CodexCard = observer(() => {
     const params = useParams();
     const navigate = useNavigate();
+    const isMdScreen = useMediaQuery((theme: Theme) =>
+        theme.breakpoints.up('md')
+    );
+    const { navigateWithSave } = useNavigateWithSave();
     const {
         codex: { currentPage, codexMenuList, loadPage, clearPage, setNavigate },
     } = useStores();
@@ -140,6 +148,7 @@ export const CodexCard = observer(() => {
                             onClick={() =>
                                 openDrawer(
                                     <CodexMenuList
+                                        params={params}
                                         bgColor="paper"
                                         onItemSelect={closeDrawer}
                                     />
@@ -151,8 +160,12 @@ export const CodexCard = observer(() => {
                     </Tooltip>
                     {currentSection && (
                         <IconButton
-                            component={Link}
-                            to="../codex"
+                            onClick={() =>
+                                navigateWithSave(
+                                    NavigationRoute.codex,
+                                    LastPageType.codex
+                                )
+                            }
                             color="primary"
                             sx={{ ml: 'auto' }}
                         >
@@ -194,6 +207,9 @@ export const CodexCard = observer(() => {
             </Box>
         </ScrollableBox>
     );
+    React.useEffect(() => {
+        if (isMdScreen) closeDrawer();
+    }, [closeDrawer, isMdScreen]);
 
     React.useEffect(() => {
         setNavigate(navigate);

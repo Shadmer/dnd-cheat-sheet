@@ -6,7 +6,7 @@ interface FlexHeightContainerProps {
     footer?: React.ReactElement;
 }
 
-const FOOTER_HEIGHT = 100;
+const MAIN_PADDING_HEIGHT = 160;
 
 export const FlexHeightContainer: React.FC<FlexHeightContainerProps> = ({
     header,
@@ -27,7 +27,7 @@ export const FlexHeightContainer: React.FC<FlexHeightContainerProps> = ({
         }
     }, [header, footer]);
 
-    const height = `calc(100dvh - ${FOOTER_HEIGHT}px - ${headerHeight}px - ${footerHeight}px)`;
+    const height = `calc(100dvh - ${MAIN_PADDING_HEIGHT}px - ${headerHeight}px - ${footerHeight}px)`;
 
     const clonedHeader = header
         ? React.cloneElement(header, { ref: headerRef })

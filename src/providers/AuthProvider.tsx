@@ -6,7 +6,7 @@ type AuthProviderProps = {
 
 type AuthType = {
     isAuthenticated: boolean;
-    login: (username: string, password: string) => boolean;
+    login: (username: string, password: string) => void;
     logout: () => void;
 };
 
@@ -32,17 +32,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         }
     );
 
-    const login = React.useCallback(
-        (username: string, password: string): boolean => {
-            if (username === mockUsername && password === mockPassword) {
-                localStorage.setItem('isAuthenticated', 'true');
-                setIsAuthenticated(true);
-                return true;
-            }
-            return false;
-        },
-        []
-    );
+    const login = React.useCallback((username: string, password: string) => {
+        if (username === mockUsername && password === mockPassword) {
+            localStorage.setItem('isAuthenticated', 'true');
+            setIsAuthenticated(true);
+        }
+    }, []);
 
     const logout = React.useCallback(() => {
         localStorage.removeItem('isAuthenticated');

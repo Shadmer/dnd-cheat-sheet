@@ -3,21 +3,47 @@ import { useAuth } from '@src/providers/AuthProvider';
 import {
     Box,
     Button,
-    Container,
     TextField,
     Typography,
     Alert,
+    alpha,
+    styled,
+    Avatar,
 } from '@mui/material';
 
+import backgroundImage from '@src/assets/bg.webp';
+import { LockOutlined } from '@mui/icons-material';
+
+const StyledTextField = styled(TextField)(({ theme }) => ({
+    '& .MuiInputBase-input': { color: theme.palette.common.white },
+    '& .MuiInputLabel-root': {
+        color: alpha(theme.palette.common.white, 0.7),
+        '&.Mui-focused': { color: theme.palette.secondary.main },
+    },
+    '& .MuiOutlinedInput-root': {
+        '& fieldset': {
+            borderColor: alpha(theme.palette.common.white, 0.7),
+        },
+        '&:hover fieldset': {
+            borderColor: theme.palette.common.white,
+        },
+        '&.Mui-focused fieldset': {
+            borderColor: theme.palette.secondary.main,
+        },
+    },
+}));
+
 export const EntryPage = () => {
-    const { login } = useAuth();
+    const { isAuthenticated, login } = useAuth();
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [error, setError] = React.useState('');
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if (login(username, password)) {
+        login(username, password);
+
+        if (isAuthenticated) {
             setError('');
         } else {
             setError('Неправильное имя пользователя или пароль');
@@ -29,24 +55,48 @@ export const EntryPage = () => {
     }, [username, password]);
 
     return (
-        <Container maxWidth="sm">
+        <Box
+            sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: '100vh',
+                backgroundImage: `url(${backgroundImage})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundColor: 'black',
+            }}
+        >
             <Box
                 sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    mt: 8,
+                    maxWidth: 450,
+                    padding: 4,
+                    textAlign: 'center',
+                    borderRadius: 2,
+                    boxShadow: (theme) =>
+                        `inset -5px 5px 10px 0px ${alpha(
+                            theme.palette.secondary.main,
+                            0.6
+                        )}`,
+                    backdropFilter: 'blur(25px)',
+                    color: 'secondary.contrastText',
+                    border: (theme) =>
+                        `1px solid ${theme.palette.secondary.main}`,
                 }}
             >
-                <Typography component="h1" variant="h5">
+                <Avatar
+                    sx={{
+                        margin: 'auto',
+                        backgroundColor: 'secondary.main',
+                    }}
+                >
+                    <LockOutlined />
+                </Avatar>
+                <Typography component="h1" variant="h4" sx={{ mt: 2 }}>
                     Введите учетные данные для входа
                 </Typography>
-                <Box
-                    component="form"
-                    onSubmit={handleSubmit}
-                    sx={{ maxWidth: 400, mt: 1 }}
-                >
-                    <TextField
+                <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
+                    <StyledTextField
                         margin="normal"
                         required
                         fullWidth
@@ -58,7 +108,7 @@ export const EntryPage = () => {
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                     />
-                    <TextField
+                    <StyledTextField
                         margin="normal"
                         required
                         fullWidth
@@ -79,12 +129,13 @@ export const EntryPage = () => {
                         type="submit"
                         fullWidth
                         variant="contained"
+                        color="secondary"
                         sx={{ mt: 3, mb: 2 }}
                     >
                         Войти
                     </Button>
                 </Box>
             </Box>
-        </Container>
+        </Box>
     );
 };

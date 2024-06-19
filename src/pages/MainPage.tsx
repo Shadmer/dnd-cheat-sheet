@@ -1,7 +1,6 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import {
-    Avatar,
     Box,
     Container,
     IconButton,
@@ -15,8 +14,6 @@ import { useDialog } from '@src/providers/DialogProvider';
 import { useAuth } from '@src/providers/AuthProvider';
 import { MainNavigation } from '@src/components/common/MainNavigation';
 import { PlotCard } from '@src/components/plot/PlotCard';
-
-import logo from '@src/assets/logo.png';
 
 export const MainPage = () => {
     const { logout } = useAuth();
@@ -62,7 +59,6 @@ export const MainPage = () => {
                     }}
                 >
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <Avatar alt="Logo" src={logo} sx={{ mr: 2 }} />
                         <Typography variant="h6" component="h1">
                             История Мистера Markdown
                         </Typography>

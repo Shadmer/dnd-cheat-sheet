@@ -194,6 +194,24 @@ export const CodexMenuList = observer(
             </InputAdornment>
         );
 
+        const toggleOpening = (
+            <Tooltip title={hasOpenSections ? 'Закрыть всё' : 'Открыть всё'}>
+                <IconButton
+                    sx={{
+                        color: 'primary.main',
+                    }}
+                    onClick={handleToggleOpeningItems}
+                    size="small"
+                >
+                    {hasOpenSections ? (
+                        <DirectionsOff fontSize="small" />
+                    ) : (
+                        <Directions fontSize="small" />
+                    )}
+                </IconButton>
+            </Tooltip>
+        );
+
         const header = (
             <Stack spacing={2} pb={2}>
                 <Typography variant="h3" component="h3">
@@ -217,25 +235,9 @@ export const CodexMenuList = observer(
                         onChange={handleSearchChange}
                         InputProps={{
                             startAdornment: searchIcon,
+                            endAdornment: toggleOpening,
                         }}
                     />
-                    <Tooltip
-                        title={hasOpenSections ? 'Закрыть всё' : 'Открыть всё'}
-                    >
-                        <IconButton
-                            sx={{
-                                color: 'primary.main',
-                            }}
-                            onClick={handleToggleOpeningItems}
-                            size="small"
-                        >
-                            {hasOpenSections ? (
-                                <DirectionsOff />
-                            ) : (
-                                <Directions />
-                            )}
-                        </IconButton>
-                    </Tooltip>
                 </Stack>
             </Stack>
         );

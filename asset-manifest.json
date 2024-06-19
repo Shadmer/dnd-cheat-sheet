@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/dnd-cheat-sheet/static/css/main.b3f65a56.css",
-    "main.js": "/dnd-cheat-sheet/static/js/main.c2538e0b.js",
-    "static/media/logo.png": "/dnd-cheat-sheet/static/media/logo.64d7c3ce806004ea0c08.png",
+    "main.js": "/dnd-cheat-sheet/static/js/main.96e22487.js",
+    "static/media/bg.webp": "/dnd-cheat-sheet/static/media/bg.58540fc737c1828b51e3.webp",
     "static/media/roboto-latin-500-normal.woff2": "/dnd-cheat-sheet/static/media/roboto-latin-500-normal.f25d774ecfe0996f8eb5.woff2",
     "static/media/roboto-latin-700-normal.woff2": "/dnd-cheat-sheet/static/media/roboto-latin-700-normal.227c93190fe7f82de3f8.woff2",
     "static/media/roboto-latin-400-normal.woff2": "/dnd-cheat-sheet/static/media/roboto-latin-400-normal.b009a76ad6afe4ebd301.woff2",
@@ -61,10 +61,10 @@
     "static/media/roboto-greek-ext-700-normal.woff": "/dnd-cheat-sheet/static/media/roboto-greek-ext-700-normal.249853776d22a271b2b5.woff",
     "index.html": "/dnd-cheat-sheet/index.html",
     "main.b3f65a56.css.map": "/dnd-cheat-sheet/static/css/main.b3f65a56.css.map",
-    "main.c2538e0b.js.map": "/dnd-cheat-sheet/static/js/main.c2538e0b.js.map"
+    "main.96e22487.js.map": "/dnd-cheat-sheet/static/js/main.96e22487.js.map"
   },
   "entrypoints": [
     "static/css/main.b3f65a56.css",
-    "static/js/main.c2538e0b.js"
+    "static/js/main.96e22487.js"
   ]
 }

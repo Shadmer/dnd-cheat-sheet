@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import { LockOutlined } from '@mui/icons-material';
 
-import bg from '@src/assets/entryPage/bg.png';
+import bg from '@src/assets/entryPage/bg.jpg';
 import dices from '@src/assets/entryPage/dices.png';
 import leaves from '@src/assets/entryPage/leaves.png';
 import drops from '@src/assets/entryPage/drops.png';
@@ -94,6 +94,7 @@ export const EntryPage = () => {
             sx={{
                 maxWidth: 450,
                 padding: 4,
+                margin: '0 10vw',
                 textAlign: 'center',
                 borderRadius: 2,
                 boxShadow: (theme) =>
@@ -171,7 +172,7 @@ export const EntryPage = () => {
         >
             <Box
                 sx={{
-                    height: '100vh',
+                    height: '100dvh',
                     transformStyle: 'preserve-3d',
                     transform: `rotateX(${rotation.rotateX}deg) rotateY(${rotation.rotateY}deg)`,
                     willChange: 'transform',

@@ -49,12 +49,11 @@ const iconMap: Record<string, React.ReactNode> = {
 
 type CodexMenuListProps = {
     params: Params<string>;
-    bgColor?: 'default' | 'paper';
     onItemSelect?: () => void;
 };
 
 export const CodexMenuList = observer(
-    ({ params, bgColor = 'default', onItemSelect }: CodexMenuListProps) => {
+    ({ params, onItemSelect }: CodexMenuListProps) => {
         // const params = useParams();
         const { navigateWithSave } = useNavigateWithSave();
 
@@ -243,7 +242,7 @@ export const CodexMenuList = observer(
         );
 
         const content = (
-            <ScrollableBox bgcolor={bgColor}>
+            <ScrollableBox>
                 <List component="nav" sx={{ bgcolor: 'background.paper' }}>
                     {filteredCodexMenuList.length ? (
                         filteredCodexMenuList.map((category) => (

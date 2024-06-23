@@ -23,9 +23,9 @@ type ProvidersProps = Readonly<{
 
 const paletteLight = {
     primary: {
-        main: '#4fc3f7',
-        light: '#8bf6ff',
-        dark: '#0093c4',
+        main: '#3a506b',
+        light: '#5bc0be',
+        dark: '#1c2541',
         contrastText: '#fff',
     },
     secondary: {

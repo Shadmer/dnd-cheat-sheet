@@ -9,6 +9,7 @@ import {
     Stack,
     Typography,
 } from '@mui/material';
+import { alpha } from '@mui/material/styles';
 import { Logout, AccountCircle } from '@mui/icons-material';
 import { useDialog } from '@src/providers/DialogProvider';
 import { useAuth } from '@src/providers/AuthProvider';
@@ -41,11 +42,13 @@ export const MainPage = () => {
     return (
         <Stack
             p="80px 0"
-            // sx={{
-            //     backgroundImage: `url(${bg})`,
-            //     backgroundSize: 'cover',
-            //     backgroundPosition: 'center',
-            // }}
+            sx={{
+                backgroundImage: `url(${bg})`,
+                backgroundSize: 'contain',
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'center bottom',
+                backgroundColor: '#111111',
+            }}
         >
             <Box
                 component="header"
@@ -53,9 +56,10 @@ export const MainPage = () => {
                     position: 'fixed',
                     top: 0,
                     width: '100%',
-                    background: (theme) => theme.palette.background.paper,
                     boxShadow: 1,
                     zIndex: 1100,
+                    background: (theme) =>
+                        alpha(theme.palette.background.paper, 0.9),
                 }}
             >
                 <Container
@@ -109,7 +113,13 @@ export const MainPage = () => {
                 </Container>
             </Box>
             <Box component="main">
-                <Container maxWidth="xl">
+                <Container
+                    maxWidth="xl"
+                    sx={{
+                        background: (theme) =>
+                            alpha(theme.palette.background.paper, 0.9),
+                    }}
+                >
                     <Outlet />
                 </Container>
             </Box>
@@ -119,7 +129,8 @@ export const MainPage = () => {
                     position: 'fixed',
                     bottom: 0,
                     width: '100%',
-                    background: (theme) => theme.palette.background.paper,
+                    background: (theme) =>
+                        alpha(theme.palette.background.paper, 0.9),
                 }}
             >
                 {/* <button onClick={() => openDialog(dialogContent)}>

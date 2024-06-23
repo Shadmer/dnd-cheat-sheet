@@ -29,8 +29,8 @@ export const App = () => {
             children: [
                 { path: '', element: <Navigate to="plot" replace /> },
                 { path: 'plot/:scene?', element: <PlotPage /> },
-                { path: 'journey', element: <JourneyPage /> },
-                { path: 'battle', element: <BattlePage /> },
+                // { path: 'journey', element: <JourneyPage /> },
+                // { path: 'battle', element: <BattlePage /> },
                 { path: 'codex/:section?/:id?', element: <CodexPage /> },
                 { path: '*', element: <Navigate to="plot" replace /> },
             ],

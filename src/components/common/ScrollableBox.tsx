@@ -10,7 +10,7 @@ type ScrollableBoxProps = {
 
 export const ScrollableBox: React.FC<ScrollableBoxProps> = ({
     children,
-    bgcolor = 'paper',
+    bgcolor,
     disableCustomScroll,
     height = 'inherit',
 }) => {
@@ -43,7 +43,8 @@ export const ScrollableBox: React.FC<ScrollableBoxProps> = ({
                     height: disableCustomScroll ? 'auto' : 'inherit',
                     overflow: disableCustomScroll ? 'hidden' : 'scroll',
                     overflowX: 'hidden',
-                    background: (theme) => theme.palette.background[bgcolor],
+                    background: (theme) =>
+                        bgcolor ? theme.palette.background[bgcolor] : 'none',
                     '&::-webkit-scrollbar-thumb': {
                         background: (theme) => theme.palette.primary.main,
                         borderRadius: '3px',

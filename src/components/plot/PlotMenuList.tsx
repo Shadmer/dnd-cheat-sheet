@@ -4,7 +4,6 @@ import { observer } from 'mobx-react-lite';
 
 import {
     Box,
-    Divider,
     Unstable_Grid2 as Grid,
     IconButton,
     InputAdornment,
@@ -133,7 +132,7 @@ export const PlotMenuList = observer(() => {
     );
 
     const content = (
-        <ScrollableBox bgcolor="default">
+        <ScrollableBox>
             <React.Fragment>
                 {groupedPlotMenuList.length ? (
                     groupedPlotMenuList.map((part, menuListIndex) => (

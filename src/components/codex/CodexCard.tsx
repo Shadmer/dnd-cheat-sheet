@@ -149,7 +149,6 @@ export const CodexCard = observer(() => {
                                 openDrawer(
                                     <CodexMenuList
                                         params={params}
-                                        bgColor="paper"
                                         onItemSelect={closeDrawer}
                                     />
                                 )
@@ -191,7 +190,7 @@ export const CodexCard = observer(() => {
     );
 
     const content = (
-        <ScrollableBox>
+        <ScrollableBox bgcolor="paper">
             <Box p="1rem">
                 {currentSection ? (
                     <Box>

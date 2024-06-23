@@ -18,16 +18,16 @@ const navigationActionList: INavigationAction[] = [
         label: 'Сюжет',
         icon: <AutoStories />,
     },
-    {
-        value: NavigationRoute.journey,
-        label: 'Путешествие',
-        icon: <Route />,
-    },
-    {
-        value: NavigationRoute.battle,
-        label: 'Сражение',
-        icon: <Extension />,
-    },
+    // {
+    //     value: NavigationRoute.journey,
+    //     label: 'Путешествие',
+    //     icon: <Route />,
+    // },
+    // {
+    //     value: NavigationRoute.battle,
+    //     label: 'Сражение',
+    //     icon: <Extension />,
+    // },
     {
         value: NavigationRoute.codex,
         label: 'Кодекс',
@@ -63,6 +63,7 @@ export const MainNavigation = () => {
         <BottomNavigation
             value={activeTab?.value ?? ''}
             onChange={(_, newValue: string) => handleNavigation(newValue)}
+            sx={{ background: 'none' }}
         >
             {navigationActionList.map((action) => (
                 <BottomNavigationAction

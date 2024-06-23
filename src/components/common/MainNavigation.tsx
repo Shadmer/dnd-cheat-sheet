@@ -63,7 +63,20 @@ export const MainNavigation = () => {
         <BottomNavigation
             value={activeTab?.value ?? ''}
             onChange={(_, newValue: string) => handleNavigation(newValue)}
-            sx={{ background: 'none' }}
+            sx={{
+                background: 'none',
+                '& .MuiBottomNavigationAction-root': {
+                    color: (theme) => theme.palette.common.white,
+                    '&.Mui-selected': {
+                        color: (theme) => theme.palette.secondary.light,
+                    },
+                },
+                '& .MuiBottomNavigationAction-label': {
+                    '&.Mui-selected': {
+                        fontWeight: 'bold',
+                    },
+                },
+            }}
         >
             {navigationActionList.map((action) => (
                 <BottomNavigationAction

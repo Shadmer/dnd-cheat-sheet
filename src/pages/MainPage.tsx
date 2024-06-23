@@ -59,7 +59,8 @@ export const MainPage = () => {
                     boxShadow: 1,
                     zIndex: 1100,
                     background: (theme) =>
-                        alpha(theme.palette.background.paper, 0.9),
+                        alpha(theme.palette.primary.main, 0.6),
+                    color: (theme) => theme.palette.primary.contrastText,
                 }}
             >
                 <Container
@@ -72,7 +73,7 @@ export const MainPage = () => {
                     }}
                 >
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <Typography variant="h6" component="h1">
+                        <Typography variant="h4" component="h1">
                             История Мистера Markdown
                         </Typography>
                     </Box>
@@ -117,7 +118,7 @@ export const MainPage = () => {
                     maxWidth="xl"
                     sx={{
                         background: (theme) =>
-                            alpha(theme.palette.background.paper, 0.9),
+                            alpha(theme.palette.background.default, 0.9),
                     }}
                 >
                     <Outlet />
@@ -130,7 +131,7 @@ export const MainPage = () => {
                     bottom: 0,
                     width: '100%',
                     background: (theme) =>
-                        alpha(theme.palette.background.paper, 0.9),
+                        alpha(theme.palette.primary.main, 0.6),
                 }}
             >
                 {/* <button onClick={() => openDialog(dialogContent)}>

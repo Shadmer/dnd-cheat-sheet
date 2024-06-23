@@ -6,7 +6,7 @@ interface FlexHeightContainerProps {
     footer?: React.ReactElement;
 }
 
-const MAIN_PADDING_HEIGHT = 160;
+const MAIN_PADDING_HEIGHT = 110;
 
 export const FlexHeightContainer: React.FC<FlexHeightContainerProps> = ({
     header,

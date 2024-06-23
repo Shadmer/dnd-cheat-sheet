@@ -1,4 +1,3 @@
-import React from 'react';
 import { Tabs, styled } from '@mui/material';
 
 export const FullWidthTabs = styled(Tabs)(({ theme }) => ({

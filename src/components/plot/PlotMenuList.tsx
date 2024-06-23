@@ -104,8 +104,17 @@ export const PlotMenuList = observer(() => {
 
     const header = (
         <Stack spacing={2} pb={2}>
-            <Typography variant="h3" component="h3">
-                Сцены
+            <Typography
+                variant="h3"
+                component="h3"
+                sx={{
+                    color: theme.palette.primary.main,
+                    '&::first-letter': {
+                        fontSize: '1.2em',
+                    },
+                }}
+            >
+                История Мистера Markdown
             </Typography>
             <Stack
                 direction="row"

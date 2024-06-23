@@ -41,7 +41,8 @@ export const MainPage = () => {
 
     return (
         <Stack
-            p="80px 0"
+            pt="30px"
+            pb="80px"
             sx={{
                 backgroundImage: `url(${bg})`,
                 backgroundSize: 'contain',
@@ -50,69 +51,6 @@ export const MainPage = () => {
                 backgroundColor: '#111111',
             }}
         >
-            <Box
-                component="header"
-                sx={{
-                    position: 'fixed',
-                    top: 0,
-                    width: '100%',
-                    boxShadow: 1,
-                    zIndex: 1100,
-                    background: (theme) =>
-                        alpha(theme.palette.primary.main, 0.6),
-                    color: (theme) => theme.palette.primary.contrastText,
-                }}
-            >
-                <Container
-                    maxWidth="xl"
-                    sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        height: '55px',
-                    }}
-                >
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <Typography variant="h4" component="h1">
-                            История Мистера Markdown
-                        </Typography>
-                    </Box>
-
-                    <Box>
-                        <IconButton
-                            size="large"
-                            edge="end"
-                            aria-label="account of current user"
-                            aria-controls="menu-appbar"
-                            aria-haspopup="true"
-                            onClick={handleMenuOpen}
-                            color="inherit"
-                        >
-                            <AccountCircle />
-                        </IconButton>
-                        <Menu
-                            id="menu-appbar"
-                            anchorEl={anchorEl}
-                            anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            open={Boolean(anchorEl)}
-                            onClose={handleMenuClose}
-                        >
-                            <MenuItem onClick={handleLogout}>
-                                <Logout sx={{ mr: 1 }} />
-                                Выйти
-                            </MenuItem>
-                        </Menu>
-                    </Box>
-                </Container>
-            </Box>
             <Box component="main">
                 <Container
                     maxWidth="xl"
@@ -143,7 +81,51 @@ export const MainPage = () => {
                         height: '55px',
                     }}
                 >
-                    <MainNavigation />
+                    <Stack
+                        direction="row"
+                        alignItems="center"
+                        justifyContent="center"
+                    >
+                        <Box flexGrow={1}>
+                            <MainNavigation />
+                        </Box>
+                        <Box
+                            sx={{
+                                color: (theme) =>
+                                    theme.palette.primary.contrastText,
+                                paddingLeft: 1.5,
+                                borderLeft: '1px solid',
+                            }}
+                        >
+                            <IconButton
+                                size="small"
+                                onClick={handleMenuOpen}
+                                color="inherit"
+                            >
+                                <AccountCircle />
+                            </IconButton>
+                            <Menu
+                                id="menu-appbar"
+                                anchorEl={anchorEl}
+                                anchorOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                open={Boolean(anchorEl)}
+                                onClose={handleMenuClose}
+                            >
+                                <MenuItem onClick={handleLogout}>
+                                    <Logout sx={{ mr: 1 }} />
+                                    Выйти
+                                </MenuItem>
+                            </Menu>
+                        </Box>
+                    </Stack>
                 </Container>
             </Box>
         </Stack>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
 import {
@@ -24,6 +24,70 @@ import { FullWidthTabs } from '@src/components/common/FullWidthTabs';
 import { LastPageType, NavigationRoute } from '@src/enums';
 import { useNavigateWithSave } from '@src/providers/NavigateWithSaveProvider';
 
+const defaultContentText = (
+    <Stack spacing={2}>
+        <Box>
+            <Typography variant="h3" gutterBottom>
+                Игроки
+            </Typography>
+            <Typography variant="body1" gutterBottom>
+                Здесь вы найдете всю необходимую информацию о героях вашего
+                приключения, от их имен и характеристик до уникальных историй и
+                личных целей.
+            </Typography>
+        </Box>
+        <Box>
+            <Typography variant="h3" gutterBottom>
+                Персонажи мастера
+            </Typography>
+            <Typography variant="body1" gutterBottom>
+                Этот раздел представляет персонажей, которыми управляет мастер.
+                От верных союзников до зловещих врагов, здесь вы найдете всех,
+                кого герои могут встретить.
+            </Typography>
+        </Box>
+        <Box>
+            <Typography variant="h3" gutterBottom>
+                Бестиарий
+            </Typography>
+            <Typography variant="body1" gutterBottom>
+                Встречайте чудовищ и монстров вашего мира! Здесь вы найдете
+                подробные описания существ, их способностей, поведения и мест
+                обитания.
+            </Typography>
+        </Box>
+        <Box>
+            <Typography variant="h3" gutterBottom>
+                Интересные места
+            </Typography>
+            <Typography variant="body1" gutterBottom>
+                От тихих деревень до величественных замков, этот раздел содержит
+                описание всех мест, которые герои могут исследовать во время
+                своего путешествия.
+            </Typography>
+        </Box>
+        <Box>
+            <Typography variant="h3" gutterBottom>
+                Артефакты и способности
+            </Typography>
+            <Typography variant="body1" gutterBottom>
+                Здесь собраны все магические артефакты и уникальные способности,
+                которые герои могут обнаружить во время своих приключений.
+            </Typography>
+        </Box>
+        <Box>
+            <Typography variant="h3" gutterBottom>
+                Заметки
+            </Typography>
+            <Typography variant="body1" gutterBottom>
+                Этот раздел предназначен для хранения ваших заметок,
+                таинственных записок и карт, которые могут пригодиться во время
+                игры.
+            </Typography>
+        </Box>
+    </Stack>
+);
+
 export const CodexCard = observer(() => {
     const params = useParams();
     const navigate = useNavigate();
@@ -44,71 +108,6 @@ export const CodexCard = observer(() => {
     );
 
     const codexSectionTitle = currentSection?.title ?? '';
-
-    const defaultContentText = (
-        <Stack spacing={2}>
-            <Box>
-                <Typography variant="h3" gutterBottom>
-                    Игроки
-                </Typography>
-                <Typography variant="body1" gutterBottom>
-                    Здесь вы найдете всю необходимую информацию о героях вашего
-                    приключения, от их имен и характеристик до уникальных
-                    историй и личных целей.
-                </Typography>
-            </Box>
-            <Box>
-                <Typography variant="h3" gutterBottom>
-                    Персонажи мастера
-                </Typography>
-                <Typography variant="body1" gutterBottom>
-                    Этот раздел представляет персонажей, которыми управляет
-                    мастер. От верных союзников до зловещих врагов, здесь вы
-                    найдете всех, кого герои могут встретить.
-                </Typography>
-            </Box>
-            <Box>
-                <Typography variant="h3" gutterBottom>
-                    Бестиарий
-                </Typography>
-                <Typography variant="body1" gutterBottom>
-                    Встречайте чудовищ и монстров вашего мира! Здесь вы найдете
-                    подробные описания существ, их способностей, поведения и
-                    мест обитания.
-                </Typography>
-            </Box>
-            <Box>
-                <Typography variant="h3" gutterBottom>
-                    Интересные места
-                </Typography>
-                <Typography variant="body1" gutterBottom>
-                    От тихих деревень до величественных замков, этот раздел
-                    содержит описание всех мест, которые герои могут исследовать
-                    во время своего путешествия.
-                </Typography>
-            </Box>
-            <Box>
-                <Typography variant="h3" gutterBottom>
-                    Артефакты и способности
-                </Typography>
-                <Typography variant="body1" gutterBottom>
-                    Здесь собраны все магические артефакты и уникальные
-                    способности, которые герои могут обнаружить во время своих
-                    приключений.
-                </Typography>
-            </Box>
-            <Box>
-                <Typography variant="h3" gutterBottom>
-                    Заметки
-                </Typography>
-                <Typography variant="body1" gutterBottom>
-                    Этот раздел предназначен для хранения ваших заметок,
-                    таинственных записок и карт, которые могут пригодиться во
-                    время игры.
-                </Typography>
-            </Box>
-        </Stack>
-    );
 
     const codexItemTitle =
         currentSection?.content.find((item) => item.id === params.id)?.name ??
@@ -206,6 +205,12 @@ export const CodexCard = observer(() => {
             </Box>
         </ScrollableBox>
     );
+
+    React.useEffect(
+        () => console.log('currentPage', currentPage),
+        [currentPage]
+    );
+
     React.useEffect(() => {
         if (isMdScreen) closeDrawer();
     }, [closeDrawer, isMdScreen]);

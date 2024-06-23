@@ -15,6 +15,8 @@ import { useAuth } from '@src/providers/AuthProvider';
 import { MainNavigation } from '@src/components/common/MainNavigation';
 import { PlotCard } from '@src/components/plot/PlotCard';
 
+import bg from '@src/assets/img/bg.jpg';
+
 export const MainPage = () => {
     const { logout } = useAuth();
     const { openDialog } = useDialog();
@@ -37,7 +39,14 @@ export const MainPage = () => {
     };
 
     return (
-        <Stack p="80px 0">
+        <Stack
+            p="80px 0"
+            // sx={{
+            //     backgroundImage: `url(${bg})`,
+            //     backgroundSize: 'cover',
+            //     backgroundPosition: 'center',
+            // }}
+        >
             <Box
                 component="header"
                 sx={{

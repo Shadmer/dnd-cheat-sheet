@@ -11,6 +11,8 @@ import {
     Stack,
     TextField,
     Typography,
+    useMediaQuery,
+    useTheme,
 } from '@mui/material';
 import { SearchOff } from '@mui/icons-material';
 import { useStores } from '@src/providers/RootStoreContext';
@@ -21,6 +23,7 @@ import { IPlotMenuItem } from '@src/interfaces';
 
 export const PlotMenuList = observer(() => {
     const { scene } = useParams();
+    const theme = useTheme();
 
     const {
         plot: { filterPlotMenuList, loadPlotMenuList, filteredPlotMenuList },
@@ -32,6 +35,31 @@ export const PlotMenuList = observer(() => {
     const menuGridWidth = React.useMemo(
         () => (scene ? { xs: 12 } : { xs: 12, md: 6, lg: 4 }),
         [scene]
+    );
+
+    const isXs = useMediaQuery(theme.breakpoints.only('xs'));
+    const isMd = useMediaQuery(theme.breakpoints.only('md'));
+
+    const sceneMarginBottom = React.useCallback(
+        (
+            menuListIndex: number,
+            menuListLength: number,
+            partIndex: number,
+            partLength: number
+        ) => {
+            const itemsPerRow = (() => {
+                if (isXs || scene) return 1;
+                if (isMd) return 2;
+                return 3;
+            })();
+
+            const isLastPart = menuListIndex === menuListLength;
+            const elementsInLastRow = partLength % itemsPerRow || itemsPerRow;
+            const isInLastRow = partIndex > partLength - elementsInLastRow;
+
+            return isLastPart && isInLastRow ? 0 : '1rem';
+        },
+        [isXs, isMd, scene]
     );
 
     const groupedPlotMenuList = React.useMemo(() => {
@@ -108,7 +136,7 @@ export const PlotMenuList = observer(() => {
         <ScrollableBox bgcolor="default">
             <React.Fragment>
                 {groupedPlotMenuList.length ? (
-                    groupedPlotMenuList.map((part) => (
+                    groupedPlotMenuList.map((part, menuListIndex) => (
                         <Box key={part.partTitle}>
                             <Box
                                 sx={{
@@ -125,24 +153,24 @@ export const PlotMenuList = observer(() => {
                                     {part.partTitle}
                                 </Typography>
                             </Box>
-                            <Grid
-                                container
-                                spacing={{ xs: 0, md: scene ? 0 : 2 }}
-                            >
-                                {part.scenes.map((sceneItem) => (
+                            <Grid container spacing={2} rowSpacing={0}>
+                                {part.scenes.map((sceneItem, partIndex) => (
                                     <Grid
                                         key={sceneItem.sceneId}
                                         {...menuGridWidth}
                                         sx={{
-                                            mb: '1rem',
+                                            mb: sceneMarginBottom(
+                                                menuListIndex + 1,
+                                                groupedPlotMenuList.length,
+                                                partIndex + 1,
+                                                part.scenes.length
+                                            ),
                                         }}
                                     >
                                         <PlotMenuItem scene={sceneItem} />
                                     </Grid>
                                 ))}
                             </Grid>
-
-                            <Divider sx={{ mt: 1 }} />
                         </Box>
                     ))
                 ) : (

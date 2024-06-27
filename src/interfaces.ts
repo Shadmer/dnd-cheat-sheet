@@ -21,9 +21,14 @@ export interface ICodexMenuList {
     content: ICodexMenuItem[];
 }
 
-export interface ICodexCard<T = unknown> {
+export interface IImageData {
+    image: string;
+    title: string;
+}
+
+export interface ICodexCard<T> {
     content: T;
     description: string;
-    images: string[];
-    maps: string[];
+    images: IImageData[];
+    maps: IImageData[];
 }

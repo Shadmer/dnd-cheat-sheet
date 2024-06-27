@@ -16,16 +16,24 @@ import {
 import { Clear, MenuOpen } from '@mui/icons-material';
 import { useStores } from '@src/providers/RootStoreContext';
 import { useDrawer } from '@src/providers/DrawerProvider';
+import { useNavigateWithSave } from '@src/providers/NavigateWithSaveProvider';
+import { LastPageType, NavigationRoute } from '@src/enums';
 import { ScrollableBox } from '@src/components/common/ScrollableBox';
 import { MarkdownRenderer } from '@src/components/common/MarkdownRenderer';
 import { FlexHeightContainer } from '@src/components/common/FlexHeightContainer';
 import { CodexMenuList } from '@src/components/codex/CodexMenuList';
 import { FullWidthTabs } from '@src/components/common/FullWidthTabs';
-import { LastPageType, NavigationRoute } from '@src/enums';
-import { useNavigateWithSave } from '@src/providers/NavigateWithSaveProvider';
+import { ImageGallery } from '@src/components/common/ImageGallery';
+import { IImageData } from '@src/interfaces';
+
+interface ITabData {
+    id: string;
+    label: string;
+    content: string | string[] | IImageData[] | any;
+}
 
 const defaultContentText = (
-    <Stack spacing={2}>
+    <Stack spacing={2} textAlign="justify">
         <Box>
             <Typography variant="h3" gutterBottom>
                 Игроки
@@ -101,7 +109,9 @@ export const CodexCard = observer(() => {
 
     const { openDrawer, closeDrawer } = useDrawer();
 
-    const [tabValue, setTabValue] = React.useState(0);
+    const [tabData, setTabData] = React.useState<ITabData[]>([]);
+
+    const [tabValue, setTabValue] = React.useState('');
 
     const currentSection = codexMenuList.find(
         (item) => item.section === params.section
@@ -112,13 +122,6 @@ export const CodexCard = observer(() => {
     const codexItemTitle =
         currentSection?.content.find((item) => item.id === params.id)?.name ??
         'Кодекс мастера';
-
-    const tabData = [
-        { label: 'Характеристики', content: 'Характеристики' },
-        { label: 'Описание', content: 'Описание' },
-        { label: 'Изображения', content: 'Изображения' },
-        { label: 'Карты', content: 'Карты' },
-    ];
 
     const header = (
         <Stack p="1rem 0" bgcolor="background.paper" boxShadow={1} spacing={2}>
@@ -180,8 +183,8 @@ export const CodexCard = observer(() => {
                     scrollButtons="auto"
                     allowScrollButtonsMobile
                 >
-                    {tabData.map((tab, index) => (
-                        <Tab key={index} label={tab.label} value={index} />
+                    {tabData.map((tab) => (
+                        <Tab key={tab.id} label={tab.label} value={tab.id} />
                     ))}
                 </FullWidthTabs>
             )}
@@ -193,9 +196,9 @@ export const CodexCard = observer(() => {
             <Box p="1rem">
                 {currentSection ? (
                     <Box>
-                        {tabData.map((tab, index) => (
-                            <Box key={index} hidden={tabValue !== index}>
-                                <Typography>{tab.content}</Typography>
+                        {tabData.map((tab) => (
+                            <Box key={tab.id} hidden={tabValue !== tab.id}>
+                                {tab.content}
                             </Box>
                         ))}
                     </Box>
@@ -206,10 +209,52 @@ export const CodexCard = observer(() => {
         </ScrollableBox>
     );
 
-    React.useEffect(
-        () => console.log('currentPage', currentPage),
-        [currentPage]
-    );
+    const getTabData = React.useCallback(() => {
+        if (!currentPage) return;
+
+        const newTabData: ITabData[] = [];
+
+        if (currentPage.content) {
+            newTabData.push({
+                id: 'content',
+                label: 'Характеристики',
+                content: <h1>currentPage.content</h1>,
+            });
+        }
+
+        if (currentPage.description) {
+            newTabData.push({
+                id: 'description',
+                label: 'Описание',
+                content: (
+                    <MarkdownRenderer markdown={currentPage.description} />
+                ),
+            });
+        }
+
+        if (currentPage.images.length) {
+            newTabData.push({
+                id: 'images',
+                label: 'Изображения',
+                content: <ImageGallery images={currentPage.images} />,
+            });
+        }
+
+        if (currentPage.maps.length) {
+            newTabData.push({
+                id: 'maps',
+                label: 'Карты',
+                content: <ImageGallery images={currentPage.maps} single />,
+            });
+        }
+
+        setTabData(newTabData);
+        setTabValue(newTabData[0].id ?? '');
+    }, [currentPage]);
+
+    React.useEffect(() => {
+        getTabData();
+    }, [getTabData]);
 
     React.useEffect(() => {
         if (isMdScreen) closeDrawer();

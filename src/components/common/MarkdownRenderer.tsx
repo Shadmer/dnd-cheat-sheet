@@ -145,7 +145,7 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
                         <Typography
                             variant="body1"
                             component="p"
-                            sx={{ my: 1 }}
+                            sx={{ my: 1, textAlign: 'justify' }}
                         >
                             {props.children}
                         </Typography>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
@@ -21,15 +21,15 @@ import { LastPageType, NavigationRoute } from '@src/enums';
 import { ScrollableBox } from '@src/components/common/ScrollableBox';
 import { MarkdownRenderer } from '@src/components/common/MarkdownRenderer';
 import { FlexHeightContainer } from '@src/components/common/FlexHeightContainer';
-import { CodexMenuList } from '@src/components/codex/CodexMenuList';
 import { FullWidthTabs } from '@src/components/common/FullWidthTabs';
 import { ImageGallery } from '@src/components/common/ImageGallery';
-import { IImageData } from '@src/interfaces';
+import { CodexMenuList } from '@src/components/codex/CodexMenuList';
+import { CreatureCard } from '@src/components/codex/CreatureContent';
 
 interface ITabData {
     id: string;
     label: string;
-    content: string | string[] | IImageData[] | any;
+    content: ReactElement;
 }
 
 const defaultContentText = (
@@ -123,6 +123,51 @@ export const CodexCard = observer(() => {
         currentSection?.content.find((item) => item.id === params.id)?.name ??
         'Кодекс мастера';
 
+    const getTabData = React.useCallback(() => {
+        if (!currentPage) return;
+
+        const newTabData: ITabData[] = [];
+
+        if (currentPage.creatureContent) {
+            newTabData.push({
+                id: 'creatureContent',
+                label: 'Характеристики',
+                content: (
+                    <CreatureCard creature={currentPage.creatureContent} />
+                ),
+            });
+        }
+
+        if (currentPage.description) {
+            newTabData.push({
+                id: 'description',
+                label: 'Описание',
+                content: (
+                    <MarkdownRenderer markdown={currentPage.description} />
+                ),
+            });
+        }
+
+        if (currentPage.images.length) {
+            newTabData.push({
+                id: 'images',
+                label: 'Изображения',
+                content: <ImageGallery images={currentPage.images} />,
+            });
+        }
+
+        if (currentPage.maps.length) {
+            newTabData.push({
+                id: 'maps',
+                label: 'Карты',
+                content: <ImageGallery images={currentPage.maps} single />,
+            });
+        }
+
+        setTabData(newTabData);
+        setTabValue(newTabData[0].id ?? '');
+    }, [currentPage]);
+
     const header = (
         <Stack p="1rem 0" bgcolor="background.paper" boxShadow={1} spacing={2}>
             <Stack
@@ -208,49 +253,6 @@ export const CodexCard = observer(() => {
             </Box>
         </ScrollableBox>
     );
-
-    const getTabData = React.useCallback(() => {
-        if (!currentPage) return;
-
-        const newTabData: ITabData[] = [];
-
-        if (currentPage.content) {
-            newTabData.push({
-                id: 'content',
-                label: 'Характеристики',
-                content: <h1>currentPage.content</h1>,
-            });
-        }
-
-        if (currentPage.description) {
-            newTabData.push({
-                id: 'description',
-                label: 'Описание',
-                content: (
-                    <MarkdownRenderer markdown={currentPage.description} />
-                ),
-            });
-        }
-
-        if (currentPage.images.length) {
-            newTabData.push({
-                id: 'images',
-                label: 'Изображения',
-                content: <ImageGallery images={currentPage.images} />,
-            });
-        }
-
-        if (currentPage.maps.length) {
-            newTabData.push({
-                id: 'maps',
-                label: 'Карты',
-                content: <ImageGallery images={currentPage.maps} single />,
-            });
-        }
-
-        setTabData(newTabData);
-        setTabValue(newTabData[0].id ?? '');
-    }, [currentPage]);
 
     React.useEffect(() => {
         getTabData();

@@ -8,7 +8,7 @@ class Codex {
     codexService = CodexService();
     codexMenuList: ICodexMenuList[] = [];
     filteredCodexMenuList: ICodexMenuList[] = [];
-    currentPage: ICodexCard<unknown> | null = null;
+    currentPage: ICodexCard | null = null;
     navigate: NavigateFunction | null = null;
 
     constructor() {

@@ -120,11 +120,16 @@ export const CreatureCard: React.FC<CreatureCardProps> = ({ creature }) => {
                     Иммунитеты
                 </Typography>
                 <Typography>
-                    <b>К урону:</b> {creature.damageImmunities.join(', ')}
+                    <b>К урону:</b>{' '}
+                    {creature.damageImmunities.length
+                        ? creature.damageImmunities.join(', ')
+                        : 'Нет'}
                 </Typography>
                 <Typography>
                     <b>К состояниям:</b>{' '}
-                    {creature.conditionImmunities.join(', ')}
+                    {creature.conditionImmunities.length
+                        ? creature.conditionImmunities.join(', ')
+                        : 'Нет'}
                 </Typography>
             </Box>
 
@@ -159,7 +164,11 @@ export const CreatureCard: React.FC<CreatureCardProps> = ({ creature }) => {
                 <Typography variant="h6" gutterBottom>
                     Места обитания
                 </Typography>
-                <Typography>{creature.areas.join(', ')}</Typography>
+                <Typography>
+                    {creature.areas.length
+                        ? creature.areas.join(', ')
+                        : 'Не известно'}
+                </Typography>
             </Box>
 
             <Divider />
@@ -177,7 +186,7 @@ export const CreatureCard: React.FC<CreatureCardProps> = ({ creature }) => {
                         >
                             <ListItemText
                                 primary={
-                                    <>
+                                    <Typography textAlign="justify">
                                         <Typography
                                             component="span"
                                             fontWeight="bold"
@@ -185,7 +194,7 @@ export const CreatureCard: React.FC<CreatureCardProps> = ({ creature }) => {
                                             {feat.name}
                                         </Typography>
                                         {`: ${feat.value}`}
-                                    </>
+                                    </Typography>
                                 }
                             />
                         </ListItem>
@@ -208,7 +217,7 @@ export const CreatureCard: React.FC<CreatureCardProps> = ({ creature }) => {
                         >
                             <ListItemText
                                 primary={
-                                    <>
+                                    <Typography textAlign="justify">
                                         <Typography
                                             component="span"
                                             fontWeight="bold"
@@ -216,7 +225,7 @@ export const CreatureCard: React.FC<CreatureCardProps> = ({ creature }) => {
                                             {action.name}
                                         </Typography>
                                         {`: ${action.value}`}
-                                    </>
+                                    </Typography>
                                 }
                             />
                         </ListItem>

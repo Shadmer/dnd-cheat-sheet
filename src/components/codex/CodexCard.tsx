@@ -128,13 +128,11 @@ export const CodexCard = observer(() => {
 
         const newTabData: ITabData[] = [];
 
-        if (currentPage.creatureContent) {
+        if (currentPage.creature) {
             newTabData.push({
-                id: 'creatureContent',
+                id: 'creature',
                 label: 'Характеристики',
-                content: (
-                    <CreatureCard creature={currentPage.creatureContent} />
-                ),
+                content: <CreatureCard creature={currentPage.creature} />,
             });
         }
 
@@ -148,7 +146,7 @@ export const CodexCard = observer(() => {
             });
         }
 
-        if (currentPage.images.length) {
+        if (currentPage.images && currentPage.images.length) {
             newTabData.push({
                 id: 'images',
                 label: 'Изображения',
@@ -156,7 +154,7 @@ export const CodexCard = observer(() => {
             });
         }
 
-        if (currentPage.maps.length) {
+        if (currentPage.maps && currentPage.maps.length) {
             newTabData.push({
                 id: 'maps',
                 label: 'Карты',

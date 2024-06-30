@@ -40,7 +40,7 @@ export const PlotMenuItem = ({
                     if (scene === sceneId) {
                         return mode === 'light'
                             ? lighten(theme.palette.primary.main, 0.8)
-                            : darken(theme.palette.primary.main, 0.3);
+                            : darken(theme.palette.primary.main, 0.4);
                     }
                     return theme.palette.background.paper;
                 },

@@ -161,7 +161,7 @@ export const CodexMenuList = observer(
 
         // TODO: создать стор для favorites
         React.useEffect(() => {
-            // console.log('favorites', favorites);
+            console.log('favorites', favorites);
         }, [favorites]);
 
         React.useEffect(() => {
@@ -230,6 +230,13 @@ export const CodexMenuList = observer(
             </Stack>
         );
 
+        const availableFavorites = (section: string) => {
+            // TODO: раскомментировать после начала работы над Полем битвы
+            // const favorites = ['players', 'characters', 'bestiary', 'places'];
+            // return favorites.includes(section);
+            return [''].includes(section);
+        };
+
         const innerListItemButton = (
             category: ICodexMenuList,
             item: ICodexMenuItem
@@ -254,24 +261,26 @@ export const CodexMenuList = observer(
                     );
                 }}
             >
-                <ListItemIcon>
-                    <IconButton
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            handleIconClick(category.section, item.id);
-                        }}
-                    >
-                        {favorites[category.section]?.[item.id] ? (
-                            <Star
-                                sx={{
-                                    color: 'secondary.main',
-                                }}
-                            />
-                        ) : (
-                            <StarBorder />
-                        )}
-                    </IconButton>
-                </ListItemIcon>
+                {availableFavorites(category.section) && (
+                    <ListItemIcon>
+                        <IconButton
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                handleIconClick(category.section, item.id);
+                            }}
+                        >
+                            {favorites[category.section]?.[item.id] ? (
+                                <Star
+                                    sx={{
+                                        color: 'secondary.main',
+                                    }}
+                                />
+                            ) : (
+                                <StarBorder />
+                            )}
+                        </IconButton>
+                    </ListItemIcon>
+                )}
                 <ListItemText primary={item.name} />
             </ListItemButton>
         );
@@ -280,13 +289,18 @@ export const CodexMenuList = observer(
             <ScrollableBox>
                 <List component="nav" sx={{ bgcolor: 'background.paper' }}>
                     {filteredCodexMenuList.length ? (
-                        filteredCodexMenuList.map((category) => (
+                        filteredCodexMenuList.map((category, index) => (
                             <React.Fragment key={category.section}>
                                 {category.content.length ? (
                                     <>
                                         <ListItemButton
                                             sx={{
                                                 columnGap: '10px',
+                                                borderBottom: openSections?.[
+                                                    category.section
+                                                ]
+                                                    ? '1px solid'
+                                                    : 'none',
                                             }}
                                             onClick={() =>
                                                 handleToggleOpeningItem(

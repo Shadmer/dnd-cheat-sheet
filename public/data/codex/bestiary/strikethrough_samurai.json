@@ -1,0 +1,77 @@
+{
+    "creature": {
+        "name": {
+            "rus": "Зачеркнутый Самурай",
+            "eng": "Strikethrough Samurai"
+        },
+        "size": "Средний",
+        "type": "гуманоид",
+        "alignment": "нейтрально-злой",
+        "challengeRating": "4",
+        "proficiencyBonus": "2",
+        "armorClass": 17,
+        "hits": {
+            "average": 75,
+            "formula": "10к8 + 30"
+        },
+        "speed": "30 фт.",
+        "ability": {
+            "str": 18,
+            "dex": 12,
+            "con": 16,
+            "int": 10,
+            "wiz": 12,
+            "cha": 10
+        },
+        "savingThrows": [
+            {
+                "name": "Сила",
+                "value": 6
+            },
+            {
+                "name": "Выносливость",
+                "value": 5
+            }
+        ],
+        "damageImmunities": [],
+        "conditionImmunities": [],
+        "senses": {
+            "passivePerception": "11",
+            "senses": [
+                {
+                    "name": "тёмное зрение",
+                    "value": "60 фт."
+                }
+            ]
+        },
+        "languages": [
+            "общий"
+        ],
+        "areas": [
+            "деревня"
+        ],
+        "feats": [
+            {
+                "name": "Стойкость самурая",
+                "value": "Самурай имеет преимущество на спасброски против усталости."
+            }
+        ],
+        "actions": [
+            {
+                "name": "Атака катаной",
+                "value": "Рукопашная атака оружием: +6 к попаданию, досягаемость 5 фт., одна цель. Попадание: 10 (1к10 + 4) рубящего урона."
+            },
+            {
+                "name": "Вихрь клинков",
+                "value": "Самурай совершает две атаки катаной как одно действие."
+            }
+        ]
+    },
+    "description": "Зачеркнутый Самурай, опасный воин, известен своей жестокостью и мастерством в бою. Он не остановится ни перед чем, чтобы добиться своей цели.",
+    "images": [
+        {
+            "image": "https://via.placeholder.com/150",
+            "title": "strikethrough samurai"
+        }
+    ]
+}

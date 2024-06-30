@@ -73,8 +73,8 @@ export interface ICreature {
 }
 
 export interface ICodexCard {
-    creatureContent?: ICreature;
-    description: string;
-    images: IImageData[];
-    maps: IImageData[];
+    creature?: ICreature;
+    description?: string;
+    images?: IImageData[];
+    maps?: IImageData[];
 }

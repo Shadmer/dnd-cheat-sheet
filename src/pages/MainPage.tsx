@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import { Box, Container, Stack } from '@mui/material';
-import { alpha } from '@mui/material/styles';
+import { Box, Container, Stack, useMediaQuery } from '@mui/material';
+import { Theme, alpha } from '@mui/material/styles';
 
 import { useDialog } from '@src/providers/DialogProvider';
 
@@ -12,14 +12,17 @@ import { UserMenu } from '@src/components/common/UserMenu';
 import bg from '@src/assets/img/bg.jpg';
 
 export const MainPage = () => {
+    const isMdScreen = useMediaQuery((theme: Theme) =>
+        theme.breakpoints.up('md')
+    );
     const { openDialog } = useDialog();
 
     const dialogContent = <PlotCard />;
 
     return (
         <Stack
-            pt="30px"
-            pb="80px"
+            pt={isMdScreen ? '30px' : '10px'}
+            pb={isMdScreen ? '80px' : '60px'}
             sx={{
                 backgroundImage: `url(${bg})`,
                 backgroundSize: 'contain',
@@ -47,6 +50,7 @@ export const MainPage = () => {
                     width: '100%',
                     background: (theme) =>
                         alpha(theme.palette.primary.main, 0.6),
+                    zIndex: 1,
                 }}
             >
                 {/* <button onClick={() => openDialog(dialogContent)}>

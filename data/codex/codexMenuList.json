@@ -2,12 +2,22 @@
     {
         "section": "players",
         "title": "Игроки",
-        "content": []
+        "content": [
+            {
+                "id": "mr_markdown",
+                "name": "Мистер Markdown"
+            }
+        ]
     },
     {
         "section": "characters",
         "title": "Персонажи мастера",
-        "content": []
+        "content": [
+            {
+                "id": "wise_elder",
+                "name": "Мудрый старец"
+            }
+        ]
     },
     {
         "section": "bestiary",
@@ -16,24 +26,81 @@
             {
                 "id": "zombie",
                 "name": "Зомби"
+            },
+            {
+                "id": "brave_knight",
+                "name": "Смелый Рыцарь"
+            },
+            {
+                "id": "italic_rogue",
+                "name": "Курсивный Разбойник"
+            },
+            {
+                "id": "strikethrough_samurai",
+                "name": "Зачеркнутый Самурай"
             }
         ]
     },
     {
         "section": "places",
         "title": "Интересные места",
-        "content": []
+        "content": [
+            {
+                "id": "distant_land",
+                "name": "Далекая страна"
+            },
+            {
+                "id": "mysterious_site",
+                "name": "Таинственный сайт"
+            },
+            {
+                "id": "forest",
+                "name": "Лес"
+            }
+        ]
     },
     {
         "section": "artifacts",
         "title": "Артефакты и способности",
-        "content": []
+        "content": [
+            {
+                "id": "magic_quill",
+                "name": "Волшебное перо"
+            },
+            {
+                "id": "enchanted_scroll",
+                "name": "Заколдованный свиток"
+            },
+            {
+                "id": "punctuation_bag",
+                "name": "Мешок с пунктуационными знаками"
+            },
+            {
+                "id": "markdown_tome",
+                "name": "Том Markdown"
+            },
+            {
+                "id": "path_separator",
+                "name": "Разделитель Путей"
+            },
+            {
+                "id": "blade_of_heroes",
+                "name": "Клинок Героев"
+            }
+        ]
     },
     {
         "section": "notes",
         "title": "Заметки",
-        "content": []
+        "content": [
+            {
+                "id": "sage_words",
+                "name": "Слова мудреца"
+            },
+            {
+                "id": "mysterious_message",
+                "name": "Загадочное сообщение"
+            }
+        ]
     }
 ]
-
-

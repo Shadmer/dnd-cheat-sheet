@@ -1,5 +1,5 @@
 {
-    "creatureContent": {
+    "creature": {
         "name": {
             "rus": "Зомби",
             "eng": "Zombie"
@@ -86,12 +86,7 @@
             "title": "zombie"
         }
     ],
-    "maps": [
-        {
-            "image": "https://i.pinimg.com/originals/98/4d/37/984d373c81fbc7833a1a37fcdc133c51.jpg",
-            "title": "zombies area"
-        }
-    ]
+    "maps": []
 }
 
 

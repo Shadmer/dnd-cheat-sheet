@@ -1,5 +1,5 @@
 import React from 'react';
-import { Params, useParams } from 'react-router-dom';
+import { Params } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 
 import {
@@ -16,6 +16,7 @@ import {
     Typography,
     Tooltip,
 } from '@mui/material';
+import { darken, lighten } from '@mui/material/styles';
 import {
     ExpandMore,
     DirectionsOff,
@@ -24,9 +25,6 @@ import {
     StarBorder,
     SearchOff,
 } from '@mui/icons-material';
-import { useStores } from '@src/providers/RootStoreContext';
-import { ScrollableBox } from '@src/components/common/ScrollableBox';
-import { FlexHeightContainer } from '@src/components/common/FlexHeightContainer';
 import {
     FaUserFriends,
     FaUserTie,
@@ -35,8 +33,16 @@ import {
     FaGavel,
     FaStickyNote,
 } from 'react-icons/fa';
+
+import { useStores } from '@src/providers/RootStoreContext';
 import { useNavigateWithSave } from '@src/providers/NavigateWithSaveProvider';
+import { useCustomTheme } from '@src/providers/CustomThemeProvider';
+
+import { ScrollableBox } from '@src/components/common/ScrollableBox';
+import { FlexHeightContainer } from '@src/components/common/FlexHeightContainer';
+
 import { LastPageType, NavigationRoute } from '@src/enums';
+import { ICodexMenuList, ICodexMenuItem } from '@src/interfaces';
 
 const iconMap: Record<string, React.ReactNode> = {
     players: <FaUserFriends />,
@@ -54,8 +60,8 @@ type CodexMenuListProps = {
 
 export const CodexMenuList = observer(
     ({ params, onItemSelect }: CodexMenuListProps) => {
-        // const params = useParams();
         const { navigateWithSave } = useNavigateWithSave();
+        const { mode } = useCustomTheme();
 
         const {
             codex: {
@@ -71,9 +77,6 @@ export const CodexMenuList = observer(
             string,
             boolean
         > | null>(params.section ? { [params.section]: true } : null);
-        // const [prevOpenSections, setPrevOpenSections] = React.useState<
-        //     Record<string, boolean>
-        // >({});
         const [favorites, setFavorites] = React.useState<
             Record<string, Record<string, boolean>>
         >({});
@@ -86,11 +89,8 @@ export const CodexMenuList = observer(
             [filteredCodexMenuList, openSections]
         );
 
-        const isSelected = (section: string, id: string) => {
-            // return true;
-            // console.log(savedSection, savedId);
-            return params.section === section && params.id === id;
-        };
+        const isSelected = (section: string, id: string) =>
+            params.section === section && params.id === id;
         const openAllSections = React.useCallback(() => {
             const newOpenSections: Record<string, boolean> = {};
             filteredCodexMenuList.forEach((category) => {
@@ -101,7 +101,6 @@ export const CodexMenuList = observer(
 
         const closeAllSections = () => {
             setOpenSections(null);
-            // setPrevOpenSections({});
         };
 
         const handleSearchChange = (
@@ -110,18 +109,12 @@ export const CodexMenuList = observer(
             const { value } = event.target;
 
             setSearchTitle(value);
-
-            // if (!value) {
-            //     setOpenSections(prevOpenSections);
-            // }
-
             filterCodexMenuList(value);
         };
 
         const handleReset = () => {
             setSearchTitle('');
             filterCodexMenuList('');
-            // setOpenSections(prevOpenSections);
 
             if (searchInputRef.current) {
                 searchInputRef.current.focus();
@@ -142,10 +135,6 @@ export const CodexMenuList = observer(
                     ...prevState,
                     [section]: !prevState?.[section],
                 };
-
-                // if (!searchTitle) {
-                //     setPrevOpenSections(updatedOpenSections);
-                // }
 
                 return updatedOpenSections;
             });
@@ -241,6 +230,52 @@ export const CodexMenuList = observer(
             </Stack>
         );
 
+        const innerListItemButton = (
+            category: ICodexMenuList,
+            item: ICodexMenuItem
+        ) => (
+            <ListItemButton
+                key={item.id}
+                sx={{
+                    pl: 4,
+                    '&.Mui-selected': {
+                        backgroundColor: (theme) =>
+                            mode === 'light'
+                                ? lighten(theme.palette.primary.main, 0.8)
+                                : darken(theme.palette.primary.main, 0.4),
+                    },
+                }}
+                selected={isSelected(category.section, item.id)}
+                onClick={() => {
+                    onItemSelect && onItemSelect();
+                    navigateWithSave(
+                        `${NavigationRoute.codex}/${category.section}/${item.id}`,
+                        LastPageType.codex
+                    );
+                }}
+            >
+                <ListItemIcon>
+                    <IconButton
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            handleIconClick(category.section, item.id);
+                        }}
+                    >
+                        {favorites[category.section]?.[item.id] ? (
+                            <Star
+                                sx={{
+                                    color: 'secondary.main',
+                                }}
+                            />
+                        ) : (
+                            <StarBorder />
+                        )}
+                    </IconButton>
+                </ListItemIcon>
+                <ListItemText primary={item.name} />
+            </ListItemButton>
+        );
+
         const content = (
             <ScrollableBox>
                 <List component="nav" sx={{ bgcolor: 'background.paper' }}>
@@ -298,60 +333,10 @@ export const CodexMenuList = observer(
                                                 component="div"
                                                 disablePadding
                                             >
-                                                {category.content.map(
-                                                    (item) => (
-                                                        <ListItemButton
-                                                            key={item.id}
-                                                            sx={{
-                                                                pl: 4,
-                                                            }}
-                                                            selected={isSelected(
-                                                                category.section,
-                                                                item.id
-                                                            )}
-                                                            onClick={() => {
-                                                                onItemSelect &&
-                                                                    onItemSelect();
-                                                                navigateWithSave(
-                                                                    `${NavigationRoute.codex}/${category.section}/${item.id}`,
-                                                                    LastPageType.codex
-                                                                );
-                                                            }}
-                                                        >
-                                                            <ListItemIcon>
-                                                                <IconButton
-                                                                    onClick={(
-                                                                        e
-                                                                    ) => {
-                                                                        e.stopPropagation();
-                                                                        handleIconClick(
-                                                                            category.section,
-                                                                            item.id
-                                                                        );
-                                                                    }}
-                                                                >
-                                                                    {favorites[
-                                                                        category
-                                                                            .section
-                                                                    ]?.[
-                                                                        item.id
-                                                                    ] ? (
-                                                                        <Star
-                                                                            sx={{
-                                                                                color: 'secondary.main',
-                                                                            }}
-                                                                        />
-                                                                    ) : (
-                                                                        <StarBorder />
-                                                                    )}
-                                                                </IconButton>
-                                                            </ListItemIcon>
-                                                            <ListItemText
-                                                                primary={
-                                                                    item.name
-                                                                }
-                                                            />
-                                                        </ListItemButton>
+                                                {category.content.map((item) =>
+                                                    innerListItemButton(
+                                                        category,
+                                                        item
                                                     )
                                                 )}
                                             </List>

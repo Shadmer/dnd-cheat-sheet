@@ -65,24 +65,36 @@ export const CreatureCard: React.FC<CreatureCardProps> = ({ creature }) => {
                             <Typography
                                 align="center"
                                 p={0.5}
-                                bgcolor="primary.light"
-                                color="primary.contrastText"
+                                border="1px solid"
+                                borderBottom="1px dotted"
                             >
                                 {abilityNames[key]}
                             </Typography>
                             <Typography
                                 align="center"
                                 p={0.5}
-                                sx={{
-                                    background: (theme) =>
-                                        theme.palette.grey[100],
-                                }}
+                                border="1px solid"
+                                borderTop="none"
                             >
                                 {getStatWithModifier(value)}
                             </Typography>
                         </Grid>
                     ))}
                 </Grid>
+            </Box>
+
+            <Divider />
+
+            <Box>
+                <Typography variant="h6" gutterBottom>
+                    Дополнительная информация
+                </Typography>
+                <Typography>
+                    <b>Уровень опасности:</b> {creature.challengeRating}
+                </Typography>
+                <Typography>
+                    <b>Бонус мастерства:</b> {creature.proficiencyBonus}
+                </Typography>
             </Box>
 
             <Divider />
@@ -148,20 +160,6 @@ export const CreatureCard: React.FC<CreatureCardProps> = ({ creature }) => {
                     Места обитания
                 </Typography>
                 <Typography>{creature.areas.join(', ')}</Typography>
-            </Box>
-
-            <Divider />
-
-            <Box>
-                <Typography variant="h6" gutterBottom>
-                    Дополнительная информация
-                </Typography>
-                <Typography>
-                    <b>Уровень опасности:</b> {creature.challengeRating}
-                </Typography>
-                <Typography>
-                    <b>Бонус мастерства:</b> {creature.proficiencyBonus}
-                </Typography>
             </Box>
 
             <Divider />

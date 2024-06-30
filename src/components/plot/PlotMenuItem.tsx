@@ -9,11 +9,12 @@ import {
     IconButton,
     Typography,
 } from '@mui/material';
+import { darken, lighten } from '@mui/material/styles';
 import { ExpandMore } from '@mui/icons-material';
 import { IPlotMenuItem } from '@src/interfaces';
 import { LastPageType, NavigationRoute } from '@src/enums';
 import { useNavigateWithSave } from '@src/providers/NavigateWithSaveProvider';
-
+import { useCustomTheme } from '@src/providers/CustomThemeProvider';
 type PlotMenuItemProps = {
     scene: IPlotMenuItem;
 };
@@ -23,6 +24,7 @@ export const PlotMenuItem = ({
 }: PlotMenuItemProps) => {
     const { scene } = useParams();
     const { navigateWithSave } = useNavigateWithSave();
+    const { mode } = useCustomTheme();
     const [expanded, setExpanded] = React.useState(false);
     const navigateHandler = (id: string) => {
         const url = `${NavigationRoute.plot}/${id}`;
@@ -34,10 +36,14 @@ export const PlotMenuItem = ({
             raised={scene === sceneId}
             sx={{
                 position: 'relative',
-                backgroundColor: (theme) =>
-                    scene === sceneId
-                        ? theme.palette.grey[300]
-                        : theme.palette.background.paper,
+                backgroundColor: (theme) => {
+                    if (scene === sceneId) {
+                        return mode === 'light'
+                            ? lighten(theme.palette.primary.main, 0.8)
+                            : darken(theme.palette.primary.main, 0.3);
+                    }
+                    return theme.palette.background.paper;
+                },
                 transition: 'background .3s',
             }}
         >

@@ -1,43 +1,20 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import {
-    Box,
-    Container,
-    IconButton,
-    Menu,
-    MenuItem,
-    Stack,
-    Typography,
-} from '@mui/material';
+import { Box, Container, Stack } from '@mui/material';
 import { alpha } from '@mui/material/styles';
-import { Logout, AccountCircle } from '@mui/icons-material';
+
 import { useDialog } from '@src/providers/DialogProvider';
-import { useAuth } from '@src/providers/AuthProvider';
+
 import { MainNavigation } from '@src/components/common/MainNavigation';
 import { PlotCard } from '@src/components/plot/PlotCard';
+import { UserMenu } from '@src/components/common/UserMenu';
 
 import bg from '@src/assets/img/bg.jpg';
 
 export const MainPage = () => {
-    const { logout } = useAuth();
     const { openDialog } = useDialog();
 
     const dialogContent = <PlotCard />;
-
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-
-    const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleMenuClose = () => {
-        setAnchorEl(null);
-    };
-
-    const handleLogout = () => {
-        handleMenuClose();
-        logout();
-    };
 
     return (
         <Stack
@@ -97,33 +74,7 @@ export const MainPage = () => {
                                 borderLeft: '1px solid',
                             }}
                         >
-                            <IconButton
-                                size="small"
-                                onClick={handleMenuOpen}
-                                color="inherit"
-                            >
-                                <AccountCircle />
-                            </IconButton>
-                            <Menu
-                                id="menu-appbar"
-                                anchorEl={anchorEl}
-                                anchorOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                keepMounted
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                open={Boolean(anchorEl)}
-                                onClose={handleMenuClose}
-                            >
-                                <MenuItem onClick={handleLogout}>
-                                    <Logout sx={{ mr: 1 }} />
-                                    Выйти
-                                </MenuItem>
-                            </Menu>
+                            <UserMenu />
                         </Box>
                     </Stack>
                 </Container>

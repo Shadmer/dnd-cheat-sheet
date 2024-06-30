@@ -1,5 +1,6 @@
 import React from 'react';
 import Markdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import {
     Typography,
     Link,
@@ -19,10 +20,15 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
 }) => {
     return (
         <Markdown
+            remarkPlugins={[remarkGfm]}
             components={{
                 // TODO: ссылку заменить на кнопку, которая вызывает всплывающее окно
                 a(props) {
-                    return <Link href={props.href}>{props.children}</Link>;
+                    return (
+                        <Link href={props.href} color="info.main">
+                            {props.children}
+                        </Link>
+                    );
                 },
                 blockquote(props) {
                     return (
@@ -31,8 +37,8 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
                             sx={{
                                 pl: 2,
                                 borderLeft: (theme) =>
-                                    `4px solid ${theme.palette.grey[600]}`,
-                                color: (theme) => theme.palette.grey[600],
+                                    `4px solid ${theme.palette.grey[500]}`,
+                                color: (theme) => theme.palette.grey[500],
                                 my: 2,
                             }}
                         >
@@ -185,6 +191,18 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
                         >
                             {props.children}
                         </List>
+                    );
+                },
+                del(props) {
+                    return (
+                        <Typography
+                            component="del"
+                            sx={{
+                                textDecoration: 'line-through',
+                            }}
+                        >
+                            {props.children}
+                        </Typography>
                     );
                 },
             }}

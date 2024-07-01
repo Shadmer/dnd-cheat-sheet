@@ -29,7 +29,7 @@ export const PlotCard = observer(() => {
         plotMenuList.find((item) => item.sceneId === scene)?.title ?? '';
 
     const plotMenuSubTitle =
-        plotMenuList.find((item) => item.sceneId === scene)?.subTitle ?? '';
+        plotMenuList.find((item) => item.sceneId === scene)?.part ?? '';
 
     const currentIndex = plotMenuList.findIndex(
         (item) => item.sceneId === scene

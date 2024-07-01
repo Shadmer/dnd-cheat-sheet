@@ -231,7 +231,7 @@ export const CodexCard = observer(() => {
                     )}
                 </Stack>
             </Stack>
-            {currentSection && (
+            {currentSection && tabData.length > 1 && (
                 <FullWidthTabs
                     value={tabValue}
                     onChange={(_, newValue) => setTabValue(newValue)}

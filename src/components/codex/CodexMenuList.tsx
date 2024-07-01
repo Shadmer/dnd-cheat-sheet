@@ -161,7 +161,7 @@ export const CodexMenuList = observer(
 
         // TODO: создать стор для favorites
         React.useEffect(() => {
-            console.log('favorites', favorites);
+            // console.log('favorites', favorites);
         }, [favorites]);
 
         React.useEffect(() => {
@@ -287,20 +287,34 @@ export const CodexMenuList = observer(
 
         const content = (
             <ScrollableBox>
-                <List component="nav" sx={{ bgcolor: 'background.paper' }}>
+                <List component="nav">
                     {filteredCodexMenuList.length ? (
-                        filteredCodexMenuList.map((category, index) => (
+                        filteredCodexMenuList.map((category) => (
                             <React.Fragment key={category.section}>
                                 {category.content.length ? (
                                     <>
                                         <ListItemButton
                                             sx={{
+                                                marginTop: 2,
                                                 columnGap: '10px',
+                                                bgcolor: 'background.paper',
                                                 borderBottom: openSections?.[
                                                     category.section
                                                 ]
                                                     ? '1px solid'
                                                     : 'none',
+                                                '&:hover': {
+                                                    background: (theme) =>
+                                                        darken(
+                                                            theme.palette
+                                                                .background
+                                                                .paper,
+                                                            0.1
+                                                        ),
+                                                },
+                                                '&:first-of-type': {
+                                                    marginTop: 0,
+                                                },
                                             }}
                                             onClick={() =>
                                                 handleToggleOpeningItem(
@@ -346,6 +360,10 @@ export const CodexMenuList = observer(
                                             <List
                                                 component="div"
                                                 disablePadding
+                                                sx={{
+                                                    bgcolor:
+                                                        'background.default',
+                                                }}
                                             >
                                                 {category.content.map((item) =>
                                                     innerListItemButton(

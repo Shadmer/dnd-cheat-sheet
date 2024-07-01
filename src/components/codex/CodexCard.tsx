@@ -25,6 +25,7 @@ import { FullWidthTabs } from '@src/components/common/FullWidthTabs';
 import { ImageGallery } from '@src/components/common/ImageGallery';
 import { CodexMenuList } from '@src/components/codex/CodexMenuList';
 import { CreatureCard } from '@src/components/codex/CreatureContent';
+import { ICodexMenuList } from '@src/interfaces';
 
 interface ITabData {
     id: string;
@@ -113,15 +114,13 @@ export const CodexCard = observer(() => {
 
     const [tabValue, setTabValue] = React.useState('');
 
-    const currentSection = codexMenuList.find(
-        (item) => item.section === params.section
-    );
+    const [currentSection, setCurrentSection] =
+        React.useState<ICodexMenuList | null>(null);
 
-    const codexSectionTitle = currentSection?.title ?? '';
+    const [codexSectionTitle, setCodexSectionTitle] = React.useState('');
 
-    const codexItemTitle =
-        currentSection?.content.find((item) => item.id === params.id)?.name ??
-        'Кодекс мастера';
+    const [codexItemTitle, setCodexItemTitle] =
+        React.useState('Кодекс мастера');
 
     const getTabData = React.useCallback(() => {
         if (!currentPage) return;
@@ -165,6 +164,20 @@ export const CodexCard = observer(() => {
         setTabData(newTabData);
         setTabValue(newTabData[0].id ?? '');
     }, [currentPage]);
+
+    const getCurrentData = React.useCallback(() => {
+        const newCurrentSection =
+            codexMenuList.find((item) => item.section === params.section) ??
+            null;
+        const newCodexSectionTitle = currentSection?.title ?? '';
+        const newCodexItemTitle =
+            currentSection?.content.find((item) => item.id === params.id)
+                ?.name ?? 'Кодекс мастера';
+
+        setCurrentSection(newCurrentSection);
+        setCodexSectionTitle(newCodexSectionTitle);
+        setCodexItemTitle(newCodexItemTitle);
+    }, [codexMenuList, currentSection, params]);
 
     const header = (
         <Stack p="1rem 0" bgcolor="background.paper" boxShadow={1} spacing={2}>
@@ -251,6 +264,10 @@ export const CodexCard = observer(() => {
             </Box>
         </ScrollableBox>
     );
+
+    React.useEffect(() => {
+        getCurrentData();
+    }, [getCurrentData]);
 
     React.useEffect(() => {
         getTabData();

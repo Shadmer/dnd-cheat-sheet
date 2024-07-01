@@ -18,6 +18,7 @@ const navigationActionList: INavigationAction[] = [
         label: 'Сюжет',
         icon: <AutoStories />,
     },
+    // TODO: Вместо этого реализовать страницу "Инструменты"
     // {
     //     value: NavigationRoute.journey,
     //     label: 'Путешествие',

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { observer } from 'mobx-react-lite';
 import {
     ImageList,
     ImageListItem,
@@ -7,73 +8,95 @@ import {
 } from '@mui/material';
 import Lightbox from 'react-18-image-lightbox';
 import 'react-18-image-lightbox/style.css';
-import { IImageData } from '@src/interfaces';
+
+import { ImageService } from '@src/services/ImageService';
 
 interface ImageGalleryProps {
-    images: IImageData[];
-    single?: boolean;
+    images: string[];
+    alt?: string;
 }
 
-export const ImageGallery: React.FC<ImageGalleryProps> = ({
-    images,
-    single = false,
-}) => {
-    const theme = useTheme();
-    const [isOpen, setIsOpen] = useState(false);
-    const [photoIndex, setPhotoIndex] = useState(0);
+export const ImageGallery: React.FC<ImageGalleryProps> = observer(
+    ({ images, alt }) => {
+        const theme = useTheme();
+        const [isOpen, setIsOpen] = React.useState(false);
+        const [photoIndex, setPhotoIndex] = React.useState(0);
+        const [imageUrls, setImageUrls] = React.useState<string[]>([]);
 
-    const isXs = useMediaQuery(theme.breakpoints.only('xs'));
-    const isSm = useMediaQuery(theme.breakpoints.only('sm'));
-    const isMd = useMediaQuery(theme.breakpoints.only('md'));
+        const imageService = React.useMemo(() => ImageService(), []);
 
-    const getCols = () => {
-        if (isXs || single) return 1;
-        if (isSm) return 2;
-        if (isMd) return 3;
-        return 3;
-    };
+        const isXs = useMediaQuery(theme.breakpoints.only('xs'));
+        const isSm = useMediaQuery(theme.breakpoints.only('sm'));
 
-    const handleImageClick = (index: number) => {
-        setPhotoIndex(index);
-        setIsOpen(true);
-    };
+        const getCols = React.useCallback(() => {
+            let cols = 3;
 
-    return (
-        <>
-            <ImageList variant="masonry" cols={getCols()} gap={8}>
-                {images.map((item, index) => (
-                    <ImageListItem
-                        key={index}
-                        onClick={() => handleImageClick(index)}
-                    >
-                        <img
-                            src={item.image}
-                            alt={item.title}
-                            loading="lazy"
-                            style={{ cursor: 'pointer' }}
-                        />
-                    </ImageListItem>
-                ))}
-            </ImageList>
-            {isOpen && (
-                <Lightbox
-                    mainSrc={images[photoIndex].image}
-                    nextSrc={images[(photoIndex + 1) % images.length].image}
-                    prevSrc={
-                        images[(photoIndex + images.length - 1) % images.length]
-                            .image
-                    }
-                    onCloseRequest={() => setIsOpen(false)}
-                    onMovePrevRequest={() =>
-                        setPhotoIndex(
-                            (photoIndex + images.length - 1) % images.length
-                        )
-                    }
-                    onMoveNextRequest={() =>
-                        setPhotoIndex((photoIndex + 1) % images.length)
-                    }
-                />
-            )}
-        </>
-    );
-};
+            if (isXs) cols = 1;
+            if (isSm) cols = 2;
+
+            return Math.min(cols, images.length);
+        }, [images, isSm, isXs]);
+
+        const loadImages = React.useCallback(async () => {
+            const result = await imageService.fetchImages(images);
+            const mappedResult = result.map((item) =>
+                URL.createObjectURL(item)
+            );
+            setImageUrls(mappedResult);
+        }, [imageService, images]);
+
+        const handleImageClick = (index: number) => {
+            setPhotoIndex(index);
+            setIsOpen(true);
+        };
+
+        React.useEffect(() => {
+            loadImages();
+        }, [loadImages]);
+
+        return (
+            <>
+                <ImageList variant="masonry" cols={getCols()} gap={8}>
+                    {imageUrls.map((item, index) => (
+                        <ImageListItem
+                            key={index}
+                            onClick={() => handleImageClick(index)}
+                        >
+                            <img
+                                src={item}
+                                alt={
+                                    `${alt}-${index + 1}` ||
+                                    `Image-${index + 1}`
+                                }
+                                loading="lazy"
+                                style={{ cursor: 'pointer' }}
+                            />
+                        </ImageListItem>
+                    ))}
+                </ImageList>
+                {isOpen && (
+                    <Lightbox
+                        mainSrc={imageUrls[photoIndex]}
+                        nextSrc={imageUrls[(photoIndex + 1) % imageUrls.length]}
+                        prevSrc={
+                            imageUrls[
+                                (photoIndex + imageUrls.length - 1) %
+                                    imageUrls.length
+                            ]
+                        }
+                        onCloseRequest={() => setIsOpen(false)}
+                        onMovePrevRequest={() =>
+                            setPhotoIndex(
+                                (photoIndex + imageUrls.length - 1) %
+                                    imageUrls.length
+                            )
+                        }
+                        onMoveNextRequest={() =>
+                            setPhotoIndex((photoIndex + 1) % imageUrls.length)
+                        }
+                    />
+                )}
+            </>
+        );
+    }
+);

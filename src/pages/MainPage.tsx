@@ -5,9 +5,9 @@ import { Theme, alpha } from '@mui/material/styles';
 
 import { useDialog } from '@src/providers/DialogProvider';
 
-import { MainNavigation } from '@src/components/common/MainNavigation';
+import { MainNavigation } from '@src/components/other/MainNavigation';
 import { PlotCard } from '@src/components/plot/PlotCard';
-import { UserMenu } from '@src/components/common/UserMenu';
+import { UserMenu } from '@src/components/other/UserMenu';
 
 import bg from '@src/assets/img/bg.jpg';
 

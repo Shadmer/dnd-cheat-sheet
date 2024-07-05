@@ -146,24 +146,33 @@ export const CodexCard = observer(() => {
         }
 
         if (currentPage.images && currentPage.images.length) {
+            const imagesName = params.id ?? 'codexImage';
             newTabData.push({
                 id: 'images',
                 label: 'Изображения',
-                content: <ImageGallery images={currentPage.images} />,
+                content: (
+                    <ImageGallery
+                        images={currentPage.images}
+                        alt={imagesName}
+                    />
+                ),
             });
         }
 
         if (currentPage.maps && currentPage.maps.length) {
+            const mapName = params.id ?? 'codexMap';
             newTabData.push({
                 id: 'maps',
-                label: 'Карты',
-                content: <ImageGallery images={currentPage.maps} single />,
+                label: 'Карта',
+                content: (
+                    <ImageGallery images={currentPage.maps} alt={mapName} />
+                ),
             });
         }
 
         setTabData(newTabData);
         setTabValue(newTabData[0].id ?? '');
-    }, [currentPage]);
+    }, [currentPage, params]);
 
     const getCurrentData = React.useCallback(() => {
         const newCurrentSection =
@@ -285,7 +294,7 @@ export const CodexCard = observer(() => {
         const { section, id } = params;
 
         if (section && id) {
-            const fullPage = `${section}/${id}`;
+            const fullPage = `${section}/cards/${id}`;
             loadPage(fullPage);
 
             return () => {

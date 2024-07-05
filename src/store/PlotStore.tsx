@@ -24,6 +24,7 @@ class Plot {
             this.filteredPlotMenuList = this.plotMenuList.filter((item) => {
                 const lowercaseTitle = item.title.toLowerCase();
                 const lowercaseSearchTitle = searchTitle.toLowerCase();
+
                 return lowercaseTitle.includes(lowercaseSearchTitle);
             });
         });

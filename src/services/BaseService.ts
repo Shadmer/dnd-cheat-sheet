@@ -31,6 +31,10 @@ export const BaseService = async <T>(
             return response.text() as unknown as T;
         }
 
+        if (contentType?.includes('image/')) {
+            return response.blob() as unknown as T;
+        }
+
         return response.json();
     } catch (error) {
         console.error('Error fetching:', error);

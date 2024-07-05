@@ -5,21 +5,25 @@ import {
     MenuItem,
     ListItemIcon,
     ListItemText,
-    Switch,
 } from '@mui/material';
 import {
     AccountCircle,
     Brightness7,
     Brightness4,
     Logout,
+    Print,
 } from '@mui/icons-material';
 
 import { useAuth } from '@src/providers/AuthProvider';
 import { useCustomTheme } from '@src/providers/CustomThemeProvider';
+import { useDialog } from '@src/providers/DialogProvider';
+
+import { ImagePrinter } from '@src/components/other/ImagePrinter';
 
 export const UserMenu = () => {
     const { logout } = useAuth();
     const { mode, toggleTheme } = useCustomTheme();
+    const { openDialog } = useDialog();
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -34,6 +38,10 @@ export const UserMenu = () => {
     const handleLogout = () => {
         handleMenuClose();
         logout();
+    };
+
+    const handleOpenPrintModal = () => {
+        openDialog('Печать изображений', <ImagePrinter />, true);
     };
 
     return (
@@ -55,6 +63,12 @@ export const UserMenu = () => {
                 open={Boolean(anchorEl)}
                 onClose={handleMenuClose}
             >
+                <MenuItem onClick={handleOpenPrintModal}>
+                    <ListItemIcon>
+                        <Print />
+                    </ListItemIcon>
+                    <ListItemText>Перейти к печати</ListItemText>
+                </MenuItem>
                 <MenuItem onClick={toggleTheme}>
                     <ListItemIcon>
                         {mode === 'light' ? <Brightness7 /> : <Brightness4 />}
@@ -62,15 +76,12 @@ export const UserMenu = () => {
                     <ListItemText>
                         {mode === 'light' ? 'Светлая тема' : 'Тёмная тема'}
                     </ListItemText>
-                    <Switch
-                        checked={mode === 'light'}
-                        onChange={toggleTheme}
-                        color="default"
-                    />
                 </MenuItem>
                 <MenuItem onClick={handleLogout}>
-                    <Logout sx={{ mr: 1 }} />
-                    Выйти
+                    <ListItemIcon>
+                        <Logout />
+                    </ListItemIcon>
+                    <ListItemText>Выйти</ListItemText>
                 </MenuItem>
             </Menu>
         </>

@@ -21,11 +21,6 @@ export interface ICodexMenuList {
     content: ICodexMenuItem[];
 }
 
-export interface IImageData {
-    image: string;
-    title: string;
-}
-
 export interface IProperty {
     name: string;
     value: string | number;
@@ -75,6 +70,6 @@ export interface ICreature {
 export interface ICodexCard {
     creature?: ICreature;
     description?: string;
-    images?: IImageData[];
-    maps?: IImageData[];
+    images?: string[];
+    maps?: string[];
 }

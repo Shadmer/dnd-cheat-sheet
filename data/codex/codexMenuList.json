@@ -24,10 +24,6 @@
         "title": "Бестиарий",
         "content": [
             {
-                "id": "zombie",
-                "name": "Зомби"
-            },
-            {
                 "id": "brave_knight",
                 "name": "Смелый Рыцарь"
             },
@@ -82,10 +78,6 @@
             {
                 "id": "path_separator",
                 "name": "Разделитель Путей"
-            },
-            {
-                "id": "blade_of_heroes",
-                "name": "Клинок Героев"
             }
         ]
     },

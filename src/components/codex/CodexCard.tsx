@@ -258,11 +258,15 @@ export const CodexCard = observer(() => {
 
     const content = (
         <ScrollableBox bgcolor="paper">
-            <Box p="1rem">
+            <Box p="1rem" sx={{ height: '100%' }}>
                 {currentSection ? (
-                    <Box>
+                    <Box sx={{ height: '100%' }}>
                         {tabData.map((tab) => (
-                            <Box key={tab.id} hidden={tabValue !== tab.id}>
+                            <Box
+                                key={tab.id}
+                                hidden={tabValue !== tab.id}
+                                sx={{ height: '100%' }}
+                            >
                                 {tab.content}
                             </Box>
                         ))}

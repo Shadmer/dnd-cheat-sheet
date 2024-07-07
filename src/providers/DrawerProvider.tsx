@@ -21,15 +21,15 @@ export const DrawerProvider = ({ children }: { children: ReactNode }) => {
     const [drawerOpen, setDrawerOpen] = React.useState(false);
     const [drawerContent, setDrawerContent] = React.useState<ReactNode>(null);
 
-    const openDrawer = (content: ReactNode) => {
+    const openDrawer = React.useCallback((content: ReactNode) => {
         setDrawerContent(content);
         setDrawerOpen(true);
-    };
+    }, []);
 
-    const closeDrawer = () => {
+    const closeDrawer = React.useCallback(() => {
         setDrawerOpen(false);
         setDrawerContent(null);
-    };
+    }, []);
 
     return (
         <DrawerContext.Provider

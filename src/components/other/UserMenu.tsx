@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
     IconButton,
     Menu,
@@ -16,14 +17,11 @@ import {
 
 import { useAuth } from '@src/providers/AuthProvider';
 import { useCustomTheme } from '@src/providers/CustomThemeProvider';
-import { useDialog } from '@src/providers/DialogProvider';
-
-import { ImagePrinter } from '@src/components/other/ImagePrinter';
 
 export const UserMenu = () => {
     const { logout } = useAuth();
     const { mode, toggleTheme } = useCustomTheme();
-    const { openDialog } = useDialog();
+    const navigate = useNavigate();
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -38,10 +36,6 @@ export const UserMenu = () => {
     const handleLogout = () => {
         handleMenuClose();
         logout();
-    };
-
-    const handleOpenPrintModal = () => {
-        openDialog('Печать изображений', <ImagePrinter />, true);
     };
 
     return (
@@ -63,7 +57,12 @@ export const UserMenu = () => {
                 open={Boolean(anchorEl)}
                 onClose={handleMenuClose}
             >
-                <MenuItem onClick={handleOpenPrintModal}>
+                <MenuItem
+                    onClick={() => {
+                        navigate('printer');
+                        handleMenuClose();
+                    }}
+                >
                     <ListItemIcon>
                         <Print />
                     </ListItemIcon>
@@ -73,9 +72,7 @@ export const UserMenu = () => {
                     <ListItemIcon>
                         {mode === 'light' ? <Brightness7 /> : <Brightness4 />}
                     </ListItemIcon>
-                    <ListItemText>
-                        {mode === 'light' ? 'Светлая тема' : 'Тёмная тема'}
-                    </ListItemText>
+                    <ListItemText>Сменить тему</ListItemText>
                 </MenuItem>
                 <MenuItem onClick={handleLogout}>
                     <ListItemIcon>

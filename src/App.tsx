@@ -1,11 +1,12 @@
 import { Navigate, useRoutes } from 'react-router-dom';
+import { useAuth } from '@src/providers/AuthProvider';
 import { EntryPage } from '@src/pages/EntryPage';
 import { MainPage } from '@src/pages/MainPage';
 import { PlotPage } from '@src/pages/PlotPage';
 import { JourneyPage } from '@src/pages/JourneyPage';
 import { BattlePage } from '@src/pages/BattlePage';
 import { CodexPage } from '@src/pages/CodexPage';
-import { useAuth } from '@src/providers/AuthProvider';
+import { PrinterPage } from '@src/pages/PrinterPage';
 
 export const App = () => {
     const { isAuthenticated } = useAuth();
@@ -32,6 +33,7 @@ export const App = () => {
                 // { path: 'journey', element: <JourneyPage /> },
                 // { path: 'battle', element: <BattlePage /> },
                 { path: 'codex/:section?/:id?', element: <CodexPage /> },
+                { path: 'printer', element: <PrinterPage /> },
                 { path: '*', element: <Navigate to="plot" replace /> },
             ],
         },

@@ -6,12 +6,14 @@ interface FlexHeightContainerProps {
     header?: React.ReactElement;
     content: React.ReactElement<{ height: string }>;
     footer?: React.ReactElement;
+    customHeight?: string;
 }
 
 export const FlexHeightContainer: React.FC<FlexHeightContainerProps> = ({
     header,
     content,
     footer,
+    customHeight,
 }) => {
     const isMdScreen = useMediaQuery((theme: Theme) =>
         theme.breakpoints.up('md')
@@ -34,7 +36,9 @@ export const FlexHeightContainer: React.FC<FlexHeightContainerProps> = ({
         }
     }, [header, footer]);
 
-    const height = `calc(100dvh - ${mainPaddingHeight}px - ${headerHeight}px - ${footerHeight}px)`;
+    const calculatedHeight = customHeight || `100dvh - ${mainPaddingHeight}px`;
+
+    const height = `calc(${calculatedHeight} - ${headerHeight}px - ${footerHeight}px)`;
 
     const clonedHeader = header
         ? React.cloneElement(header, { ref: headerRef })

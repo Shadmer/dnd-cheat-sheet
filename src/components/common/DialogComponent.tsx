@@ -9,6 +9,23 @@ import {
 } from '@mui/material';
 import { Close } from '@mui/icons-material';
 import { useDialog } from '@src/providers/DialogProvider';
+import { styled } from '@mui/system';
+
+const StyledDialogContent = styled(DialogContent)(({ theme }) => ({
+    '&::-webkit-scrollbar': {
+        width: '8px',
+    },
+    '&::-webkit-scrollbar-track': {
+        background: theme.palette.background.default,
+    },
+    '&::-webkit-scrollbar-thumb': {
+        background: theme.palette.primary.main,
+        borderRadius: '4px',
+    },
+    '&::-webkit-scrollbar-thumb:hover': {
+        background: theme.palette.primary.dark,
+    },
+}));
 
 export const DialogComponent = () => {
     const { dialogOpen, dialogTitle, dialogContent, fullScreen, closeDialog } =
@@ -30,9 +47,9 @@ export const DialogComponent = () => {
                     <Close />
                 </IconButton>
             </DialogTitle>
-            <DialogContent dividers>
+            <StyledDialogContent dividers>
                 <Box>{dialogContent}</Box>
-            </DialogContent>
+            </StyledDialogContent>
         </Dialog>
     );
 };

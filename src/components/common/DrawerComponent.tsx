@@ -15,7 +15,6 @@ export const DrawerComponent = () => {
                         position: 'absolute',
                         top: 8,
                         right: 8,
-                        color: 'primary.main',
                     }}
                 >
                     <Close />

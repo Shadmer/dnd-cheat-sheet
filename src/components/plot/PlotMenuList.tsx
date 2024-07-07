@@ -96,7 +96,7 @@ export const PlotMenuList = observer(() => {
 
     const searchIcon = (
         <InputAdornment position="start">
-            <IconButton onClick={handleReset} color="primary">
+            <IconButton onClick={handleReset}>
                 <SearchOff fontSize="small" />
             </IconButton>
         </InputAdornment>

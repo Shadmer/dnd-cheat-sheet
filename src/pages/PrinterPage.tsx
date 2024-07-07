@@ -17,10 +17,10 @@ import {
 } from '@mui/material';
 import {
     AutoDelete,
+    Close,
     CloudDownload,
     Delete,
     Downloading,
-    Menu,
     MenuOpen,
 } from '@mui/icons-material';
 
@@ -68,11 +68,9 @@ export const PrinterPage: React.FC = observer(() => {
             <Typography variant="h4" sx={{ flexGrow: 1 }} noWrap>
                 Меню загрузки
             </Typography>
-            <Tooltip title="Закрыть меню">
-                <IconButton onClick={handleDrawerToggle}>
-                    <MenuOpen />
-                </IconButton>
-            </Tooltip>
+            <IconButton onClick={handleDrawerToggle}>
+                <Close />
+            </IconButton>
         </Stack>
     );
 
@@ -131,7 +129,7 @@ export const PrinterPage: React.FC = observer(() => {
                     onClick={handleDrawerToggle}
                     sx={{ mr: 2 }}
                 >
-                    <Menu />
+                    <MenuOpen />
                 </IconButton>
                 <Typography variant="h4" sx={{ flexGrow: 1 }} noWrap>
                     Меню загрузки

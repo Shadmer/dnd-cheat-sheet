@@ -176,7 +176,7 @@ export const CodexMenuList = observer(
 
         const searchIcon = (
             <InputAdornment position="start">
-                <IconButton onClick={handleReset} color="primary">
+                <IconButton onClick={handleReset}>
                     <SearchOff fontSize="small" />
                 </IconButton>
             </InputAdornment>
@@ -184,13 +184,7 @@ export const CodexMenuList = observer(
 
         const toggleOpening = (
             <Tooltip title={hasOpenSections ? 'Закрыть всё' : 'Открыть всё'}>
-                <IconButton
-                    sx={{
-                        color: 'primary.main',
-                    }}
-                    onClick={handleToggleOpeningItems}
-                    size="small"
-                >
+                <IconButton onClick={handleToggleOpeningItems} size="small">
                     {hasOpenSections ? (
                         <DirectionsOff fontSize="small" />
                     ) : (
@@ -322,11 +316,7 @@ export const CodexMenuList = observer(
                                                 )
                                             }
                                         >
-                                            <ListItemIcon
-                                                sx={{
-                                                    color: 'primary.main',
-                                                }}
-                                            >
+                                            <ListItemIcon>
                                                 {iconMap[category.section] || (
                                                     <FaStickyNote />
                                                 )}
@@ -346,7 +336,6 @@ export const CodexMenuList = observer(
                                                         : 'rotate(0deg)',
                                                     transition:
                                                         'transform 0.3s ease',
-                                                    color: 'primary.main',
                                                 }}
                                             />
                                         </ListItemButton>

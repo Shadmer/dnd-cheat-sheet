@@ -83,7 +83,6 @@ export const PlotCard = observer(() => {
                 onClick={() =>
                     navigateWithSave(NavigationRoute.plot, LastPageType.scene)
                 }
-                color="primary"
             >
                 <Clear />
             </IconButton>
@@ -109,14 +108,12 @@ export const PlotCard = observer(() => {
             <IconButton
                 disabled={currentIndex === 0}
                 onClick={() => navigateWithSave(prevScene, LastPageType.scene)}
-                color="primary"
             >
                 <ArrowBack />
             </IconButton>
             <IconButton
                 disabled={currentIndex === plotMenuList.length - 1}
                 onClick={() => navigateWithSave(nextScene, LastPageType.scene)}
-                color="primary"
             >
                 <ArrowForward />
             </IconButton>

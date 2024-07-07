@@ -76,7 +76,6 @@ export const PlotMenuItem = ({
             </CardActionArea>
 
             <IconButton
-                color="primary"
                 sx={{
                     position: 'absolute',
                     top: 6,

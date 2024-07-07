@@ -205,7 +205,6 @@ export const CodexCard = observer(() => {
                 <Stack direction="row" alignItems="center">
                     <Tooltip title="Открыть меню">
                         <IconButton
-                            color="primary"
                             sx={{
                                 display: {
                                     xs: 'flex',
@@ -232,7 +231,6 @@ export const CodexCard = observer(() => {
                                     LastPageType.codex
                                 )
                             }
-                            color="primary"
                             sx={{ ml: 'auto' }}
                         >
                             <Clear />

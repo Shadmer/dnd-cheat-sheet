@@ -14,18 +14,23 @@ import {
     useMediaQuery,
 } from '@mui/material';
 import { Clear, MenuOpen } from '@mui/icons-material';
+
+import { ICodexMenuList } from '@src/interfaces';
+import { LastPageType, NavigationRoute } from '@src/enums';
+
 import { useStores } from '@src/providers/RootStoreContext';
 import { useDrawer } from '@src/providers/DrawerProvider';
 import { useNavigateWithSave } from '@src/providers/NavigateWithSaveProvider';
-import { LastPageType, NavigationRoute } from '@src/enums';
+
 import { ScrollableBox } from '@src/components/common/ScrollableBox';
 import { MarkdownRenderer } from '@src/components/common/MarkdownRenderer';
 import { FlexHeightContainer } from '@src/components/common/FlexHeightContainer';
 import { FullWidthTabs } from '@src/components/common/FullWidthTabs';
 import { ImageGallery } from '@src/components/common/ImageGallery';
+
 import { CodexMenuList } from '@src/components/codex/CodexMenuList';
 import { CreatureCard } from '@src/components/codex/CreatureContent';
-import { ICodexMenuList } from '@src/interfaces';
+import { ArtifactContent } from '@src/components/codex/ArtifactContent';
 
 interface ITabData {
     id: string;
@@ -135,6 +140,14 @@ export const CodexCard = observer(() => {
             });
         }
 
+        if (currentPage.artifact) {
+            newTabData.push({
+                id: 'artifact',
+                label: 'Свойства',
+                content: <ArtifactContent artifact={currentPage.artifact} />,
+            });
+        }
+
         if (currentPage.description) {
             newTabData.push({
                 id: 'description',
@@ -163,7 +176,7 @@ export const CodexCard = observer(() => {
             const mapName = params.id ?? 'codexMap';
             newTabData.push({
                 id: 'maps',
-                label: 'Карта',
+                label: 'Карты',
                 content: (
                     <ImageGallery images={currentPage.maps} alt={mapName} />
                 ),

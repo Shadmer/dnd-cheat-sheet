@@ -244,6 +244,16 @@ export const CodexMenuList = observer(
                             mode === 'light'
                                 ? lighten(theme.palette.primary.main, 0.8)
                                 : darken(theme.palette.primary.main, 0.4),
+                        boxShadow: (theme) =>
+                            `0px 4px 8px ${
+                                theme.palette.mode === 'light'
+                                    ? lighten(theme.palette.primary.main, 0.4)
+                                    : darken(theme.palette.primary.main, 0.6)
+                            }`,
+                        transform: 'translateY(-2px)',
+                        transition:
+                            'background-color 0.3s, box-shadow 0.3s, transform 0.3s',
+                        zIndex: 1,
                     },
                 }}
                 selected={isSelected(category.section, item.id)}

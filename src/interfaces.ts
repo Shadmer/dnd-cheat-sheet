@@ -62,13 +62,34 @@ export interface ICreature {
         senses: IProperty[];
     };
     languages: string[];
-    areas: string[];
     feats: IProperty[];
     actions: IProperty[];
 }
 
+export interface IArtifact {
+    name: {
+        rus: string;
+        eng: string;
+    };
+    type: string;
+    rarity: string;
+    customization: boolean;
+    cost: string;
+    features: IProperty[];
+    blessings: {
+        small: IProperty[];
+        basic: IProperty[];
+    };
+    curses: {
+        small: IProperty[];
+        basic: IProperty[];
+    };
+    destruction: string[];
+}
+
 export interface ICodexCard {
     creature?: ICreature;
+    artifact?: IArtifact;
     description?: string;
     images?: string[];
     maps?: string[];

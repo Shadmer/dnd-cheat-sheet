@@ -56,7 +56,7 @@ export const CreatureCard: React.FC<CreatureCardProps> = ({ creature }) => {
             <Divider />
 
             <Box>
-                <Typography variant="h6" gutterBottom>
+                <Typography variant="h6" fontWeight="bold" gutterBottom>
                     Характеристики
                 </Typography>
                 <Grid container spacing={1}>
@@ -86,7 +86,7 @@ export const CreatureCard: React.FC<CreatureCardProps> = ({ creature }) => {
             <Divider />
 
             <Box>
-                <Typography variant="h6" gutterBottom>
+                <Typography variant="h6" fontWeight="bold" gutterBottom>
                     Дополнительная информация
                 </Typography>
                 <Typography>
@@ -100,7 +100,7 @@ export const CreatureCard: React.FC<CreatureCardProps> = ({ creature }) => {
             <Divider />
 
             <Box>
-                <Typography variant="h6" gutterBottom>
+                <Typography variant="h6" fontWeight="bold" gutterBottom>
                     Спасброски
                 </Typography>
                 <Typography>
@@ -116,7 +116,7 @@ export const CreatureCard: React.FC<CreatureCardProps> = ({ creature }) => {
             <Divider />
 
             <Box>
-                <Typography variant="h6" gutterBottom>
+                <Typography variant="h6" fontWeight="bold" gutterBottom>
                     Иммунитеты
                 </Typography>
                 <Typography>
@@ -136,7 +136,7 @@ export const CreatureCard: React.FC<CreatureCardProps> = ({ creature }) => {
             <Divider />
 
             <Box>
-                <Typography variant="h6" gutterBottom>
+                <Typography variant="h6" fontWeight="bold" gutterBottom>
                     Чувства
                 </Typography>
                 <Typography>
@@ -152,7 +152,7 @@ export const CreatureCard: React.FC<CreatureCardProps> = ({ creature }) => {
             <Divider />
 
             <Box>
-                <Typography variant="h6" gutterBottom>
+                <Typography variant="h6" fontWeight="bold" gutterBottom>
                     Языки
                 </Typography>
                 <Typography>{creature.languages.join(', ')}</Typography>
@@ -161,20 +161,7 @@ export const CreatureCard: React.FC<CreatureCardProps> = ({ creature }) => {
             <Divider />
 
             <Box>
-                <Typography variant="h6" gutterBottom>
-                    Места обитания
-                </Typography>
-                <Typography>
-                    {creature.areas.length
-                        ? creature.areas.join(', ')
-                        : 'Не известно'}
-                </Typography>
-            </Box>
-
-            <Divider />
-
-            <Box>
-                <Typography variant="h4" fontWeight="bold" gutterBottom>
+                <Typography variant="h6" fontWeight="bold" gutterBottom>
                     Особенности
                 </Typography>
                 <List dense>
@@ -205,7 +192,7 @@ export const CreatureCard: React.FC<CreatureCardProps> = ({ creature }) => {
             <Divider />
 
             <Box>
-                <Typography variant="h4" fontWeight="bold" gutterBottom>
+                <Typography variant="h6" fontWeight="bold" gutterBottom>
                     Действия
                 </Typography>
                 <List dense>

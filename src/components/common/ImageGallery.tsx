@@ -74,7 +74,6 @@ export const ImageGallery: React.FC<ImageGalleryProps> = observer(
                             justifyContent: 'center',
                             alignItems: 'center',
                             height: '100%',
-                            background: 'red',
                         }}
                     >
                         <CircularProgress />

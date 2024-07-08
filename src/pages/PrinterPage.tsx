@@ -132,7 +132,7 @@ export const PrinterPage: React.FC = observer(() => {
                     <MenuOpen />
                 </IconButton>
                 <Typography variant="h4" sx={{ flexGrow: 1 }} noWrap>
-                    Меню загрузки
+                    Изображения для печати
                 </Typography>
                 <Tooltip title="Загрузить всё">
                     <IconButton onClick={loadAllImages}>
@@ -159,15 +159,16 @@ export const PrinterPage: React.FC = observer(() => {
 
     const footer = (
         <Stack pb={2} alignItems="flex-end">
-            <Button
-                variant="contained"
-                color="primary"
-                onClick={handlePrint}
-                sx={{ mt: 2 }}
-                disabled={!loadedImagesUrls.length}
-            >
-                Печать изображений
-            </Button>
+            {!!loadedImagesUrls.length && (
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handlePrint}
+                    sx={{ mt: 2 }}
+                >
+                    Печать изображений
+                </Button>
+            )}
         </Stack>
     );
 

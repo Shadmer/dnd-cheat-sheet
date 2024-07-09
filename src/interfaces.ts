@@ -26,10 +26,6 @@ export interface IProperty {
     value: string | number;
 }
 
-export interface ICharacter {
-    foo: string;
-}
-
 export interface ICreature {
     name: {
         rus: string;
@@ -87,7 +83,46 @@ export interface IArtifact {
     destruction: string[];
 }
 
+export interface ICharacter {
+    name: string;
+    race: string;
+    class: string;
+    background: string;
+    alignment: string;
+    physical: {
+        appearance: string;
+        health: string;
+    };
+    social: {
+        originAndStatus: string;
+        educationAndSkills: string;
+        familyAndConnections: string;
+    };
+    psychological: {
+        personality: {
+            traits: string;
+            flaw: string;
+        };
+        motivesAndGoals: {
+            motives: string;
+            goal: string;
+        };
+        innerWorld: {
+            treasure: string;
+            secret: string;
+        };
+        valuesAndBonds: {
+            ideals: string;
+            bonds: string;
+        };
+        weaknesses: {
+            phobiasAndVulnerabilities: string;
+        };
+    };
+}
+
 export interface ICodexCard {
+    character?: ICharacter;
     creature?: ICreature;
     artifact?: IArtifact;
     description?: string;

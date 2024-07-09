@@ -31,6 +31,7 @@ import { ImageGallery } from '@src/components/common/ImageGallery';
 import { CodexMenuList } from '@src/components/codex/CodexMenuList';
 import { CreatureCard } from '@src/components/codex/CreatureContent';
 import { ArtifactContent } from '@src/components/codex/ArtifactContent';
+import { CharacterContent } from '@src/components/codex/CharacterContent';
 
 interface ITabData {
     id: string;
@@ -145,6 +146,14 @@ export const CodexCard = observer(() => {
                 id: 'artifact',
                 label: 'Свойства',
                 content: <ArtifactContent artifact={currentPage.artifact} />,
+            });
+        }
+
+        if (currentPage.character) {
+            newTabData.push({
+                id: 'character',
+                label: 'Личность',
+                content: <CharacterContent character={currentPage.character} />,
             });
         }
 

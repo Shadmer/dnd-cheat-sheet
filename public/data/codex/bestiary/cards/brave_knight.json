@@ -39,13 +39,13 @@
             "passivePerception": "12",
             "senses": [
                 {
-                    "name": "тёмное зрение",
+                    "name": "Тёмное зрение",
                     "value": "60 фт."
                 }
             ]
         },
         "languages": [
-            "общий"
+            "Общий"
         ],
         "feats": [
             {

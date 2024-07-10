@@ -121,10 +121,30 @@ export interface ICharacter {
     };
 }
 
+export interface IPlace {
+    name: string;
+    location: string;
+    description: {
+        appearance: string;
+        atmosphere: string;
+        history: string;
+    };
+    inhabitants: {
+        mainInhabitants: string;
+        importantCharacters: IProperty[];
+    };
+    features: {
+        landmarks: string[];
+        dangers: string[];
+        resources: string[];
+    };
+}
+
 export interface ICodexCard {
-    character?: ICharacter;
     creature?: ICreature;
     artifact?: IArtifact;
+    place?: IPlace;
+    character?: ICharacter;
     description?: string;
     images?: string[];
     maps?: string[];

@@ -28,7 +28,6 @@ export const CreatureCard: React.FC<CreatureCardProps> = ({ creature }) => {
     const getStatWithModifier = (stat: number) => {
         const modifier = Math.floor((stat - 10) / 2);
         const modifierSign = modifier >= 0 ? '+' : '';
-
         return `${stat} (${modifierSign}${modifier})`;
     };
 

@@ -32,6 +32,7 @@ import { CodexMenuList } from '@src/components/codex/CodexMenuList';
 import { CreatureCard } from '@src/components/codex/CreatureContent';
 import { ArtifactContent } from '@src/components/codex/ArtifactContent';
 import { CharacterContent } from '@src/components/codex/CharacterContent';
+import { PlaceContent } from '@src/components/codex/PlaceContent';
 
 interface ITabData {
     id: string;
@@ -83,11 +84,11 @@ const defaultContentText = (
         </Box>
         <Box>
             <Typography variant="h3" gutterBottom>
-                Артефакты и способности
+                Артефакты
             </Typography>
             <Typography variant="body1" gutterBottom>
-                Здесь собраны все магические артефакты и уникальные способности,
-                которые герои могут обнаружить во время своих приключений.
+                Здесь собраны все магические артефакты, которые герои могут
+                обнаружить во время своих приключений.
             </Typography>
         </Box>
         <Box>
@@ -146,6 +147,14 @@ export const CodexCard = observer(() => {
                 id: 'artifact',
                 label: 'Свойства',
                 content: <ArtifactContent artifact={currentPage.artifact} />,
+            });
+        }
+
+        if (currentPage.place) {
+            newTabData.push({
+                id: 'place',
+                label: 'Особенности',
+                content: <PlaceContent place={currentPage.place} />,
             });
         }
 

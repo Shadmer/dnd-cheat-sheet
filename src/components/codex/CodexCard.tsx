@@ -33,6 +33,7 @@ import { CreatureCard } from '@src/components/codex/CreatureContent';
 import { ArtifactContent } from '@src/components/codex/ArtifactContent';
 import { CharacterContent } from '@src/components/codex/CharacterContent';
 import { PlaceContent } from '@src/components/codex/PlaceContent';
+import { ShopContent } from '@src/components/codex/ShopContent';
 
 interface ITabData {
     id: string;
@@ -163,6 +164,14 @@ export const CodexCard = observer(() => {
                 id: 'character',
                 label: 'Личность',
                 content: <CharacterContent character={currentPage.character} />,
+            });
+        }
+
+        if (currentPage.shop) {
+            newTabData.push({
+                id: 'shop',
+                label: 'Товары',
+                content: <ShopContent shop={currentPage.shop} />,
             });
         }
 

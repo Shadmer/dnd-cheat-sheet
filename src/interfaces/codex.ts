@@ -135,7 +135,7 @@ export interface ICodexCard {
     artifact?: IArtifact;
     place?: IPlace;
     character?: ICharacter;
-    goods?: IShop;
+    shop?: IShop;
     description?: string;
     images?: string[];
     maps?: string[];

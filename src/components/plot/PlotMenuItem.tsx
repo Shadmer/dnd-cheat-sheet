@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import { darken, lighten } from '@mui/material/styles';
 import { ExpandMore } from '@mui/icons-material';
-import { IPlotMenuItem } from '@src/interfaces';
+import { IPlotMenuItem } from '@src/interfaces/plot';
 import { LastPageType, NavigationRoute } from '@src/enums';
 import { useNavigateWithSave } from '@src/providers/NavigateWithSaveProvider';
 import { useCustomTheme } from '@src/providers/CustomThemeProvider';

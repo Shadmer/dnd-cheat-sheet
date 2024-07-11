@@ -15,7 +15,7 @@ import {
 } from '@mui/material';
 import { Clear, MenuOpen } from '@mui/icons-material';
 
-import { ICodexMenuList } from '@src/interfaces';
+import { ICodexMenuList } from '@src/interfaces/codex';
 import { LastPageType, NavigationRoute } from '@src/enums';
 
 import { useStores } from '@src/providers/RootStoreContext';

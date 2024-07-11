@@ -8,7 +8,7 @@ import {
     ListItem,
     ListItemText,
 } from '@mui/material';
-import { IPlace } from '@src/interfaces';
+import { IPlace } from '@src/interfaces/codex';
 
 interface PlaceContentProps {
     place: IPlace;

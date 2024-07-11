@@ -1,6 +1,6 @@
 import { BaseService } from '@src/services/BaseService';
 import { ENDPOINTS } from '@src/endpoints';
-import { ICodexCard, ICodexMenuList } from '@src/interfaces';
+import { ICodexCard, ICodexMenuList } from '@src/interfaces/codex';
 
 export const CodexService = () => {
     const fetchCodexMenuList = async () =>

@@ -42,7 +42,7 @@ import { ScrollableBox } from '@src/components/common/ScrollableBox';
 import { FlexHeightContainer } from '@src/components/common/FlexHeightContainer';
 
 import { LastPageType, NavigationRoute } from '@src/enums';
-import { ICodexMenuList, ICodexMenuItem } from '@src/interfaces';
+import { ICodexMenuList, ICodexMenuItem } from '@src/interfaces/codex';
 
 const iconMap: Record<string, React.ReactNode> = {
     players: <FaUserFriends />,

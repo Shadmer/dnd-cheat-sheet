@@ -1,6 +1,6 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import { CodexService } from '@src/services/CodexService';
-import { IPrintSection, IPrintContent } from '@src/interfaces';
+import { IPrintSection, IPrintContent } from '@src/interfaces/print';
 
 class Print {
     codexService = CodexService();

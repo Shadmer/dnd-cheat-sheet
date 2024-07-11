@@ -1,6 +1,6 @@
 import React from 'react';
 import { Typography, Box, Stack, Divider } from '@mui/material';
-import { ICharacter } from '@src/interfaces';
+import { ICharacter } from '@src/interfaces/codex';
 
 interface CharacterContentProps {
     character: ICharacter;

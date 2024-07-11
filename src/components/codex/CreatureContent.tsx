@@ -9,7 +9,7 @@ import {
     Divider,
 } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
-import { ICreature } from '@src/interfaces';
+import { ICreature } from '@src/interfaces/codex';
 
 interface CreatureCardProps {
     creature: ICreature;

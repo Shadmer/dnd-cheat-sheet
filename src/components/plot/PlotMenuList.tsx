@@ -18,7 +18,7 @@ import { useStores } from '@src/providers/RootStoreContext';
 import { ScrollableBox } from '@src/components/common/ScrollableBox';
 import { PlotMenuItem } from '@src/components/plot/PlotMenuItem';
 import { FlexHeightContainer } from '@src/components/common/FlexHeightContainer';
-import { IPlotMenuItem } from '@src/interfaces';
+import { IPlotMenuItem } from '@src/interfaces/plot';
 
 export const PlotMenuList = observer(() => {
     const { scene } = useParams();

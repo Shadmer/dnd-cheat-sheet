@@ -14,7 +14,7 @@ import {
 import { GiCursedStar, GiHeartPlus, GiHolySymbol } from 'react-icons/gi';
 import { SiCurseforge } from 'react-icons/si';
 
-import { IArtifact } from '@src/interfaces';
+import { IArtifact } from '@src/interfaces/codex';
 
 interface ArtifactContentProps {
     artifact: IArtifact;

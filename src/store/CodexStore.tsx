@@ -3,7 +3,7 @@ import { makeAutoObservable, runInAction } from 'mobx';
 
 import { CodexService } from '@src/services/CodexService';
 
-import { ICodexCard, ICodexMenuList } from '@src/interfaces';
+import { ICodexCard, ICodexMenuList } from '@src/interfaces/codex';
 import { NavigationRoute } from '@src/enums';
 
 class Codex {

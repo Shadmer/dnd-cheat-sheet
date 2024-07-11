@@ -1,30 +1,4 @@
-export interface IPlotItemResponse {
-    content: string;
-}
-
-export interface IPlotMenuItem {
-    sceneId: string;
-    part: string;
-    title: string;
-    subTitle: string;
-    description: string;
-}
-
-export interface ICodexMenuItem {
-    id: string;
-    name: string;
-}
-
-export interface ICodexMenuList {
-    section: string;
-    title: string;
-    content: ICodexMenuItem[];
-}
-
-export interface IProperty {
-    name: string;
-    value: string | number;
-}
+import { IProperty } from '@src/interfaces/common';
 
 export interface ICreature {
     name: {
@@ -140,24 +114,40 @@ export interface IPlace {
     };
 }
 
+interface IShopItem {
+    name: string;
+    price: string;
+    description: string;
+}
+
+interface IShopCategory {
+    categoryName: string;
+    items: IShopItem[];
+}
+
+export interface IShop {
+    shopName: string;
+    categories: IShopCategory[];
+}
+
 export interface ICodexCard {
     creature?: ICreature;
     artifact?: IArtifact;
     place?: IPlace;
     character?: ICharacter;
+    goods?: IShop;
     description?: string;
     images?: string[];
     maps?: string[];
 }
 
-export interface IPrintContent {
+export interface ICodexMenuItem {
     id: string;
     name: string;
-    images: string[];
 }
 
-export interface IPrintSection {
+export interface ICodexMenuList {
     section: string;
     title: string;
-    content: IPrintContent[];
+    content: ICodexMenuItem[];
 }

@@ -19,9 +19,6 @@ interface ShopContentProps {
 export const ShopContent: React.FC<ShopContentProps> = ({ shop }) => {
     return (
         <Box>
-            <Typography variant="h4" fontWeight="bold" gutterBottom>
-                {shop.shopName}
-            </Typography>
             {shop.categories.map((category, categoryIndex) => (
                 <Box key={categoryIndex} mb={4}>
                     <Typography variant="h6" fontWeight="bold" gutterBottom>
@@ -45,9 +42,13 @@ export const ShopContent: React.FC<ShopContentProps> = ({ shop }) => {
                             <TableBody>
                                 {category.items.map((item, itemIndex) => (
                                     <TableRow key={itemIndex}>
-                                        <TableCell>{item.name}</TableCell>
-                                        <TableCell>{item.price}</TableCell>
-                                        <TableCell>
+                                        <TableCell width={200}>
+                                            {item.name}
+                                        </TableCell>
+                                        <TableCell width={200}>
+                                            {item.price}
+                                        </TableCell>
+                                        <TableCell width={200}>
                                             {item.description}
                                         </TableCell>
                                     </TableRow>

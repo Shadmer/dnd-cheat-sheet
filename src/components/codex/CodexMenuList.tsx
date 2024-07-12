@@ -21,8 +21,6 @@ import {
     ExpandMore,
     DirectionsOff,
     Directions,
-    Star,
-    StarBorder,
     SearchOff,
 } from '@mui/icons-material';
 import {
@@ -77,9 +75,6 @@ export const CodexMenuList = observer(
             string,
             boolean
         > | null>(params.section ? { [params.section]: true } : null);
-        const [favorites, setFavorites] = React.useState<
-            Record<string, Record<string, boolean>>
-        >({});
 
         const hasOpenSections = React.useMemo(
             () =>
@@ -139,30 +134,6 @@ export const CodexMenuList = observer(
                 return updatedOpenSections;
             });
         };
-        const handleIconClick = (section: string, id: string) => {
-            setFavorites((prevState) => {
-                const newState = { ...prevState };
-
-                if (newState[section]?.[id]) {
-                    delete newState[section][id];
-                    if (Object.keys(newState[section]).length === 0) {
-                        delete newState[section];
-                    }
-                } else {
-                    if (!newState[section]) {
-                        newState[section] = {};
-                    }
-                    newState[section][id] = true;
-                }
-
-                return newState;
-            });
-        };
-
-        // TODO: создать стор для favorites
-        React.useEffect(() => {
-            // console.log('favorites', favorites);
-        }, [favorites]);
 
         React.useEffect(() => {
             loadCodexMenuList();
@@ -224,13 +195,6 @@ export const CodexMenuList = observer(
             </Stack>
         );
 
-        const availableFavorites = (section: string) => {
-            // TODO: раскомментировать после начала работы над Полем битвы
-            // const favorites = ['players', 'characters', 'bestiary', 'places'];
-            // return favorites.includes(section);
-            return [''].includes(section);
-        };
-
         const innerListItemButton = (
             category: ICodexMenuList,
             item: ICodexMenuItem
@@ -265,26 +229,6 @@ export const CodexMenuList = observer(
                     );
                 }}
             >
-                {availableFavorites(category.section) && (
-                    <ListItemIcon>
-                        <IconButton
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                handleIconClick(category.section, item.id);
-                            }}
-                        >
-                            {favorites[category.section]?.[item.id] ? (
-                                <Star
-                                    sx={{
-                                        color: 'secondary.main',
-                                    }}
-                                />
-                            ) : (
-                                <StarBorder />
-                            )}
-                        </IconButton>
-                    </ListItemIcon>
-                )}
                 <ListItemText primary={item.name} />
             </ListItemButton>
         );

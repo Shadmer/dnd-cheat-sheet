@@ -11,6 +11,7 @@ class Codex {
     codexMenuList: ICodexMenuList[] = [];
     filteredCodexMenuList: ICodexMenuList[] = [];
     currentPage: ICodexCard | null = null;
+    currentPageLoading = false;
     navigate: NavigateFunction | null = null;
 
     constructor() {
@@ -46,6 +47,8 @@ class Codex {
     };
 
     loadPage = async (id: string) => {
+        this.currentPageLoading = true;
+
         try {
             const page = await this.codexService.fetchPage(id);
             runInAction(() => {
@@ -53,6 +56,12 @@ class Codex {
             });
         } catch {
             this.navigate && this.navigate(NavigationRoute.codex);
+        } finally {
+            setTimeout(() => {
+                runInAction(() => {
+                    this.currentPageLoading = false;
+                });
+            }, 200);
         }
     };
 

@@ -34,6 +34,7 @@ import { ArtifactContent } from '@src/components/codex/ArtifactContent';
 import { CharacterContent } from '@src/components/codex/CharacterContent';
 import { PlaceContent } from '@src/components/codex/PlaceContent';
 import { ShopContent } from '@src/components/codex/ShopContent';
+import { SkeletonLoading } from '../common/SkeletonLoading';
 
 interface ITabData {
     id: string;
@@ -113,7 +114,14 @@ export const CodexCard = observer(() => {
     );
     const { navigateWithSave } = useNavigateWithSave();
     const {
-        codex: { currentPage, codexMenuList, loadPage, clearPage, setNavigate },
+        codex: {
+            currentPage,
+            currentPageLoading,
+            codexMenuList,
+            loadPage,
+            clearPage,
+            setNavigate,
+        },
     } = useStores();
 
     const { openDrawer, closeDrawer } = useDrawer();
@@ -297,20 +305,26 @@ export const CodexCard = observer(() => {
     const content = (
         <ScrollableBox bgcolor="paper">
             <Box p="1rem" sx={{ height: '100%' }}>
-                {currentSection ? (
-                    <Box sx={{ height: '100%' }}>
-                        {tabData.map((tab) => (
-                            <Box
-                                key={tab.id}
-                                hidden={tabValue !== tab.id}
-                                sx={{ height: '100%' }}
-                            >
-                                {tab.content}
-                            </Box>
-                        ))}
-                    </Box>
+                {currentPageLoading ? (
+                    <SkeletonLoading />
                 ) : (
-                    defaultContentText
+                    <>
+                        {currentSection ? (
+                            <Box sx={{ height: '100%' }}>
+                                {tabData.map((tab) => (
+                                    <Box
+                                        key={tab.id}
+                                        hidden={tabValue !== tab.id}
+                                        sx={{ height: '100%' }}
+                                    >
+                                        {tab.content}
+                                    </Box>
+                                ))}
+                            </Box>
+                        ) : (
+                            defaultContentText
+                        )}
+                    </>
                 )}
             </Box>
         </ScrollableBox>

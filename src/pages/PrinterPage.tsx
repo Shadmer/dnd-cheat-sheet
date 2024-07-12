@@ -14,6 +14,7 @@ import {
     Stack,
     Tooltip,
     Drawer,
+    CircularProgress,
 } from '@mui/material';
 import {
     AutoDelete,
@@ -39,6 +40,7 @@ export const PrinterPage: React.FC = observer(() => {
             loadedImagesUrls,
             loadAllImages,
             unloadAllImages,
+            menuListLoading,
         },
     } = useStores();
 
@@ -76,47 +78,66 @@ export const PrinterPage: React.FC = observer(() => {
 
     const drawerContent = (
         <ScrollableBox>
-            <Box sx={{ width: 300 }}>
-                <List sx={{ padding: 2 }}>
-                    {sections.map((sectionItem) => (
-                        <Box key={sectionItem.section} mb={4}>
-                            <Typography variant="h4" gutterBottom>
-                                {sectionItem.title}
-                            </Typography>
-                            <Divider />
-                            {sectionItem.content.map((contentItem) => (
-                                <ListItem key={contentItem.id}>
-                                    <ListItemText primary={contentItem.name} />
-                                    <ListItemSecondaryAction>
-                                        <Tooltip
-                                            placement="right"
-                                            title={
-                                                isImageLoaded(contentItem.id)
-                                                    ? 'Удалить'
-                                                    : 'Загрузить'
-                                            }
-                                        >
-                                            <IconButton
-                                                onClick={() =>
-                                                    toggleImageLoad(contentItem)
+            <Box sx={{ width: 300, height: '100%' }}>
+                {menuListLoading ? (
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            height: '100%',
+                        }}
+                    >
+                        <CircularProgress />
+                    </Box>
+                ) : (
+                    <List sx={{ padding: 2 }}>
+                        {sections.map((sectionItem) => (
+                            <Box key={sectionItem.section} mb={4}>
+                                <Typography variant="h4" gutterBottom>
+                                    {sectionItem.title}
+                                </Typography>
+                                <Divider />
+                                {sectionItem.content.map((contentItem) => (
+                                    <ListItem key={contentItem.id}>
+                                        <ListItemText
+                                            primary={contentItem.name}
+                                        />
+                                        <ListItemSecondaryAction>
+                                            <Tooltip
+                                                placement="right"
+                                                title={
+                                                    isImageLoaded(
+                                                        contentItem.id
+                                                    )
+                                                        ? 'Удалить'
+                                                        : 'Загрузить'
                                                 }
-                                                edge="end"
                                             >
-                                                {isImageLoaded(
-                                                    contentItem.id
-                                                ) ? (
-                                                    <Delete />
-                                                ) : (
-                                                    <CloudDownload />
-                                                )}
-                                            </IconButton>
-                                        </Tooltip>
-                                    </ListItemSecondaryAction>
-                                </ListItem>
-                            ))}
-                        </Box>
-                    ))}
-                </List>
+                                                <IconButton
+                                                    onClick={() =>
+                                                        toggleImageLoad(
+                                                            contentItem
+                                                        )
+                                                    }
+                                                    edge="end"
+                                                >
+                                                    {isImageLoaded(
+                                                        contentItem.id
+                                                    ) ? (
+                                                        <Delete />
+                                                    ) : (
+                                                        <CloudDownload />
+                                                    )}
+                                                </IconButton>
+                                            </Tooltip>
+                                        </ListItemSecondaryAction>
+                                    </ListItem>
+                                ))}
+                            </Box>
+                        ))}
+                    </List>
+                )}
             </Box>
         </ScrollableBox>
     );

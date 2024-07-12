@@ -6,6 +6,7 @@ class Print {
     codexService = CodexService();
     sections: IPrintSection[] = [];
     loadedImages: string[] = [];
+    menuListLoading = false;
 
     constructor() {
         makeAutoObservable(this);
@@ -21,6 +22,8 @@ class Print {
         };
 
         for (const menuListItem of menuList) {
+            this.menuListLoading = true;
+
             const sectionContent: IPrintContent[] = [];
 
             for (const item of menuListItem.content) {
@@ -59,6 +62,7 @@ class Print {
 
         runInAction(() => {
             this.sections = sections;
+            this.menuListLoading = false;
         });
     };
 

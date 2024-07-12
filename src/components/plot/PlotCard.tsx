@@ -4,12 +4,15 @@ import { observer } from 'mobx-react-lite';
 
 import { Box, IconButton, Paper, Stack, Typography } from '@mui/material';
 import { ArrowBack, ArrowForward, Clear } from '@mui/icons-material';
+
 import { useStores } from '@src/providers/RootStoreContext';
+import { useNavigateWithSave } from '@src/providers/NavigateWithSaveProvider';
+import { LastPageType, NavigationRoute } from '@src/enums';
+
 import { ScrollableBox } from '@src/components/common/ScrollableBox';
 import { MarkdownRenderer } from '@src/components/common/MarkdownRenderer';
 import { FlexHeightContainer } from '@src/components/common/FlexHeightContainer';
-import { useNavigateWithSave } from '@src/providers/NavigateWithSaveProvider';
-import { LastPageType, NavigationRoute } from '@src/enums';
+import { SkeletonLoading } from '@src/components/common/SkeletonLoading';
 
 export const PlotCard = observer(() => {
     const { scene } = useParams();
@@ -21,6 +24,7 @@ export const PlotCard = observer(() => {
             clearScene,
             setNavigate,
             currentScene,
+            currentSceneLoading,
             plotMenuList,
         },
     } = useStores();
@@ -92,7 +96,11 @@ export const PlotCard = observer(() => {
     const content = (
         <ScrollableBox bgcolor="paper">
             <Box p="1rem">
-                <MarkdownRenderer markdown={currentScene} />
+                {currentSceneLoading ? (
+                    <SkeletonLoading />
+                ) : (
+                    <MarkdownRenderer markdown={currentScene} />
+                )}
             </Box>
         </ScrollableBox>
     );

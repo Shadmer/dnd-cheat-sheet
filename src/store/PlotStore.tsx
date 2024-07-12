@@ -9,6 +9,7 @@ class Plot {
     plotMenuList: IPlotMenuItem[] = [];
     filteredPlotMenuList: IPlotMenuItem[] = [];
     currentScene = '';
+    currentSceneLoading = false;
     navigate: NavigateFunction | null = null;
 
     constructor() {
@@ -40,6 +41,8 @@ class Plot {
     };
 
     loadScene = async (sceneId: string) => {
+        this.currentSceneLoading = true;
+
         try {
             const scene = await this.plotService.fetchScene(sceneId);
             runInAction(() => {
@@ -47,6 +50,12 @@ class Plot {
             });
         } catch {
             this.navigate && this.navigate(NavigationRoute.plot);
+        } finally {
+            runInAction(() => {
+                runInAction(() => {
+                    this.currentSceneLoading = false;
+                });
+            });
         }
     };
 

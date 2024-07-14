@@ -2,7 +2,7 @@ import { NavigateFunction } from 'react-router-dom';
 import { makeAutoObservable, runInAction } from 'mobx';
 import { PlotService } from '@src/services/PlotService';
 import { IPlotMenuItem } from '@src/interfaces/plot';
-import { NavigationRoute } from '@src/enums';
+import { NavigationRoute } from '@src/constants/enums';
 
 class Plot {
     plotService = PlotService();

@@ -1,5 +1,5 @@
 import { BaseService } from '@src/services/BaseService';
-import { ENDPOINTS } from '@src/endpoints';
+import { ENDPOINTS } from '@src/constants/endpoints';
 import { IPlotItemResponse, IPlotMenuItem } from '@src/interfaces/plot';
 
 export const PlotService = () => {

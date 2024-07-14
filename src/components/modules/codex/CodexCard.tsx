@@ -16,7 +16,7 @@ import {
 import { Clear, MenuOpen } from '@mui/icons-material';
 
 import { ICodexMenuList } from '@src/interfaces/codex';
-import { LastPageType, NavigationRoute } from '@src/enums';
+import { LastPageType, NavigationRoute } from '@src/constants/enums';
 
 import { useStores } from '@src/providers/RootStoreContext';
 import { useDrawer } from '@src/providers/DrawerProvider';
@@ -28,13 +28,13 @@ import { FlexHeightContainer } from '@src/components/common/FlexHeightContainer'
 import { FullWidthTabs } from '@src/components/common/FullWidthTabs';
 import { ImageGallery } from '@src/components/common/ImageGallery';
 
-import { CodexMenuList } from '@src/components/codex/CodexMenuList';
-import { CreatureCard } from '@src/components/codex/CreatureContent';
-import { ArtifactContent } from '@src/components/codex/ArtifactContent';
-import { CharacterContent } from '@src/components/codex/CharacterContent';
-import { PlaceContent } from '@src/components/codex/PlaceContent';
-import { ShopContent } from '@src/components/codex/ShopContent';
-import { SkeletonLoading } from '../common/SkeletonLoading';
+import { CodexMenuList } from '@src/components/modules/codex/CodexMenuList';
+import { CreatureCard } from '@src/components/modules/codex/CreatureContent';
+import { ArtifactContent } from '@src/components/modules/codex/ArtifactContent';
+import { CharacterContent } from '@src/components/modules/codex/CharacterContent';
+import { PlaceContent } from '@src/components/modules/codex/PlaceContent';
+import { ShopContent } from '@src/components/modules/codex/ShopContent';
+import { SkeletonLoading } from '@src/components/common/SkeletonLoading';
 
 interface ITabData {
     id: string;

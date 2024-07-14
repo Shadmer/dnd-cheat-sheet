@@ -3,9 +3,8 @@ import { useAuth } from '@src/providers/AuthProvider';
 import { EntryPage } from '@src/pages/EntryPage';
 import { MainPage } from '@src/pages/MainPage';
 import { PlotPage } from '@src/pages/PlotPage';
-import { JourneyPage } from '@src/pages/JourneyPage';
-import { BattlePage } from '@src/pages/BattlePage';
 import { CodexPage } from '@src/pages/CodexPage';
+import { WorkshopPage } from '@src/pages/WorkshopPage';
 import { PrinterPage } from '@src/pages/PrinterPage';
 
 export const App = () => {
@@ -30,9 +29,8 @@ export const App = () => {
             children: [
                 { path: '', element: <Navigate to="plot" replace /> },
                 { path: 'plot/:scene?', element: <PlotPage /> },
-                // { path: 'journey', element: <JourneyPage /> },
-                // { path: 'battle', element: <BattlePage /> },
                 { path: 'codex/:section?/:id?', element: <CodexPage /> },
+                { path: 'workshop/:section?/:id?', element: <WorkshopPage /> },
                 { path: 'printer', element: <PrinterPage /> },
                 { path: '*', element: <Navigate to="plot" replace /> },
             ],

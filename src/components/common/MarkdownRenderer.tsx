@@ -73,42 +73,42 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
                 },
                 h1(props) {
                     return (
-                        <Typography variant="h1" component="h1">
+                        <Typography variant="h1" component="h1" mt={3}>
                             {props.children}
                         </Typography>
                     );
                 },
                 h2(props) {
                     return (
-                        <Typography variant="h2" component="h2">
+                        <Typography variant="h2" component="h2" mt={3}>
                             {props.children}
                         </Typography>
                     );
                 },
                 h3(props) {
                     return (
-                        <Typography variant="h3" component="h3">
+                        <Typography variant="h3" component="h3" mt={3}>
                             {props.children}
                         </Typography>
                     );
                 },
                 h4(props) {
                     return (
-                        <Typography variant="h4" component="h4">
+                        <Typography variant="h4" component="h4" mt={3}>
                             {props.children}
                         </Typography>
                     );
                 },
                 h5(props) {
                     return (
-                        <Typography variant="h5" component="h5">
+                        <Typography variant="h5" component="h5" mt={3}>
                             {props.children}
                         </Typography>
                     );
                 },
                 h6(props) {
                     return (
-                        <Typography variant="h6" component="h6">
+                        <Typography variant="h6" component="h6" mt={3}>
                             {props.children}
                         </Typography>
                     );

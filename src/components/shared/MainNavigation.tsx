@@ -2,9 +2,9 @@ import React, { ReactElement } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { BottomNavigation, BottomNavigationAction } from '@mui/material';
-import { AutoStories, Extension, HelpCenter, Route } from '@mui/icons-material';
+import { AutoStories, Extension, HelpCenter } from '@mui/icons-material';
 import { useNavigateWithSave } from '@src/providers/NavigateWithSaveProvider';
-import { NavigationRoute } from '@src/enums';
+import { NavigationRoute } from '@src/constants/enums';
 
 interface INavigationAction {
     value: string;
@@ -18,28 +18,23 @@ const navigationActionList: INavigationAction[] = [
         label: 'Сюжет',
         icon: <AutoStories />,
     },
-    // TODO: Вместо этого реализовать страницу "Инструменты"
-    // {
-    //     value: NavigationRoute.journey,
-    //     label: 'Путешествие',
-    //     icon: <Route />,
-    // },
-    // {
-    //     value: NavigationRoute.battle,
-    //     label: 'Сражение',
-    //     icon: <Extension />,
-    // },
     {
         value: NavigationRoute.codex,
         label: 'Кодекс',
         icon: <HelpCenter />,
+    },
+    {
+        value: NavigationRoute.workshop,
+        label: 'Мастерская',
+        icon: <Extension />,
     },
 ];
 
 export const MainNavigation = () => {
     const { pathname } = useLocation();
     const navigate = useNavigate();
-    const { getLastPlotPage, getLastCodexPage } = useNavigateWithSave();
+    const { getLastPlotPage, getLastCodexPage, getLastWorkshopPage } =
+        useNavigateWithSave();
 
     const activeTab = React.useMemo(() => {
         return navigationActionList.find((action) =>
@@ -49,8 +44,18 @@ export const MainNavigation = () => {
 
     const handleNavigation = (value: string) => {
         const lastPages = [
-            { route: NavigationRoute.plot, getLastPage: getLastPlotPage },
-            { route: NavigationRoute.codex, getLastPage: getLastCodexPage },
+            {
+                route: NavigationRoute.plot,
+                getLastPage: getLastPlotPage,
+            },
+            {
+                route: NavigationRoute.codex,
+                getLastPage: getLastCodexPage,
+            },
+            {
+                route: NavigationRoute.workshop,
+                getLastPage: getLastWorkshopPage,
+            },
         ];
 
         const lastPageEntry = lastPages.find((entry) => entry.route === value);

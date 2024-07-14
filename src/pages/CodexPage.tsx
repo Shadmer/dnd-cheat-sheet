@@ -1,11 +1,10 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-
 import { Unstable_Grid2 as Grid, Theme, useMediaQuery } from '@mui/material';
 
-import { CodexMenuList } from '@src/components/codex/CodexMenuList';
-import { CodexCard } from '@src/components/codex/CodexCard';
-import { NavigationRoute } from '@src/enums';
+import { NavigationRoute } from '@src/constants/enums';
+import { CodexMenuList } from '@src/components/modules/codex/CodexMenuList';
+import { CodexCard } from '@src/components/modules/codex/CodexCard';
 
 export const CodexPage = () => {
     const { section, id } = useParams();

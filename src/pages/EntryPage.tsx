@@ -16,7 +16,7 @@ import bg from '@src/assets/entryPage/bg.jpg';
 import dices from '@src/assets/entryPage/dices.png';
 import leaves from '@src/assets/entryPage/leaves.png';
 import drops from '@src/assets/entryPage/drops.png';
-import { RainEffect } from '@src/components/other/RainEffect';
+import { RainEffect } from '@src/components/shared/RainEffect';
 
 type Rotation = {
     rotateX: number;

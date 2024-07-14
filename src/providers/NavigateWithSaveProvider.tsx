@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { LastPageType } from '@src/enums';
+import { LastPageType } from '@src/constants/enums';
 
 type NavigateWithSaveProviderProps = {
     children: ReactNode;
@@ -10,6 +10,7 @@ type NavigateWithSaveContextType = {
     navigateWithSave: (path: string, key: LastPageType) => void;
     getLastPlotPage: () => string | null;
     getLastCodexPage: () => string | null;
+    getLastWorkshopPage: () => string | null;
 };
 
 const NavigateWithSaveContext =
@@ -44,6 +45,8 @@ export const NavigateWithSaveProvider: React.FC<
             navigateWithSave,
             getLastPlotPage: () => localStorage.getItem(LastPageType.scene),
             getLastCodexPage: () => localStorage.getItem(LastPageType.codex),
+            getLastWorkshopPage: () =>
+                localStorage.getItem(LastPageType.workshop),
         }),
         [navigateWithSave]
     );

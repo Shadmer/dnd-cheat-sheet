@@ -12,7 +12,7 @@ import {
 import { darken, lighten } from '@mui/material/styles';
 import { ExpandMore } from '@mui/icons-material';
 import { IPlotMenuItem } from '@src/interfaces/plot';
-import { LastPageType, NavigationRoute } from '@src/enums';
+import { LastPageType, NavigationRoute } from '@src/constants/enums';
 import { useNavigateWithSave } from '@src/providers/NavigateWithSaveProvider';
 import { useCustomTheme } from '@src/providers/CustomThemeProvider';
 type PlotMenuItemProps = {

@@ -7,7 +7,7 @@ import { ArrowBack, ArrowForward, Clear } from '@mui/icons-material';
 
 import { useStores } from '@src/providers/RootStoreContext';
 import { useNavigateWithSave } from '@src/providers/NavigateWithSaveProvider';
-import { LastPageType, NavigationRoute } from '@src/enums';
+import { LastPageType, NavigationRoute } from '@src/constants/enums';
 
 import { ScrollableBox } from '@src/components/common/ScrollableBox';
 import { MarkdownRenderer } from '@src/components/common/MarkdownRenderer';

@@ -1,15 +1,19 @@
 import { BaseService } from '@src/services/BaseService';
 import { ENDPOINTS } from '@src/constants/endpoints';
-import { ICodexCard, ICodexMenuList } from '@src/interfaces/codex';
+import { ICard, IMenuList } from '@src/interfaces/common';
 
 export const CodexService = () => {
+    const fetchDefaultCardText = async () =>
+        BaseService<{ content: string }>(ENDPOINTS.CODEX_DEFAULT_TEXT);
+
     const fetchCodexMenuList = async () =>
-        BaseService<ICodexMenuList[]>(ENDPOINTS.CODEX_MENU_LIST);
+        BaseService<IMenuList[]>(ENDPOINTS.CODEX_MENU_LIST);
 
     const fetchPage = async (page: string) =>
-        BaseService<ICodexCard>(ENDPOINTS.CODEX_PAGE(page));
+        BaseService<ICard>(ENDPOINTS.CODEX_PAGE(page));
 
     return {
+        fetchDefaultCardText,
         fetchCodexMenuList,
         fetchPage,
     };

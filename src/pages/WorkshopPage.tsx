@@ -19,9 +19,9 @@ export const WorkshopPage = observer(() => {
             filteredMenuList,
             currentPage,
             filterMenuList,
-            fetchDefaultCardText,
-            setNavigate,
+            loadDefaultCardText,
             loadPage,
+            setNavigate,
             clearPage,
         },
     } = useStores();
@@ -29,26 +29,6 @@ export const WorkshopPage = observer(() => {
     const isMdScreen = useMediaQuery((theme: Theme) =>
         theme.breakpoints.up('md')
     );
-
-    React.useEffect(() => {
-        if (section && !id) {
-            navigate(NavigationRoute.workshop);
-        }
-    }, [id, navigate, section]);
-
-    React.useEffect(() => {
-        fetchDefaultCardText();
-    }, [fetchDefaultCardText]);
-
-    React.useEffect(() => {
-        if (id) {
-            loadPage(id);
-
-            return () => {
-                clearPage();
-            };
-        }
-    }, [clearPage, id, loadPage, section]);
 
     const createMainMenuList = (onItemSelect?: () => void) => (
         <MainMenuList
@@ -61,6 +41,26 @@ export const WorkshopPage = observer(() => {
     );
 
     const mainMenuList = createMainMenuList();
+
+    React.useEffect(() => {
+        if (section && !id) {
+            navigate(NavigationRoute.workshop);
+        }
+    }, [id, navigate, section]);
+
+    React.useEffect(() => {
+        loadDefaultCardText();
+    }, [loadDefaultCardText]);
+
+    React.useEffect(() => {
+        if (id) {
+            loadPage(id);
+
+            return () => {
+                clearPage();
+            };
+        }
+    }, [clearPage, id, loadPage, section]);
 
     return (
         <Grid container spacing={2}>

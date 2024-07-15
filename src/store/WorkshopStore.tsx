@@ -32,7 +32,7 @@ class Workshop {
         makeAutoObservable(this);
     }
 
-    fetchDefaultCardText = async () => {
+    loadDefaultCardText = async () => {
         this.isLoading = true;
 
         try {

@@ -3,15 +3,16 @@ import { makeAutoObservable, runInAction } from 'mobx';
 
 import { CodexService } from '@src/services/CodexService';
 
-import { ICodexCard, ICodexMenuList } from '@src/interfaces/codex';
+import { ICard, IMenuList } from '@src/interfaces/common';
 import { NavigationRoute } from '@src/constants/enums';
 
 class Codex {
     codexService = CodexService();
-    codexMenuList: ICodexMenuList[] = [];
-    filteredCodexMenuList: ICodexMenuList[] = [];
-    currentPage: ICodexCard | null = null;
-    currentPageLoading = false;
+    menuList: IMenuList[] = [];
+    filteredMenuList: IMenuList[] = [];
+    currentPage: ICard | null = null;
+    isLoading = false;
+    defaultCardText = '';
     navigate: NavigateFunction | null = null;
 
     constructor() {
@@ -22,9 +23,9 @@ class Codex {
         this.navigate = navigate;
     };
 
-    filterCodexMenuList = (searchTitle: string) => {
+    filterMenuList = (searchTitle: string) => {
         runInAction(() => {
-            this.filteredCodexMenuList = this.codexMenuList
+            this.filteredMenuList = this.menuList
                 .map((category) => ({
                     ...category,
                     content: category.content.filter((item) =>
@@ -37,17 +38,35 @@ class Codex {
         });
     };
 
-    loadCodexMenuList = async () => {
+    loadDefaultCardText = async () => {
+        this.isLoading = true;
+
+        try {
+            const { content } = await this.codexService.fetchDefaultCardText();
+
+            runInAction(() => {
+                this.defaultCardText = content;
+            });
+        } finally {
+            setTimeout(() => {
+                runInAction(() => {
+                    this.isLoading = false;
+                });
+            }, 200);
+        }
+    };
+
+    loadMenuList = async () => {
         const menuList = await this.codexService.fetchCodexMenuList();
 
         runInAction(() => {
-            this.codexMenuList = menuList;
-            this.filteredCodexMenuList = menuList;
+            this.menuList = menuList;
+            this.filteredMenuList = menuList;
         });
     };
 
     loadPage = async (id: string) => {
-        this.currentPageLoading = true;
+        this.isLoading = true;
 
         try {
             const page = await this.codexService.fetchPage(id);
@@ -59,7 +78,7 @@ class Codex {
         } finally {
             setTimeout(() => {
                 runInAction(() => {
-                    this.currentPageLoading = false;
+                    this.isLoading = false;
                 });
             }, 200);
         }

@@ -130,7 +130,6 @@ export interface IShop {
     categories: IShopCategory[];
 }
 
-// TODO: Избавиться
 export interface ICodexCard {
     creature?: ICreature;
     artifact?: IArtifact;
@@ -140,17 +139,4 @@ export interface ICodexCard {
     description?: string;
     images?: string[];
     maps?: string[];
-}
-
-// TODO: Избавиться
-export interface ICodexMenuItem {
-    id: string;
-    name: string;
-}
-
-// TODO: Избавиться
-export interface ICodexMenuList {
-    section: string;
-    title: string;
-    content: ICodexMenuItem[];
 }

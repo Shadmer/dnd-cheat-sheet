@@ -8,12 +8,12 @@ import { NavigationRoute } from '@src/constants/enums';
 
 const workshopMenuList: IMenuList[] = [
     {
-        section: 'test',
-        title: 'Тест',
+        section: 'process',
+        title: 'Игровой процесс',
         content: [
             {
-                id: 'some',
-                name: 'Что-то',
+                id: 'battlefield',
+                name: 'Поле битвы',
             },
         ],
     },

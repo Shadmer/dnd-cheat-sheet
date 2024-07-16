@@ -32,8 +32,9 @@ import { ScrollableBox } from '@src/components/common/ScrollableBox';
 
 export const PrinterPage: React.FC = observer(() => {
     const {
+        codex: { menuList },
         print: {
-            loadPrintMenuList,
+            getPrintMenuList,
             sections,
             loadedImages,
             toggleImageLoad,
@@ -53,8 +54,8 @@ export const PrinterPage: React.FC = observer(() => {
     });
 
     React.useEffect(() => {
-        loadPrintMenuList();
-    }, [loadPrintMenuList]);
+        getPrintMenuList(menuList);
+    }, [getPrintMenuList, menuList]);
 
     const isImageLoaded = React.useCallback(
         (id: string) => loadedImages.includes(id),

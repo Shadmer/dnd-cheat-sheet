@@ -1,7 +1,7 @@
 export interface IPrintContent {
     id: string;
     name: string;
-    images: string[];
+    images?: string[];
 }
 
 export interface IPrintSection {

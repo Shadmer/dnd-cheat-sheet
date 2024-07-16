@@ -34,7 +34,7 @@ import { CharacterContent } from '@src/components/modules/codex/CharacterContent
 import { PlaceContent } from '@src/components/modules/codex/PlaceContent';
 import { ShopContent } from '@src/components/modules/codex/ShopContent';
 
-import { SomeContent } from '@src/components/modules/workshop/SomeContent';
+import { BattlefieldContent } from '@src/components/modules/workshop/BattlefieldContent';
 import { moduleMap } from '@src/constants/constants';
 
 interface ITabData {
@@ -168,11 +168,11 @@ export const MainCard = observer<MainCardProps>(
                 });
             }
 
-            if (currentPage.some) {
+            if (currentPage.battlefield) {
                 newTabData.push({
-                    id: 'some',
-                    label: 'some',
-                    content: <SomeContent />,
+                    id: 'battlefield',
+                    label: 'Поле битвы',
+                    content: <BattlefieldContent />,
                 });
             }
 

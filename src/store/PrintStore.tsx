@@ -1,5 +1,6 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import { CodexService } from '@src/services/CodexService';
+import { IMenuList } from '@src/interfaces/common';
 import { IPrintSection, IPrintContent } from '@src/interfaces/print';
 
 class Print {
@@ -12,8 +13,8 @@ class Print {
         makeAutoObservable(this);
     }
 
-    loadPrintMenuList = async () => {
-        const menuList = await this.codexService.fetchCodexMenuList();
+    getPrintMenuList = async (codexMenuList: IMenuList[]) => {
+        const menuList = codexMenuList;
         const sections: IPrintSection[] = [];
         const mapSection: IPrintSection = {
             section: 'maps',
@@ -22,7 +23,9 @@ class Print {
         };
 
         for (const menuListItem of menuList) {
-            this.menuListLoading = true;
+            runInAction(() => {
+                this.menuListLoading = true;
+            });
 
             const sectionContent: IPrintContent[] = [];
 
@@ -31,33 +34,41 @@ class Print {
                 const page = await this.codexService.fetchPage(url);
 
                 if (page.images?.length) {
-                    sectionContent.push({
-                        id: `image_${item.id}`,
-                        name: item.name,
-                        images: page.images,
+                    runInAction(() => {
+                        sectionContent.push({
+                            id: `image_${item.id}`,
+                            name: item.name,
+                            images: page.images,
+                        });
                     });
                 }
 
                 if (page.maps?.length) {
-                    mapSection.content.push({
-                        id: `map_${item.id}`,
-                        name: item.name,
-                        images: page.maps,
+                    runInAction(() => {
+                        mapSection.content.push({
+                            id: `map_${item.id}`,
+                            name: item.name,
+                            images: page.maps,
+                        });
                     });
                 }
             }
 
             if (sectionContent.length) {
-                sections.push({
-                    section: menuListItem.section,
-                    title: menuListItem.title,
-                    content: sectionContent,
+                runInAction(() => {
+                    sections.push({
+                        section: menuListItem.section,
+                        title: menuListItem.title,
+                        content: sectionContent,
+                    });
                 });
             }
         }
 
         if (mapSection.content.length) {
-            sections.push(mapSection);
+            runInAction(() => {
+                sections.push(mapSection);
+            });
         }
 
         runInAction(() => {

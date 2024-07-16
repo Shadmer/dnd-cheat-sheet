@@ -26,7 +26,6 @@ export const CodexPage = observer(() => {
             loadDefaultCardText,
             loadPage,
             clearPage,
-            loadMenuList,
             setNavigate,
         },
     } = useStores();
@@ -46,10 +45,6 @@ export const CodexPage = observer(() => {
     React.useEffect(() => {
         loadDefaultCardText();
     }, [loadDefaultCardText]);
-
-    React.useEffect(() => {
-        loadMenuList();
-    }, [loadMenuList]);
 
     React.useEffect(() => {
         if (section && id) {

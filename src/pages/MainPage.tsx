@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 import { Box, Container, Stack, useMediaQuery } from '@mui/material';
 import { Theme, alpha } from '@mui/material/styles';
 
+import { useStores } from '@src/providers/RootStoreContext';
 import { useDialog } from '@src/providers/DialogProvider';
 
 import { MainNavigation } from '@src/components/shared/MainNavigation';
@@ -15,9 +16,16 @@ export const MainPage = () => {
     const isMdScreen = useMediaQuery((theme: Theme) =>
         theme.breakpoints.up('md')
     );
+    const {
+        codex: { loadMenuList },
+    } = useStores();
     const { openDialog } = useDialog();
 
     const dialogContent = <PlotCard />;
+
+    React.useEffect(() => {
+        loadMenuList();
+    }, [loadMenuList]);
 
     return (
         <Stack

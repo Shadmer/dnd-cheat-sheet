@@ -6,6 +6,7 @@ import {
     PaletteMode,
     CssBaseline,
 } from '@mui/material';
+import { ruRU } from '@mui/material/locale';
 
 const paletteLight = {
     primary: {
@@ -114,7 +115,7 @@ export const CustomThemeProvider = ({ children }: { children: ReactNode }) => {
     });
 
     const theme = React.useMemo(
-        () => createTheme(getCreateTheme(mode)),
+        () => createTheme(getCreateTheme(mode), ruRU),
         [mode]
     );
 

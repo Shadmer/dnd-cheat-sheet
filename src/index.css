@@ -2,3 +2,8 @@
     --index: calc(1vw + 1vh);
     --border-width: 6px;
 }
+
+@font-face {
+    font-family: ofont;
+    src: url('@src/assets/fonts/ofont.ru_InkVerse.ttf');
+}

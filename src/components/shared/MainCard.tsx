@@ -47,7 +47,7 @@ interface MainCardProps {
     module: Module;
     params: Params<string>;
     isLoading: boolean;
-    defaultCardText: string;
+    defaultCardImg: string;
     currentPage: ICard | null;
     menuList: IMenuList[];
     createMainMenuList: (onItemSelect?: () => void) => JSX.Element;
@@ -59,7 +59,7 @@ export const MainCard = observer<MainCardProps>(
         module,
         params,
         isLoading,
-        defaultCardText,
+        defaultCardImg,
         currentPage,
         menuList,
         createMainMenuList,
@@ -288,7 +288,16 @@ export const MainCard = observer<MainCardProps>(
                                     ))}
                                 </Box>
                             ) : (
-                                <MarkdownRenderer markdown={defaultCardText} />
+                                <Box
+                                    sx={{
+                                        width: '100%',
+                                        height: '100%',
+                                        backgroundImage: `url(${defaultCardImg})`,
+                                        backgroundSize: 'cover',
+                                        backgroundRepeat: 'no-repeat',
+                                        backgroundPosition: 'center',
+                                    }}
+                                ></Box>
                             )}
                         </>
                     )}

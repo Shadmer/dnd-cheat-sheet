@@ -7,6 +7,7 @@ import { useStores } from '@src/providers/RootStoreContext';
 import { Module, NavigationRoute } from '@src/constants/enums';
 import { MainMenuList } from '@src/components/shared/MainMenuList';
 import { MainCard } from '@src/components/shared/MainCard';
+import workshopImg from '@src/assets/img/workshop.jpg';
 
 export const WorkshopPage = observer(() => {
     const { section, id } = useParams();
@@ -14,12 +15,10 @@ export const WorkshopPage = observer(() => {
     const {
         workshop: {
             isLoading,
-            defaultCardText,
             menuList,
             filteredMenuList,
             currentPage,
             filterMenuList,
-            loadDefaultCardText,
             loadPage,
             setNavigate,
             clearPage,
@@ -47,10 +46,6 @@ export const WorkshopPage = observer(() => {
             navigate(NavigationRoute.workshop);
         }
     }, [id, navigate, section]);
-
-    React.useEffect(() => {
-        loadDefaultCardText();
-    }, [loadDefaultCardText]);
 
     React.useEffect(() => {
         if (id) {
@@ -82,7 +77,7 @@ export const WorkshopPage = observer(() => {
                     isLoading={isLoading}
                     currentPage={currentPage}
                     menuList={menuList}
-                    defaultCardText={defaultCardText}
+                    defaultCardImg={workshopImg}
                     setNavigate={setNavigate}
                     createMainMenuList={createMainMenuList}
                 />

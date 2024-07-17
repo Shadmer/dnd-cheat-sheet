@@ -15,6 +15,8 @@ import {
     Tooltip,
     Drawer,
     CircularProgress,
+    useMediaQuery,
+    useTheme,
 } from '@mui/material';
 import {
     AutoDelete,
@@ -24,6 +26,7 @@ import {
     Downloading,
     MenuOpen,
 } from '@mui/icons-material';
+import { GiSpiralArrow, GiBranchArrow } from 'react-icons/gi';
 
 import { useStores } from '@src/providers/RootStoreContext';
 import { ImageGallery } from '@src/components/common/ImageGallery';
@@ -31,6 +34,9 @@ import { FlexHeightContainer } from '@src/components/common/FlexHeightContainer'
 import { ScrollableBox } from '@src/components/common/ScrollableBox';
 
 export const PrinterPage: React.FC = observer(() => {
+    const theme = useTheme();
+    const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
+
     const {
         codex: { menuList },
         print: {
@@ -173,9 +179,81 @@ export const PrinterPage: React.FC = observer(() => {
 
     const content = (
         <ScrollableBox>
-            <Box ref={componentRef} sx={{ height: '100%' }}>
-                <ImageGallery images={loadedImagesUrls} print />
-            </Box>
+            {loadedImagesUrls.length ? (
+                <Box ref={componentRef} sx={{ height: '100%' }}>
+                    <ImageGallery images={loadedImagesUrls} print />
+                </Box>
+            ) : (
+                <Box position="relative" fontSize="calc(var(--index) * 2.5)">
+                    <Typography
+                        sx={{
+                            display: !isSmUp ? 'block' : 'none',
+                            position: 'absolute',
+                            top: 120,
+                            left: 0,
+                            right: 0,
+                            textAlign: 'center',
+                            fontFamily: 'ofont',
+                            fontSize: 'calc(var(--index) * 1)',
+                        }}
+                    >
+                        Управление загрузкой и удалением <br />
+                        изображений для печати
+                    </Typography>
+
+                    <Box
+                        sx={{
+                            position: 'absolute',
+                            top: 20,
+                            left: 40,
+                            rotate: '190deg',
+                        }}
+                    >
+                        <GiBranchArrow />
+                    </Box>
+
+                    <Typography
+                        sx={{
+                            display: isSmUp ? 'block' : 'none',
+                            position: 'absolute',
+                            top: 150,
+                            left: 0,
+                            rotate: '-10deg',
+                            fontFamily: 'ofont',
+                            fontSize: 'calc(var(--index) * 1)',
+                        }}
+                    >
+                        Перейти к меню <br />
+                        загрузки изображений
+                    </Typography>
+
+                    <Box
+                        sx={{
+                            position: 'absolute',
+                            top: 20,
+                            right: 40,
+                            rotate: '-90deg',
+                        }}
+                    >
+                        <GiSpiralArrow />
+                    </Box>
+
+                    <Typography
+                        sx={{
+                            display: isSmUp ? 'block' : 'none',
+                            position: 'absolute',
+                            top: 120,
+                            right: 0,
+                            rotate: '20deg',
+                            fontFamily: 'ofont',
+                            fontSize: 'calc(var(--index) * 1)',
+                        }}
+                    >
+                        Кнопки быстрой загрузки и <br />
+                        удаления всех изображений
+                    </Typography>
+                </Box>
+            )}
         </ScrollableBox>
     );
 
@@ -183,8 +261,8 @@ export const PrinterPage: React.FC = observer(() => {
         <Stack pb={2} alignItems="flex-end">
             {!!loadedImagesUrls.length && (
                 <Button
-                    variant="contained"
-                    color="primary"
+                    variant="outlined"
+                    color="inherit"
                     onClick={handlePrint}
                     sx={{ mt: 2 }}
                 >

@@ -12,7 +12,6 @@ class Codex {
     filteredMenuList: IMenuList[] = [];
     currentPage: ICard | null = null;
     isLoading = false;
-    defaultCardText = '';
     navigate: NavigateFunction | null = null;
 
     constructor() {
@@ -36,24 +35,6 @@ class Codex {
                 }))
                 .filter((category) => category.content.length > 0);
         });
-    };
-
-    loadDefaultCardText = async () => {
-        this.isLoading = true;
-
-        try {
-            const { content } = await this.codexService.fetchDefaultCardText();
-
-            runInAction(() => {
-                this.defaultCardText = content;
-            });
-        } finally {
-            setTimeout(() => {
-                runInAction(() => {
-                    this.isLoading = false;
-                });
-            }, 200);
-        }
     };
 
     loadMenuList = async () => {

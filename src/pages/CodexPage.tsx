@@ -8,6 +8,8 @@ import { useStores } from '@src/providers/RootStoreContext';
 import { MainMenuList } from '@src/components/shared/MainMenuList';
 import { MainCard } from '@src/components/shared/MainCard';
 
+import codexImg from '@src/assets/img/codex.jpg';
+
 export const CodexPage = observer(() => {
     const { section, id } = useParams();
     const navigate = useNavigate();
@@ -18,12 +20,10 @@ export const CodexPage = observer(() => {
     const {
         codex: {
             isLoading,
-            defaultCardText,
             menuList,
             filteredMenuList,
             currentPage,
             filterMenuList,
-            loadDefaultCardText,
             loadPage,
             clearPage,
             setNavigate,
@@ -41,10 +41,6 @@ export const CodexPage = observer(() => {
     );
 
     const mainMenuList = createMainMenuList();
-
-    React.useEffect(() => {
-        loadDefaultCardText();
-    }, [loadDefaultCardText]);
 
     React.useEffect(() => {
         if (section && id) {
@@ -83,7 +79,7 @@ export const CodexPage = observer(() => {
                     isLoading={isLoading}
                     currentPage={currentPage}
                     menuList={menuList}
-                    defaultCardText={defaultCardText}
+                    defaultCardImg={codexImg}
                     setNavigate={setNavigate}
                     createMainMenuList={createMainMenuList}
                 />

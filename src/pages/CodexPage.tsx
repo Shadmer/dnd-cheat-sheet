@@ -44,8 +44,7 @@ export const CodexPage = observer(() => {
 
     React.useEffect(() => {
         if (section && id) {
-            const fullPage = `${section}/cards/${id}`;
-            loadPage(fullPage);
+            loadPage(section, id);
 
             return () => {
                 clearPage();

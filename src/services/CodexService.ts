@@ -6,8 +6,8 @@ export const CodexService = () => {
     const fetchCodexMenuList = async () =>
         BaseService<IMenuList[]>(ENDPOINTS.CODEX_MENU_LIST);
 
-    const fetchPage = async (page: string) =>
-        BaseService<ICard>(ENDPOINTS.CODEX_PAGE(page));
+    const fetchPage = async (section: string, id: string) =>
+        BaseService<ICard>(ENDPOINTS.CODEX_PAGE(section, id));
 
     return {
         fetchCodexMenuList,

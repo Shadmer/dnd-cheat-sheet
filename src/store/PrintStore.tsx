@@ -30,8 +30,10 @@ class Print {
             const sectionContent: IPrintContent[] = [];
 
             for (const item of menuListItem.content) {
-                const url = `${menuListItem.section}/cards/${item.id}`;
-                const page = await this.codexService.fetchPage(url);
+                const page = await this.codexService.fetchPage(
+                    menuListItem.section,
+                    item.id
+                );
 
                 if (page.images?.length) {
                     runInAction(() => {

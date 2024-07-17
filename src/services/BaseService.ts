@@ -1,4 +1,4 @@
-const BASE_URL = '/dnd-cheat-sheet/data/';
+const BASE_URL = '/dnd-cheat-sheet/data';
 
 type RequestOptions = {
     headers?: Record<string, string>;

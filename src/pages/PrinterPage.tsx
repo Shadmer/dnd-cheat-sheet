@@ -142,7 +142,11 @@ export const PrinterPage: React.FC = observer(() => {
                                     </ListItem>
                                 ))}
                             </Box>
-                        ))}
+                        )) && (
+                            <Typography variant="body2" gutterBottom>
+                                Ничего не найдено
+                            </Typography>
+                        )}
                     </List>
                 )}
             </Box>

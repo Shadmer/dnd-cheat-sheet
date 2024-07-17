@@ -46,11 +46,11 @@ class Codex {
         });
     };
 
-    loadPage = async (id: string) => {
+    loadPage = async (section: string, id: string) => {
         this.isLoading = true;
 
         try {
-            const page = await this.codexService.fetchPage(id);
+            const page = await this.codexService.fetchPage(section, id);
             runInAction(() => {
                 this.currentPage = page;
             });

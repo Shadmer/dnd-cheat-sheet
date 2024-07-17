@@ -19,6 +19,7 @@ import {
     ListItemIcon,
     Divider,
 } from '@mui/material';
+import { Close } from '@mui/icons-material';
 import {
     AiOutlineCheckCircle,
     AiFillCheckCircle,
@@ -28,7 +29,6 @@ import {
 import { PiCaretLeftThin, PiCaretRightThin } from 'react-icons/pi';
 import { IMenuItem, IMenuList } from '@src/interfaces/common';
 import { IUnit } from './interfaces';
-import { Close } from '@mui/icons-material';
 
 interface BattleUnitsDialogProps {
     open: boolean;
@@ -61,7 +61,7 @@ export const BattleUnitsDialog: React.FC<BattleUnitsDialogProps> = ({
                 ...newValue.map((item) => ({
                     ...item,
                     section,
-                    url: `${section}/card/${item.id}`,
+                    parentId: item.id,
                     initiative: '',
                     maxHealth: '',
                     health: '',
@@ -88,7 +88,7 @@ export const BattleUnitsDialog: React.FC<BattleUnitsDialogProps> = ({
             id: generateUniqueId(customUnitName),
             name: customUnitName,
             section: 'custom',
-            url: '',
+            parentId: '',
             initiative: '',
             maxHealth: '',
             health: '',
@@ -105,7 +105,7 @@ export const BattleUnitsDialog: React.FC<BattleUnitsDialogProps> = ({
             id: generateUniqueId(item.id),
             name: item.name,
             section: 'bestiary',
-            url: `bestiary/card/${item.id}`,
+            parentId: item.id,
             initiative: '',
             maxHealth: '',
             health: '',
@@ -116,10 +116,10 @@ export const BattleUnitsDialog: React.FC<BattleUnitsDialogProps> = ({
         setSelectedUnits([...selectedUnits, newUnit]);
     };
 
-    const handleRemoveBestiaryUnit = (name: string) => {
+    const handleRemoveBestiaryUnit = (unitId: string) => {
         const newSelectedUnits = [...selectedUnits];
         const index = newSelectedUnits.findIndex(
-            (unit) => unit.name === name && unit.section === 'bestiary'
+            (unit) => unit.parentId === unitId && unit.section === 'bestiary'
         );
         if (index > -1) {
             newSelectedUnits.splice(index, 1);
@@ -127,10 +127,11 @@ export const BattleUnitsDialog: React.FC<BattleUnitsDialogProps> = ({
         }
     };
 
-    const handleRemoveAllBestiaryUnits = (name: string) => {
+    const handleRemoveAllBestiaryUnits = (unitId: string) => {
         setSelectedUnits(
             selectedUnits.filter(
-                (unit) => !(unit.name === name && unit.section === 'bestiary')
+                (unit) =>
+                    !(unit.parentId === unitId && unit.section === 'bestiary')
             )
         );
     };
@@ -143,9 +144,9 @@ export const BattleUnitsDialog: React.FC<BattleUnitsDialogProps> = ({
         setAnchorEl(null);
     };
 
-    const getBestiaryUnitCount = (name: string) => {
+    const getBestiaryUnitCount = (unitId: string) => {
         return selectedUnits.filter(
-            (unit) => unit.name === name && unit.section === 'bestiary'
+            (unit) => unit.parentId === unitId && unit.section === 'bestiary'
         ).length;
     };
 
@@ -294,7 +295,7 @@ export const BattleUnitsDialog: React.FC<BattleUnitsDialogProps> = ({
                                                                     size="small"
                                                                     onClick={() =>
                                                                         handleRemoveBestiaryUnit(
-                                                                            item.name
+                                                                            item.id
                                                                         )
                                                                     }
                                                                 >
@@ -302,7 +303,7 @@ export const BattleUnitsDialog: React.FC<BattleUnitsDialogProps> = ({
                                                                 </IconButton>
                                                                 <Typography>
                                                                     {getBestiaryUnitCount(
-                                                                        item.name
+                                                                        item.id
                                                                     )}
                                                                 </Typography>
                                                                 <IconButton
@@ -330,7 +331,7 @@ export const BattleUnitsDialog: React.FC<BattleUnitsDialogProps> = ({
                                                                         size="small"
                                                                         onClick={() =>
                                                                             handleRemoveAllBestiaryUnits(
-                                                                                item.name
+                                                                                item.id
                                                                             )
                                                                         }
                                                                     >
@@ -373,7 +374,7 @@ export const BattleUnitsDialog: React.FC<BattleUnitsDialogProps> = ({
                                             const unit: IUnit = {
                                                 ...option,
                                                 section,
-                                                url: `${section}/card/${option.id}`,
+                                                parentId: option.id,
                                                 initiative: '',
                                                 maxHealth: '',
                                                 health: '',
@@ -405,6 +406,14 @@ export const BattleUnitsDialog: React.FC<BattleUnitsDialogProps> = ({
                                     />
                                 );
                             }
+                        ) && (
+                            <Typography
+                                mt={2}
+                                variant="body2"
+                                color="text.secondary"
+                            >
+                                Ничего не найдено
+                            </Typography>
                         )}
                     </Stack>
                 </Box>

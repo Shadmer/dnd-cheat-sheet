@@ -27,8 +27,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     const [isAuthenticated, setIsAuthenticated] = React.useState<boolean>(
         () => {
-            const storedAuthState = localStorage.getItem('isAuthenticated');
-            return storedAuthState === 'true';
+            return !!localStorage.getItem('isAuthenticated');
         }
     );
 

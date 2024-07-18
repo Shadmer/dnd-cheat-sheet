@@ -5,6 +5,7 @@ import { observer } from 'mobx-react-lite';
 import { Box, IconButton, Paper, Stack, Typography } from '@mui/material';
 import { ArrowBack, ArrowForward, Clear } from '@mui/icons-material';
 
+import { useCampaign } from '@src/providers/CampaignProvider';
 import { useStores } from '@src/providers/RootStoreContext';
 import { useNavigateWithSave } from '@src/providers/NavigateWithSaveProvider';
 import { LastPageType, NavigationRoute } from '@src/constants/enums';
@@ -18,6 +19,7 @@ export const PlotCard = observer(() => {
     const { scene } = useParams();
     const navigate = useNavigate();
     const { navigateWithSave } = useNavigateWithSave();
+    const { currentCampaign } = useCampaign();
     const {
         plot: {
             loadScene,
@@ -54,12 +56,12 @@ export const PlotCard = observer(() => {
             : '';
 
     React.useEffect(() => {
-        if (scene) loadScene(scene);
+        if (scene) loadScene(currentCampaign, scene);
 
         return () => {
             clearScene();
         };
-    }, [clearScene, loadScene, scene]);
+    }, [currentCampaign, clearScene, loadScene, scene]);
 
     React.useEffect(() => {
         setNavigate(navigate);

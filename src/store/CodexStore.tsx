@@ -37,8 +37,10 @@ class Codex {
         });
     };
 
-    loadMenuList = async () => {
-        const menuList = await this.codexService.fetchCodexMenuList();
+    loadMenuList = async (campaign: string) => {
+        const menuList = campaign
+            ? await this.codexService.fetchCodexMenuList(campaign)
+            : [];
 
         runInAction(() => {
             this.menuList = menuList;
@@ -46,11 +48,15 @@ class Codex {
         });
     };
 
-    loadPage = async (section: string, id: string) => {
+    loadPage = async (campaign: string, section: string, id: string) => {
         this.isLoading = true;
 
         try {
-            const page = await this.codexService.fetchPage(section, id);
+            const page = await this.codexService.fetchPage(
+                campaign,
+                section,
+                id
+            );
             runInAction(() => {
                 this.currentPage = page;
             });

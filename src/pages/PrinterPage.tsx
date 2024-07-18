@@ -27,7 +27,7 @@ import {
     MenuOpen,
 } from '@mui/icons-material';
 import { GiSpiralArrow, GiBranchArrow } from 'react-icons/gi';
-
+import { useCampaign } from '@src/providers/CampaignProvider';
 import { useStores } from '@src/providers/RootStoreContext';
 import { ImageGallery } from '@src/components/common/ImageGallery';
 import { FlexHeightContainer } from '@src/components/common/FlexHeightContainer';
@@ -36,7 +36,7 @@ import { ScrollableBox } from '@src/components/common/ScrollableBox';
 export const PrinterPage: React.FC = observer(() => {
     const theme = useTheme();
     const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
-
+    const { currentCampaign } = useCampaign();
     const {
         codex: { menuList },
         print: {
@@ -60,8 +60,8 @@ export const PrinterPage: React.FC = observer(() => {
     });
 
     React.useEffect(() => {
-        getPrintMenuList(menuList);
-    }, [getPrintMenuList, menuList]);
+        getPrintMenuList(currentCampaign, menuList);
+    }, [currentCampaign, getPrintMenuList, menuList]);
 
     const isImageLoaded = React.useCallback(
         (id: string) => loadedImages.includes(id),
@@ -185,7 +185,7 @@ export const PrinterPage: React.FC = observer(() => {
         <ScrollableBox>
             {loadedImagesUrls.length ? (
                 <Box ref={componentRef} sx={{ height: '100%' }}>
-                    <ImageGallery images={loadedImagesUrls} print />
+                    <ImageGallery images={loadedImagesUrls} noLightBox />
                 </Box>
             ) : (
                 <Box position="relative" fontSize="calc(var(--index) * 2.5)">

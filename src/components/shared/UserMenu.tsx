@@ -11,6 +11,7 @@ import {
     AccountCircle,
     Brightness7,
     Brightness4,
+    Explore,
     Logout,
     Print,
 } from '@mui/icons-material';
@@ -57,6 +58,17 @@ export const UserMenu = () => {
                 open={Boolean(anchorEl)}
                 onClose={handleMenuClose}
             >
+                <MenuItem
+                    onClick={() => {
+                        navigate('campaign');
+                        handleMenuClose();
+                    }}
+                >
+                    <ListItemIcon>
+                        <Explore />
+                    </ListItemIcon>
+                    <ListItemText>Выбрать кампанию</ListItemText>
+                </MenuItem>
                 <MenuItem
                     onClick={() => {
                         navigate('printer');

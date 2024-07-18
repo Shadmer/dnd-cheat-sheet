@@ -13,7 +13,7 @@ class Print {
         makeAutoObservable(this);
     }
 
-    getPrintMenuList = async (codexMenuList: IMenuList[]) => {
+    getPrintMenuList = async (campaign: string, codexMenuList: IMenuList[]) => {
         const menuList = codexMenuList;
         const sections: IPrintSection[] = [];
         const mapSection: IPrintSection = {
@@ -31,6 +31,7 @@ class Print {
 
             for (const item of menuListItem.content) {
                 const page = await this.codexService.fetchPage(
+                    campaign,
                     menuListItem.section,
                     item.id
                 );

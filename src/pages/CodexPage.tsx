@@ -2,12 +2,11 @@ import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Unstable_Grid2 as Grid, Theme, useMediaQuery } from '@mui/material';
-
 import { Module, NavigationRoute } from '@src/constants/enums';
+import { useCampaign } from '@src/providers/CampaignProvider';
 import { useStores } from '@src/providers/RootStoreContext';
 import { MainMenuList } from '@src/components/shared/MainMenuList';
 import { MainCard } from '@src/components/shared/MainCard';
-
 import codexImg from '@src/assets/img/codex.jpg';
 
 export const CodexPage = observer(() => {
@@ -17,6 +16,7 @@ export const CodexPage = observer(() => {
         theme.breakpoints.up('md')
     );
 
+    const { currentCampaign } = useCampaign();
     const {
         codex: {
             isLoading,
@@ -44,13 +44,13 @@ export const CodexPage = observer(() => {
 
     React.useEffect(() => {
         if (section && id) {
-            loadPage(section, id);
+            loadPage(currentCampaign, section, id);
 
             return () => {
                 clearPage();
             };
         }
-    }, [clearPage, id, loadPage, section]);
+    }, [currentCampaign, clearPage, id, loadPage, section]);
 
     React.useEffect(() => {
         if (section && !id) {

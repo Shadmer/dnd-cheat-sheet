@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { BottomNavigation, BottomNavigationAction } from '@mui/material';
-import { AutoStories, Extension, HelpCenter } from '@mui/icons-material';
+import { AutoStories, Extension, ImportContacts } from '@mui/icons-material';
 import { useNavigateWithSave } from '@src/providers/NavigateWithSaveProvider';
 import { NavigationRoute } from '@src/constants/enums';
 
@@ -21,7 +21,7 @@ const navigationActionList: INavigationAction[] = [
     {
         value: NavigationRoute.codex,
         label: 'Кодекс',
-        icon: <HelpCenter />,
+        icon: <ImportContacts />,
     },
     {
         value: NavigationRoute.workshop,

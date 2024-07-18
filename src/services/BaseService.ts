@@ -1,4 +1,6 @@
-const BASE_URL = '/dnd-cheat-sheet/data';
+const BASE_URL = '/dnd-cheat-sheet/data/';
+
+const removeDoubleSlashes = (path: string) => path.replace(/\/\//g, '/');
 
 type RequestOptions = {
     headers?: Record<string, string>;
@@ -14,7 +16,7 @@ export const BaseService = async <T>(
     const defaultHeaders = options?.headers || {};
 
     try {
-        const response = await fetch(url, {
+        const response = await fetch(removeDoubleSlashes(url), {
             headers: { ...defaultHeaders },
             ...options,
         });

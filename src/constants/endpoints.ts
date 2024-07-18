@@ -1,4 +1,7 @@
 export const ENDPOINTS = {
+    // CAMPAIGN
+    CAMPAIGN_MENU_LIST: 'campaignList/campaignList.json',
+
     // PLOT
     PLOT_MENU_LIST: '/plot/plotMenuList.json',
     PLOT_SCENE: (sceneId: string) => `/plot/scenes/${sceneId}.json`,

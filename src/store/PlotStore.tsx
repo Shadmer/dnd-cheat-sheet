@@ -31,8 +31,10 @@ class Plot {
         });
     };
 
-    loadPlotMenuList = async () => {
-        const menuList = await this.plotService.fetchPlotMenuList();
+    loadPlotMenuList = async (campaign: string) => {
+        const menuList = campaign
+            ? await this.plotService.fetchPlotMenuList(campaign)
+            : [];
 
         runInAction(() => {
             this.plotMenuList = menuList;
@@ -40,11 +42,11 @@ class Plot {
         });
     };
 
-    loadScene = async (sceneId: string) => {
+    loadScene = async (campaign: string, sceneId: string) => {
         this.currentSceneLoading = true;
 
         try {
-            const scene = await this.plotService.fetchScene(sceneId);
+            const scene = await this.plotService.fetchScene(campaign, sceneId);
             runInAction(() => {
                 this.currentScene = scene.content;
             });

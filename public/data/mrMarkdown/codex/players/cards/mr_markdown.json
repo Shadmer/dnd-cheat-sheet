@@ -36,5 +36,5 @@
             }
         }
     },
-    "images": ["codex/players/img/mr_markdown.jpg"]
+    "images": ["/codex/players/img/mr_markdown.jpg"]
 }

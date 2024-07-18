@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 import { Box, Container, Stack, useMediaQuery } from '@mui/material';
 import { Theme, alpha } from '@mui/material/styles';
 
+import { useCampaign } from '@src/providers/CampaignProvider';
 import { useStores } from '@src/providers/RootStoreContext';
 import { useDialog } from '@src/providers/DialogProvider';
 
@@ -16,6 +17,7 @@ export const MainPage = () => {
     const isMdScreen = useMediaQuery((theme: Theme) =>
         theme.breakpoints.up('md')
     );
+    const { currentCampaign } = useCampaign();
     const {
         codex: { loadMenuList },
     } = useStores();
@@ -24,14 +26,15 @@ export const MainPage = () => {
     const dialogContent = <PlotCard />;
 
     React.useEffect(() => {
-        loadMenuList();
-    }, [loadMenuList]);
+        loadMenuList(currentCampaign);
+    }, [currentCampaign, loadMenuList]);
 
     return (
         <Stack
             pt={isMdScreen ? '30px' : '10px'}
             pb={isMdScreen ? '80px' : '60px'}
             sx={{
+                minHeight: '100vh',
                 backgroundImage: `url(${bg})`,
                 backgroundSize: 'contain',
                 backgroundRepeat: 'no-repeat',

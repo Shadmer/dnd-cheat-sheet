@@ -12,39 +12,45 @@ import Lightbox from 'react-18-image-lightbox';
 import 'react-18-image-lightbox/style.css';
 
 import { ImageService } from '@src/services/ImageService';
+import { useCampaign } from '@src/providers/CampaignProvider';
 
 interface ImageGalleryProps {
     images: string[];
     alt?: string;
-    print?: boolean;
+    noLightBox?: boolean;
 }
 
 export const ImageGallery: React.FC<ImageGalleryProps> = observer(
-    ({ images, alt, print = false }) => {
+    ({ images, alt, noLightBox = false }) => {
+        const { currentCampaign } = useCampaign();
         const theme = useTheme();
         const [isOpen, setIsOpen] = React.useState(false);
         const [photoIndex, setPhotoIndex] = React.useState(0);
         const [imageUrls, setImageUrls] = React.useState<string[]>([]);
         const [loading, setLoading] = React.useState(false);
-
         const imageService = React.useMemo(() => ImageService(), []);
 
         const isXs = useMediaQuery(theme.breakpoints.only('xs'));
         const isSm = useMediaQuery(theme.breakpoints.only('sm'));
 
         const getCols = React.useCallback(() => {
-            if (print) return 1;
+            if (noLightBox) return 1;
 
             let cols = 3;
             if (isXs) cols = 1;
             if (isSm) cols = 2;
             return Math.min(cols, images.length);
-        }, [images, isSm, isXs, print]);
+        }, [images, isSm, isXs, noLightBox]);
 
         const loadImages = React.useCallback(async () => {
+            const campaignUrl = currentCampaign;
+
             try {
                 setLoading(true);
-                const result = await imageService.fetchImages(images);
+                const result = await imageService.fetchImages(
+                    campaignUrl,
+                    images
+                );
                 const mappedResult = result.map((item) =>
                     URL.createObjectURL(item)
                 );
@@ -52,10 +58,10 @@ export const ImageGallery: React.FC<ImageGalleryProps> = observer(
             } finally {
                 setLoading(false);
             }
-        }, [imageService, images]);
+        }, [currentCampaign, imageService, images]);
 
         const handleImageClick = (index: number) => {
-            if (print) return;
+            if (noLightBox) return;
 
             setPhotoIndex(index);
             setIsOpen(true);
@@ -89,7 +95,7 @@ export const ImageGallery: React.FC<ImageGalleryProps> = observer(
                                 key={index}
                                 onClick={() => handleImageClick(index)}
                                 sx={{
-                                    marginBottom: print
+                                    marginBottom: noLightBox
                                         ? '0 !important'
                                         : 'auto',
                                 }}
@@ -102,7 +108,9 @@ export const ImageGallery: React.FC<ImageGalleryProps> = observer(
                                     }
                                     loading="lazy"
                                     style={{
-                                        cursor: print ? 'default' : 'pointer',
+                                        cursor: noLightBox
+                                            ? 'default'
+                                            : 'pointer',
                                     }}
                                 />
                             </ImageListItem>

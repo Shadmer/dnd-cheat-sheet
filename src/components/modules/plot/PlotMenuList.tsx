@@ -14,6 +14,7 @@ import {
     useTheme,
 } from '@mui/material';
 import { SearchOff } from '@mui/icons-material';
+import { useCampaign } from '@src/providers/CampaignProvider';
 import { useStores } from '@src/providers/RootStoreContext';
 import { ScrollableBox } from '@src/components/common/ScrollableBox';
 import { PlotMenuItem } from '@src/components/modules/plot/PlotMenuItem';
@@ -24,6 +25,7 @@ export const PlotMenuList = observer(() => {
     const { scene } = useParams();
     const theme = useTheme();
 
+    const { currentCampaign } = useCampaign();
     const {
         plot: { filterPlotMenuList, loadPlotMenuList, filteredPlotMenuList },
     } = useStores();
@@ -91,8 +93,8 @@ export const PlotMenuList = observer(() => {
     };
 
     React.useEffect(() => {
-        loadPlotMenuList();
-    }, [loadPlotMenuList]);
+        loadPlotMenuList(currentCampaign);
+    }, [currentCampaign, loadPlotMenuList]);
 
     const searchIcon = (
         <InputAdornment position="start">

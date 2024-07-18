@@ -1,10 +1,13 @@
 {
   "files": {
-    "main.css": "/dnd-cheat-sheet/static/css/main.799e06d8.css",
-    "main.js": "/dnd-cheat-sheet/static/js/main.09ad857e.js",
+    "main.css": "/dnd-cheat-sheet/static/css/main.b958b765.css",
+    "main.js": "/dnd-cheat-sheet/static/js/main.d25bbc39.js",
     "static/media/dices.png": "/dnd-cheat-sheet/static/media/dices.aa4c7c198eb48db07783.png",
+    "static/media/ofont.ru_InkVerse.ttf": "/dnd-cheat-sheet/static/media/ofont.ru_InkVerse.30b8dc264af0c3a977ea.ttf",
     "static/media/drops.png": "/dnd-cheat-sheet/static/media/drops.35edcb87611e547f6ec4.png",
+    "static/media/workshop.jpg": "/dnd-cheat-sheet/static/media/workshop.4d365d3aadc761de1523.jpg",
     "static/media/bg.jpg": "/dnd-cheat-sheet/static/media/bg.8891276cff7618b8c0b1.jpg",
+    "static/media/codex.jpg": "/dnd-cheat-sheet/static/media/codex.1a24dde798dc19ca5f1d.jpg",
     "static/media/leaves.png": "/dnd-cheat-sheet/static/media/leaves.9dec5ca577d76efbc096.png",
     "static/media/roboto-latin-500-normal.woff2": "/dnd-cheat-sheet/static/media/roboto-latin-500-normal.f25d774ecfe0996f8eb5.woff2",
     "static/media/roboto-latin-700-normal.woff2": "/dnd-cheat-sheet/static/media/roboto-latin-700-normal.227c93190fe7f82de3f8.woff2",
@@ -63,11 +66,11 @@
     "static/media/roboto-greek-ext-400-normal.woff": "/dnd-cheat-sheet/static/media/roboto-greek-ext-400-normal.f708607d2a7290fb8bfa.woff",
     "static/media/roboto-greek-ext-700-normal.woff": "/dnd-cheat-sheet/static/media/roboto-greek-ext-700-normal.249853776d22a271b2b5.woff",
     "index.html": "/dnd-cheat-sheet/index.html",
-    "main.799e06d8.css.map": "/dnd-cheat-sheet/static/css/main.799e06d8.css.map",
-    "main.09ad857e.js.map": "/dnd-cheat-sheet/static/js/main.09ad857e.js.map"
+    "main.b958b765.css.map": "/dnd-cheat-sheet/static/css/main.b958b765.css.map",
+    "main.d25bbc39.js.map": "/dnd-cheat-sheet/static/js/main.d25bbc39.js.map"
   },
   "entrypoints": [
-    "static/css/main.799e06d8.css",
-    "static/js/main.09ad857e.js"
+    "static/css/main.b958b765.css",
+    "static/js/main.d25bbc39.js"
   ]
 }

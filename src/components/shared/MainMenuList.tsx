@@ -141,7 +141,7 @@ export const MainMenuList = observer(
 
         const header = (
             <Stack spacing={2} pb={2}>
-                <Typography variant="h3" component="h3">
+                <Typography variant="h3" component="h3" fontFamily="ofont">
                     {moduleMap[module].title}
                 </Typography>
                 <Stack

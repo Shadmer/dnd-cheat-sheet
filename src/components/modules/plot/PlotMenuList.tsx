@@ -106,7 +106,7 @@ export const PlotMenuList = observer(() => {
 
     const header = (
         <Stack spacing={2} pb={2}>
-            <Typography variant="h3" component="h3">
+            <Typography variant="h3" component="h3" fontFamily="ofont">
                 Сюжет
             </Typography>
             <Stack
@@ -150,7 +150,11 @@ export const PlotMenuList = observer(() => {
                                         theme.palette.primary.contrastText,
                                 }}
                             >
-                                <Typography variant="h5" gutterBottom>
+                                <Typography
+                                    variant="h5"
+                                    fontFamily="ofont"
+                                    gutterBottom
+                                >
                                     {part.partTitle}
                                 </Typography>
                             </Box>

@@ -115,7 +115,12 @@ export const EntryPage = () => {
             >
                 <LockOutlined />
             </Avatar>
-            <Typography component="h1" variant="h4" sx={{ mt: 2 }}>
+            <Typography
+                component="h1"
+                variant="h4"
+                fontFamily="ofont"
+                sx={{ mt: 2 }}
+            >
                 Введите учетные данные для входа
             </Typography>
             <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>

@@ -193,16 +193,15 @@ export const PrinterPage: React.FC = observer(() => {
                         sx={{
                             display: !isSmUp ? 'block' : 'none',
                             position: 'absolute',
-                            top: 120,
+                            top: 100,
                             left: 0,
                             right: 0,
                             textAlign: 'center',
                             fontFamily: 'ofont',
-                            fontSize: 'calc(var(--index) * 1)',
+                            fontSize: 'calc(var(--index) * 1.5)',
                         }}
                     >
-                        Управление загрузкой и удалением <br />
-                        изображений для печати
+                        Управление загрузкой <br /> и удалением печати
                     </Typography>
 
                     <Box

@@ -77,10 +77,15 @@ export const PlotCard = observer(() => {
             boxShadow={1}
         >
             <Box>
-                <Typography variant="body2" component="p">
+                <Typography variant="body2" component="p" fontFamily="ofont">
                     {plotMenuSubTitle}
                 </Typography>
-                <Typography fontWeight="500" variant="h2" component="h1">
+                <Typography
+                    fontWeight="500"
+                    variant="h2"
+                    component="h1"
+                    fontFamily="ofont"
+                >
                     {plotMenuTitle}
                 </Typography>
             </Box>

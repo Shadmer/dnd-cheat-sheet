@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
     IconButton,
     Menu,
@@ -18,8 +18,10 @@ import {
 
 import { useAuth } from '@src/providers/AuthProvider';
 import { useCustomTheme } from '@src/providers/CustomThemeProvider';
+import { NavigationRoute } from '@src/constants/enums';
 
 export const UserMenu = () => {
+    const { pathname } = useLocation();
     const { logout } = useAuth();
     const { mode, toggleTheme } = useCustomTheme();
     const navigate = useNavigate();
@@ -57,12 +59,18 @@ export const UserMenu = () => {
                 }}
                 open={Boolean(anchorEl)}
                 onClose={handleMenuClose}
+                sx={{
+                    '&& .Mui-selected': {
+                        backgroundColor:
+                            mode === 'light'
+                                ? 'secondary.light'
+                                : 'primary.light',
+                    },
+                }}
             >
                 <MenuItem
-                    onClick={() => {
-                        navigate('campaign');
-                        handleMenuClose();
-                    }}
+                    onClick={() => navigate('campaign')}
+                    selected={pathname === NavigationRoute.campaign}
                 >
                     <ListItemIcon>
                         <Explore />
@@ -70,10 +78,8 @@ export const UserMenu = () => {
                     <ListItemText>Выбрать кампанию</ListItemText>
                 </MenuItem>
                 <MenuItem
-                    onClick={() => {
-                        navigate('printer');
-                        handleMenuClose();
-                    }}
+                    onClick={() => navigate('printer')}
+                    selected={pathname === NavigationRoute.printer}
                 >
                     <ListItemIcon>
                         <Print />

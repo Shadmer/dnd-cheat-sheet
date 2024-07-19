@@ -160,6 +160,144 @@ export const BattleUnitsDialog: React.FC<BattleUnitsDialogProps> = ({
         </IconButton>
     );
 
+    const renderedSections = ['players', 'characters', 'bestiary'].map(
+        (section) => {
+            const sectionMenu = menuList.find(
+                (menu) => menu.section === section
+            );
+            if (!sectionMenu || !sectionMenu.content.length) return null;
+
+            const sectionTitle = sectionMenu.title;
+
+            if (section === 'bestiary') {
+                return (
+                    <Box key={section}>
+                        <Button
+                            color="inherit"
+                            variant="outlined"
+                            onClick={handleMenuOpen}
+                            fullWidth
+                            sx={{ padding: '10px 14px' }}
+                        >
+                            Бестиарий
+                        </Button>
+                        <Menu
+                            anchorEl={anchorEl}
+                            open={Boolean(anchorEl)}
+                            onClose={handleMenuClose}
+                        >
+                            {sectionMenu.content.map((item) => (
+                                <MenuItem key={item.id}>
+                                    <ListItemIcon
+                                        sx={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                        }}
+                                    >
+                                        <IconButton
+                                            size="small"
+                                            onClick={() =>
+                                                handleRemoveBestiaryUnit(
+                                                    item.id
+                                                )
+                                            }
+                                        >
+                                            <PiCaretLeftThin />
+                                        </IconButton>
+                                        <Typography>
+                                            {getBestiaryUnitCount(item.id)}
+                                        </Typography>
+                                        <IconButton
+                                            size="small"
+                                            onClick={() =>
+                                                handleAddBestiaryUnit(item)
+                                            }
+                                        >
+                                            <PiCaretRightThin />
+                                        </IconButton>
+                                    </ListItemIcon>
+                                    <ListItemText sx={{ pr: 2 }}>
+                                        {item.name}
+                                    </ListItemText>
+                                    <ListItemIcon>
+                                        <Tooltip
+                                            title="Удалить всех"
+                                            placement="left"
+                                        >
+                                            <IconButton
+                                                size="small"
+                                                onClick={() =>
+                                                    handleRemoveAllBestiaryUnits(
+                                                        item.id
+                                                    )
+                                                }
+                                            >
+                                                <AiOutlineDelete />
+                                            </IconButton>
+                                        </Tooltip>
+                                    </ListItemIcon>
+                                </MenuItem>
+                            ))}
+                        </Menu>
+                    </Box>
+                );
+            }
+
+            return (
+                <Autocomplete
+                    key={section}
+                    multiple
+                    disableCloseOnSelect
+                    options={sectionMenu.content}
+                    getOptionLabel={(option) => option.name}
+                    value={selectedUnits.filter(
+                        (unit) => unit.section === section
+                    )}
+                    onChange={handleUnitSelectionChange(section)}
+                    isOptionEqualToValue={(option, value) =>
+                        option.id === value.id
+                    }
+                    renderInput={(params) => (
+                        <TextField
+                            {...params}
+                            label={sectionTitle}
+                            variant="outlined"
+                        />
+                    )}
+                    renderOption={(props, option) => {
+                        const unit: IUnit = {
+                            ...option,
+                            section,
+                            parentId: option.id,
+                            initiative: '',
+                            maxHealth: '',
+                            health: '',
+                            armor: '',
+                            speed: '',
+                        };
+
+                        return (
+                            <li {...props}>
+                                {isSelected(unit) ? (
+                                    <AiFillCheckCircle
+                                        style={{ marginRight: 8 }}
+                                    />
+                                ) : (
+                                    <AiOutlineCheckCircle
+                                        style={{ marginRight: 8 }}
+                                    />
+                                )}
+                                <Typography>{option.name}</Typography>
+                            </li>
+                        );
+                    }}
+                />
+            );
+        }
+    );
+
+    const hasNoResults = renderedSections.every((section) => section === null);
+
     return (
         <Dialog open={open} onClose={onClose} fullWidth>
             <DialogTitle
@@ -194,9 +332,7 @@ export const BattleUnitsDialog: React.FC<BattleUnitsDialogProps> = ({
                                 if (e.key === 'Enter') handleAddCustomUnit();
                             }}
                             variant="outlined"
-                            InputProps={{
-                                endAdornment: addCharacter,
-                            }}
+                            InputProps={{ endAdornment: addCharacter }}
                         />
                         <Autocomplete
                             sx={{ width: isSmUp ? '50%' : '100%' }}
@@ -230,15 +366,11 @@ export const BattleUnitsDialog: React.FC<BattleUnitsDialogProps> = ({
                                     <li {...props}>
                                         {isSelected(unit) ? (
                                             <AiFillCheckCircle
-                                                style={{
-                                                    marginRight: 8,
-                                                }}
+                                                style={{ marginRight: 8 }}
                                             />
                                         ) : (
                                             <AiOutlineCheckCircle
-                                                style={{
-                                                    marginRight: 8,
-                                                }}
+                                                style={{ marginRight: 8 }}
                                             />
                                         )}
                                         <Typography>{option.name}</Typography>
@@ -252,161 +384,8 @@ export const BattleUnitsDialog: React.FC<BattleUnitsDialogProps> = ({
                         Выбрать из готовых
                     </Typography>
                     <Stack spacing={2} pt={2}>
-                        {['players', 'characters', 'bestiary'].map(
-                            (section) => {
-                                const sectionMenu = menuList.find(
-                                    (menu) => menu.section === section
-                                );
-                                if (!sectionMenu) return null;
-
-                                const sectionTitle = sectionMenu.title;
-
-                                if (section === 'bestiary') {
-                                    return (
-                                        <Box key={section}>
-                                            <Button
-                                                color="inherit"
-                                                variant="outlined"
-                                                onClick={handleMenuOpen}
-                                                fullWidth
-                                                sx={{
-                                                    padding: '10px 14px',
-                                                }}
-                                            >
-                                                Бестиарий
-                                            </Button>
-                                            <Menu
-                                                anchorEl={anchorEl}
-                                                open={Boolean(anchorEl)}
-                                                onClose={handleMenuClose}
-                                            >
-                                                {sectionMenu.content.map(
-                                                    (item) => (
-                                                        <MenuItem key={item.id}>
-                                                            <ListItemIcon
-                                                                sx={{
-                                                                    display:
-                                                                        'flex',
-                                                                    alignItems:
-                                                                        'center',
-                                                                }}
-                                                            >
-                                                                <IconButton
-                                                                    size="small"
-                                                                    onClick={() =>
-                                                                        handleRemoveBestiaryUnit(
-                                                                            item.id
-                                                                        )
-                                                                    }
-                                                                >
-                                                                    <PiCaretLeftThin />
-                                                                </IconButton>
-                                                                <Typography>
-                                                                    {getBestiaryUnitCount(
-                                                                        item.id
-                                                                    )}
-                                                                </Typography>
-                                                                <IconButton
-                                                                    size="small"
-                                                                    onClick={() =>
-                                                                        handleAddBestiaryUnit(
-                                                                            item
-                                                                        )
-                                                                    }
-                                                                >
-                                                                    <PiCaretRightThin />
-                                                                </IconButton>
-                                                            </ListItemIcon>
-                                                            <ListItemText
-                                                                sx={{ pr: 2 }}
-                                                            >
-                                                                {item.name}
-                                                            </ListItemText>
-                                                            <ListItemIcon>
-                                                                <Tooltip
-                                                                    title="Удалить всех"
-                                                                    placement="left"
-                                                                >
-                                                                    <IconButton
-                                                                        size="small"
-                                                                        onClick={() =>
-                                                                            handleRemoveAllBestiaryUnits(
-                                                                                item.id
-                                                                            )
-                                                                        }
-                                                                    >
-                                                                        <AiOutlineDelete />
-                                                                    </IconButton>
-                                                                </Tooltip>
-                                                            </ListItemIcon>
-                                                        </MenuItem>
-                                                    )
-                                                )}
-                                            </Menu>
-                                        </Box>
-                                    );
-                                }
-
-                                return (
-                                    <Autocomplete
-                                        key={section}
-                                        multiple
-                                        disableCloseOnSelect
-                                        options={sectionMenu.content}
-                                        getOptionLabel={(option) => option.name}
-                                        value={selectedUnits.filter(
-                                            (unit) => unit.section === section
-                                        )}
-                                        onChange={handleUnitSelectionChange(
-                                            section
-                                        )}
-                                        isOptionEqualToValue={(option, value) =>
-                                            option.id === value.id
-                                        }
-                                        renderInput={(params) => (
-                                            <TextField
-                                                {...params}
-                                                label={sectionTitle}
-                                                variant="outlined"
-                                            />
-                                        )}
-                                        renderOption={(props, option) => {
-                                            const unit: IUnit = {
-                                                ...option,
-                                                section,
-                                                parentId: option.id,
-                                                initiative: '',
-                                                maxHealth: '',
-                                                health: '',
-                                                armor: '',
-                                                speed: '',
-                                            };
-
-                                            return (
-                                                <li {...props}>
-                                                    {isSelected(unit) ? (
-                                                        <AiFillCheckCircle
-                                                            style={{
-                                                                marginRight: 8,
-                                                            }}
-                                                        />
-                                                    ) : (
-                                                        <AiOutlineCheckCircle
-                                                            style={{
-                                                                marginRight: 8,
-                                                            }}
-                                                        />
-                                                    )}
-                                                    <Typography>
-                                                        {option.name}
-                                                    </Typography>
-                                                </li>
-                                            );
-                                        }}
-                                    />
-                                );
-                            }
-                        ) && (
+                        {renderedSections}
+                        {hasNoResults && (
                             <Typography
                                 mt={2}
                                 variant="body2"

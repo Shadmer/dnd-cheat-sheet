@@ -13,4 +13,6 @@ export enum NavigationRoute {
     plot = '/game/plot',
     codex = '/game/codex',
     workshop = '/game/workshop',
+    campaign = '/game/campaign',
+    printer = '/game/printer',
 }

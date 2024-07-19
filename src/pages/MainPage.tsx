@@ -34,7 +34,7 @@ export const MainPage = () => {
             pt={isMdScreen ? '30px' : '10px'}
             pb={isMdScreen ? '80px' : '60px'}
             sx={{
-                minHeight: '100vh',
+                minHeight: '100dvh',
                 backgroundImage: `url(${bg})`,
                 backgroundSize: 'contain',
                 backgroundRepeat: 'no-repeat',

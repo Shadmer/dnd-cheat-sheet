@@ -50,6 +50,7 @@ interface MainCardProps {
     defaultCardImg: string;
     currentPage: ICard | null;
     menuList: IMenuList[];
+    defaultTitle?: string;
     createMainMenuList: (onItemSelect?: () => void) => JSX.Element;
     setNavigate: (navigate: NavigateFunction) => void;
 }
@@ -62,6 +63,7 @@ export const MainCard = observer<MainCardProps>(
         defaultCardImg,
         currentPage,
         menuList,
+        defaultTitle,
         createMainMenuList,
         setNavigate,
     }) => {
@@ -210,13 +212,16 @@ export const MainCard = observer<MainCardProps>(
                     p="0 1rem"
                 >
                     <Box>
-                        <Typography variant="body2">{sectionTitle}</Typography>
+                        <Typography variant="body2" fontFamily="ofont">
+                            {sectionTitle}
+                        </Typography>
                         <Typography
-                            fontWeight="500"
                             variant="h2"
                             component="h1"
+                            fontFamily="ofont"
+                            fontWeight="500"
                         >
-                            {itemTitle}
+                            {itemTitle || defaultTitle}
                         </Typography>
                     </Box>
                     <Stack direction="row" alignItems="center">

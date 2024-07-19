@@ -7,6 +7,7 @@ class Campaign {
     campaignService = CampaignService();
     imageService = ImageService();
     campaignList: ICampaign[] = [];
+    isLoading = false;
 
     constructor() {
         makeAutoObservable(this);
@@ -21,32 +22,40 @@ class Campaign {
     };
 
     loadCampaignList = async () => {
-        const list = await this.campaignService.fetchCampaignList();
+        this.isLoading = true;
 
-        const updatedList = await Promise.all(
-            list.map(async (campaign) => {
-                const updatedStoryGameList = await Promise.all(
-                    campaign.storyGameList.map(async (storyGame) => {
-                        const updatedImage = await this.loadImage(
-                            storyGame.image
-                        );
-                        return {
-                            ...storyGame,
-                            image: updatedImage,
-                        };
-                    })
-                );
+        try {
+            const list = await this.campaignService.fetchCampaignList();
 
-                return {
-                    ...campaign,
-                    storyGameList: updatedStoryGameList,
-                };
-            })
-        );
+            const updatedList = await Promise.all(
+                list.map(async (campaign) => {
+                    const updatedStoryGameList = await Promise.all(
+                        campaign.storyGameList.map(async (storyGame) => {
+                            const updatedImage = await this.loadImage(
+                                storyGame.image
+                            );
+                            return {
+                                ...storyGame,
+                                image: updatedImage,
+                            };
+                        })
+                    );
 
-        runInAction(() => {
-            this.campaignList = updatedList;
-        });
+                    return {
+                        ...campaign,
+                        storyGameList: updatedStoryGameList,
+                    };
+                })
+            );
+
+            runInAction(() => {
+                this.campaignList = updatedList;
+            });
+        } finally {
+            runInAction(() => {
+                this.isLoading = false;
+            });
+        }
     };
 }
 

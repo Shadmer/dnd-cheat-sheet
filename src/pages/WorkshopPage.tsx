@@ -72,7 +72,7 @@ export const WorkshopPage = observer(() => {
 
             <Grid xs={12} md={8} lg={9}>
                 <MainCard
-                    defaultTitle="Возьмите инструмент в мастерской"
+                    defaultTitle="Возьмите инструмент"
                     module={Module.workshop}
                     params={{ section, id }}
                     isLoading={isLoading}

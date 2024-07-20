@@ -67,6 +67,7 @@ export const BattleUnitsDialog: React.FC<BattleUnitsDialogProps> = ({
                     health: '',
                     armor: '',
                     speed: '',
+                    isInBattle: false,
                 })),
             ];
 
@@ -94,6 +95,7 @@ export const BattleUnitsDialog: React.FC<BattleUnitsDialogProps> = ({
             health: '',
             armor: '',
             speed: '',
+            isInBattle: false,
         };
 
         setSelectedUnits([...selectedUnits, newUnit]);
@@ -101,9 +103,17 @@ export const BattleUnitsDialog: React.FC<BattleUnitsDialogProps> = ({
     };
 
     const handleAddBestiaryUnit = (item: IMenuItem) => {
+        const existingUnits = selectedUnits.filter((unit) =>
+            unit.name.startsWith(item.name)
+        );
+        const newUnitName =
+            existingUnits.length > 0
+                ? `${item.name} - ${existingUnits.length + 1}`
+                : item.name;
+
         const newUnit: IUnit = {
             id: generateUniqueId(item.id),
-            name: item.name,
+            name: newUnitName,
             section: 'bestiary',
             parentId: item.id,
             initiative: '',
@@ -111,6 +121,7 @@ export const BattleUnitsDialog: React.FC<BattleUnitsDialogProps> = ({
             health: '',
             armor: '',
             speed: '',
+            isInBattle: false,
         };
 
         setSelectedUnits([...selectedUnits, newUnit]);
@@ -118,9 +129,18 @@ export const BattleUnitsDialog: React.FC<BattleUnitsDialogProps> = ({
 
     const handleRemoveBestiaryUnit = (unitId: string) => {
         const newSelectedUnits = [...selectedUnits];
-        const index = newSelectedUnits.findIndex(
-            (unit) => unit.parentId === unitId && unit.section === 'bestiary'
-        );
+        let index = -1;
+
+        for (let i = newSelectedUnits.length - 1; i >= 0; i--) {
+            if (
+                newSelectedUnits[i].parentId === unitId &&
+                newSelectedUnits[i].section === 'bestiary'
+            ) {
+                index = i;
+                break;
+            }
+        }
+
         if (index > -1) {
             newSelectedUnits.splice(index, 1);
             setSelectedUnits(newSelectedUnits);
@@ -274,6 +294,7 @@ export const BattleUnitsDialog: React.FC<BattleUnitsDialogProps> = ({
                             health: '',
                             armor: '',
                             speed: '',
+                            isInBattle: false,
                         };
 
                         return (

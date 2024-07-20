@@ -18,7 +18,8 @@ import {
 import { ExpandMore } from '@mui/icons-material';
 
 export const CampaignPage: React.FC = observer(() => {
-    const { setCurrentCampaign, currentCampaign } = useCampaign();
+    const { setCurrentCampaign, setCurrentCampaignTitle, currentCampaign } =
+        useCampaign();
     const {
         campaign: { loadCampaignList, campaignList, isLoading },
     } = useStores();
@@ -48,7 +49,7 @@ export const CampaignPage: React.FC = observer(() => {
                         color: (theme) => theme.palette.primary.contrastText,
                     }}
                 >
-                    <Typography variant="h5" gutterBottom>
+                    <Typography variant="h5" fontFamily="ofont" gutterBottom>
                         {campaign.title}
                     </Typography>
                 </Box>
@@ -65,9 +66,12 @@ export const CampaignPage: React.FC = observer(() => {
                                 }}
                             >
                                 <CardActionArea
-                                    onClick={() =>
-                                        setCurrentCampaign(storyGame.id)
-                                    }
+                                    onClick={() => {
+                                        setCurrentCampaign(storyGame.id);
+                                        setCurrentCampaignTitle(
+                                            storyGame.title
+                                        );
+                                    }}
                                 >
                                     <Box
                                         sx={{

@@ -3,19 +3,7 @@ import { makeAutoObservable, runInAction } from 'mobx';
 
 import { ICard, IMenuList } from '@src/interfaces/common';
 import { NavigationRoute } from '@src/constants/enums';
-
-const workshopMenuList: IMenuList[] = [
-    {
-        section: 'process',
-        title: 'Игровой процесс',
-        content: [
-            {
-                id: 'battlefield',
-                name: 'Поле битвы',
-            },
-        ],
-    },
-];
+import { workshopMenuList } from '@src/constants/constants';
 
 class Workshop {
     isLoading = false;

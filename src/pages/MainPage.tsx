@@ -41,6 +41,7 @@ export const MainPage = () => {
                 backgroundPosition: 'center bottom',
                 backgroundColor: '#111111',
             }}
+            overflow="hidden"
         >
             <Box component="main">
                 <Container

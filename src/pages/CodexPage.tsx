@@ -73,7 +73,7 @@ export const CodexPage = observer(() => {
 
             <Grid xs={12} md={8} lg={9}>
                 <MainCard
-                    defaultTitle="Перелистните страницу кодекса"
+                    defaultTitle="Перелестните страницу"
                     module={Module.codex}
                     params={{ section, id }}
                     isLoading={isLoading}

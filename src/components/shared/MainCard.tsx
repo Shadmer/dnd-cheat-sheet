@@ -207,7 +207,7 @@ export const MainCard = observer<MainCardProps>(
             >
                 <Stack
                     direction="row"
-                    alignItems="flex-start"
+                    alignItems="center"
                     justifyContent="space-between"
                     p="0 1rem"
                 >

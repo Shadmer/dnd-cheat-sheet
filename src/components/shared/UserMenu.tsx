@@ -6,6 +6,9 @@ import {
     MenuItem,
     ListItemIcon,
     ListItemText,
+    Typography,
+    Box,
+    Divider,
 } from '@mui/material';
 import {
     AccountCircle,
@@ -18,13 +21,15 @@ import {
 
 import { useAuth } from '@src/providers/AuthProvider';
 import { useCustomTheme } from '@src/providers/CustomThemeProvider';
+import { useCampaign } from '@src/providers/CampaignProvider';
 import { NavigationRoute } from '@src/constants/enums';
 
 export const UserMenu = () => {
     const { pathname } = useLocation();
+    const navigate = useNavigate();
     const { logout } = useAuth();
     const { mode, toggleTheme } = useCustomTheme();
-    const navigate = useNavigate();
+    const { currentCampaignTitle } = useCampaign();
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -68,8 +73,26 @@ export const UserMenu = () => {
                     },
                 }}
             >
+                {currentCampaignTitle && (
+                    <Box>
+                        <Typography
+                            sx={{
+                                maxWidth: 300,
+                                py: 1,
+                                px: 2,
+                                fontFamily: 'ofont',
+                            }}
+                        >
+                            {currentCampaignTitle}
+                        </Typography>
+                        <Divider />
+                    </Box>
+                )}
                 <MenuItem
-                    onClick={() => navigate('campaign')}
+                    onClick={() => {
+                        navigate('campaign');
+                        handleMenuClose();
+                    }}
                     selected={pathname === NavigationRoute.campaign}
                 >
                     <ListItemIcon>
@@ -78,7 +101,10 @@ export const UserMenu = () => {
                     <ListItemText>Выбрать кампанию</ListItemText>
                 </MenuItem>
                 <MenuItem
-                    onClick={() => navigate('printer')}
+                    onClick={() => {
+                        navigate('printer');
+                        handleMenuClose();
+                    }}
                     selected={pathname === NavigationRoute.printer}
                 >
                     <ListItemIcon>

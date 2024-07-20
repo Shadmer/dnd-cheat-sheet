@@ -8,4 +8,5 @@ export interface IUnit {
     health: string;
     armor: string;
     speed: string;
+    isInBattle: boolean;
 }

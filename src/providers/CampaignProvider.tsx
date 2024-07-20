@@ -6,7 +6,9 @@ type CampaignProviderProps = {
 
 type CampaignType = {
     currentCampaign: string;
+    currentCampaignTitle: string;
     setCurrentCampaign: Dispatch<SetStateAction<string>>;
+    setCurrentCampaignTitle: Dispatch<SetStateAction<string>>;
 };
 
 const CampaignContext = React.createContext<CampaignType | null>(null);
@@ -28,6 +30,12 @@ export const CampaignProvider: React.FC<CampaignProviderProps> = ({
         return localStorage.getItem('currentCampaign') || '';
     });
 
+    const [currentCampaignTitle, setCurrentCampaignTitle] = React.useState(
+        () => {
+            return localStorage.getItem('currentCampaignTitle') || '';
+        }
+    );
+
     React.useEffect(() => {
         if (isInitialMount.current) {
             isInitialMount.current = false;
@@ -39,11 +47,17 @@ export const CampaignProvider: React.FC<CampaignProviderProps> = ({
         }
 
         localStorage.setItem('currentCampaign', currentCampaign);
-    }, [currentCampaign]);
+        localStorage.setItem('currentCampaignTitle', currentCampaignTitle);
+    }, [currentCampaign, currentCampaignTitle]);
 
     return (
         <CampaignContext.Provider
-            value={{ currentCampaign, setCurrentCampaign }}
+            value={{
+                currentCampaign,
+                currentCampaignTitle,
+                setCurrentCampaign,
+                setCurrentCampaignTitle,
+            }}
         >
             {children}
         </CampaignContext.Provider>

@@ -1,4 +1,5 @@
 import { LastPageType, Module, NavigationRoute } from '@src/constants/enums';
+import { IMenuList } from '@src/interfaces/common';
 
 export const moduleMap: Record<
     Module,
@@ -19,3 +20,16 @@ export const moduleMap: Record<
         lastPage: LastPageType.workshop,
     },
 };
+
+export const workshopMenuList: IMenuList[] = [
+    {
+        section: 'process',
+        title: 'Игровой процесс',
+        content: [
+            {
+                id: 'battlefield',
+                name: 'Поле битвы',
+            },
+        ],
+    },
+];

@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/dnd-cheat-sheet/static/css/main.b958b765.css",
-    "main.js": "/dnd-cheat-sheet/static/js/main.d25bbc39.js",
+    "main.js": "/dnd-cheat-sheet/static/js/main.602a304b.js",
     "static/media/dices.png": "/dnd-cheat-sheet/static/media/dices.aa4c7c198eb48db07783.png",
     "static/media/ofont.ru_InkVerse.ttf": "/dnd-cheat-sheet/static/media/ofont.ru_InkVerse.30b8dc264af0c3a977ea.ttf",
     "static/media/drops.png": "/dnd-cheat-sheet/static/media/drops.35edcb87611e547f6ec4.png",
@@ -67,10 +67,10 @@
     "static/media/roboto-greek-ext-700-normal.woff": "/dnd-cheat-sheet/static/media/roboto-greek-ext-700-normal.249853776d22a271b2b5.woff",
     "index.html": "/dnd-cheat-sheet/index.html",
     "main.b958b765.css.map": "/dnd-cheat-sheet/static/css/main.b958b765.css.map",
-    "main.d25bbc39.js.map": "/dnd-cheat-sheet/static/js/main.d25bbc39.js.map"
+    "main.602a304b.js.map": "/dnd-cheat-sheet/static/js/main.602a304b.js.map"
   },
   "entrypoints": [
     "static/css/main.b958b765.css",
-    "static/js/main.d25bbc39.js"
+    "static/js/main.602a304b.js"
   ]
 }

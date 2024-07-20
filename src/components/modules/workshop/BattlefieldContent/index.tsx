@@ -1,28 +1,25 @@
 import React from 'react';
 import {
-    IconButton,
-    Tooltip,
     Box,
     Typography,
     Stack,
     Divider,
-    Paper,
     useMediaQuery,
     useTheme,
+    IconButton,
+    Tooltip,
     Unstable_Grid2 as Grid,
 } from '@mui/material';
-import {
-    AiOutlineAppstoreAdd,
-    AiOutlinePlayCircle,
-    AiOutlineStop,
-} from 'react-icons/ai';
+import { GiAxeSword, GiBattleGear } from 'react-icons/gi';
 import { CodexService } from '@src/services/CodexService';
 import { useStores } from '@src/providers/RootStoreContext';
 import { BattleUnitsDialog } from './BattleUnitsDialog';
 import { IUnit } from './interfaces';
 import { useCampaign } from '@src/providers/CampaignProvider';
+import { UnitCard } from './UnitCard';
+import { EditUnitModal } from './EditUnitModal';
 
-export const BattlefieldContent = () => {
+export const BattlefieldContent: React.FC = () => {
     const { fetchPage } = CodexService();
     const { currentCampaign } = useCampaign();
     const {
@@ -30,7 +27,12 @@ export const BattlefieldContent = () => {
     } = useStores();
 
     const [selectedUnits, setSelectedUnits] = React.useState<IUnit[]>([]);
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState<boolean>(false);
+    const [editModalOpen, setEditModalOpen] = React.useState<boolean>(false);
+    const [unitToEdit, setUnitToEdit] = React.useState<IUnit | null>(null);
+
+    const theme = useTheme();
+    const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
 
     React.useEffect(() => {
         const savedUnits = localStorage.getItem('selectedUnits');
@@ -48,12 +50,6 @@ export const BattlefieldContent = () => {
 
     const handleUnitClick = async (unit: IUnit) => {
         console.log('Selected Unit:', unit);
-        // const response = await fetchPage(
-        //     currentCampaign,
-        //     unit.section,
-        //     unit.parentId
-        // );
-        // console.log('data', response.creature);
     };
 
     const calculateInitiative = (dex: number): string => {
@@ -76,9 +72,6 @@ export const BattlefieldContent = () => {
     };
 
     const startBattle = async () => {
-        console.log('Начать битву');
-        console.log('selectedUnits', selectedUnits);
-
         const uniqueBestiaryUnits = Array.from(
             new Set(
                 selectedUnits
@@ -156,11 +149,10 @@ export const BattlefieldContent = () => {
 
                 return {
                     ...unit,
-                    initiative,
-                    maxHealth,
-                    health,
+                    initiative: unit.initiative || initiative,
+                    maxHealth: unit.maxHealth || maxHealth,
+                    health: unit.health || health,
                     armor: unit.armor || creature.armorClass.toString(),
-                    speed: unit.speed || creature.speed,
                     isInBattle: true,
                 };
             });
@@ -171,8 +163,52 @@ export const BattlefieldContent = () => {
         await updateUnits();
     };
 
-    const endBattle = () => {
-        console.log('Закончить битву');
+    const handleDamage = (id: string, amount: number) => {
+        setSelectedUnits((units) =>
+            units.map((unit) =>
+                unit.id === id
+                    ? {
+                          ...unit,
+                          health: Math.max(
+                              0,
+                              parseInt(unit.health) - amount
+                          ).toString(),
+                      }
+                    : unit
+            )
+        );
+    };
+
+    const handleHeal = (id: string, amount: number) => {
+        setSelectedUnits((units) =>
+            units.map((unit) =>
+                unit.id === id
+                    ? {
+                          ...unit,
+                          health: Math.min(
+                              parseInt(unit.maxHealth),
+                              parseInt(unit.health) + amount
+                          ).toString(),
+                      }
+                    : unit
+            )
+        );
+    };
+
+    const openEditModal = (unit: IUnit) => {
+        setUnitToEdit(unit);
+        setEditModalOpen(true);
+    };
+
+    const closeEditModal = () => {
+        setEditModalOpen(false);
+        setUnitToEdit(null);
+    };
+
+    const handleEditChange = (editedUnit: IUnit) => {
+        setSelectedUnits((units) =>
+            units.map((unit) => (unit.id === editedUnit.id ? editedUnit : unit))
+        );
     };
 
     const renderUnitsBySection = (section: string, title: string) => {
@@ -190,28 +226,20 @@ export const BattlefieldContent = () => {
                 <Divider />
                 <Grid container spacing={2} mt={2}>
                     {units.map((unit) => (
-                        <Grid xs={12} sm={6} md={4} lg={3} key={unit.id}>
-                            <Paper
-                                sx={{
-                                    padding: 2,
-                                    cursor: 'pointer',
-                                    '&:hover': {
-                                        backgroundColor: '#f5f5f5',
-                                    },
-                                }}
-                                onClick={() => handleUnitClick(unit)}
-                            >
-                                <Typography>{unit.name}</Typography>
-                            </Paper>
+                        <Grid xs={12} sm={6} lg={4} key={unit.id}>
+                            <UnitCard
+                                unit={unit}
+                                handleUnitClick={handleUnitClick}
+                                handleDamage={handleDamage}
+                                handleHeal={handleHeal}
+                                openEditModal={openEditModal}
+                            />
                         </Grid>
                     ))}
                 </Grid>
             </Box>
         );
     };
-
-    const theme = useTheme();
-    const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
 
     return (
         <Box>
@@ -233,17 +261,12 @@ export const BattlefieldContent = () => {
                 <Stack direction="row" spacing={1}>
                     <Tooltip title="Выбрать участников битвы">
                         <IconButton onClick={handleOpen}>
-                            <AiOutlineAppstoreAdd size={24} />
+                            <GiBattleGear size={24} />
                         </IconButton>
                     </Tooltip>
                     <Tooltip title="Начать битву">
                         <IconButton onClick={startBattle}>
-                            <AiOutlinePlayCircle size={24} />
-                        </IconButton>
-                    </Tooltip>
-                    <Tooltip title="Закончить битву">
-                        <IconButton onClick={endBattle}>
-                            <AiOutlineStop size={24} />
+                            <GiAxeSword size={24} />
                         </IconButton>
                     </Tooltip>
                 </Stack>
@@ -265,6 +288,13 @@ export const BattlefieldContent = () => {
                 menuList={menuList}
                 selectedUnits={selectedUnits}
                 setSelectedUnits={setSelectedUnits}
+            />
+
+            <EditUnitModal
+                unit={unitToEdit}
+                open={editModalOpen}
+                onClose={closeEditModal}
+                handleEditChange={handleEditChange}
             />
         </Box>
     );

@@ -7,6 +7,5 @@ export interface IUnit {
     maxHealth: string;
     health: string;
     armor: string;
-    speed: string;
     isInBattle: boolean;
 }

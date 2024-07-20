@@ -66,7 +66,6 @@ export const BattleUnitsDialog: React.FC<BattleUnitsDialogProps> = ({
                     maxHealth: '',
                     health: '',
                     armor: '',
-                    speed: '',
                     isInBattle: false,
                 })),
             ];
@@ -94,7 +93,6 @@ export const BattleUnitsDialog: React.FC<BattleUnitsDialogProps> = ({
             maxHealth: '',
             health: '',
             armor: '',
-            speed: '',
             isInBattle: false,
         };
 
@@ -120,7 +118,6 @@ export const BattleUnitsDialog: React.FC<BattleUnitsDialogProps> = ({
             maxHealth: '',
             health: '',
             armor: '',
-            speed: '',
             isInBattle: false,
         };
 
@@ -205,6 +202,7 @@ export const BattleUnitsDialog: React.FC<BattleUnitsDialogProps> = ({
                             anchorEl={anchorEl}
                             open={Boolean(anchorEl)}
                             onClose={handleMenuClose}
+                            sx={{ maxHeight: 300 }}
                         >
                             {sectionMenu.content.map((item) => (
                                 <MenuItem key={item.id}>
@@ -293,7 +291,6 @@ export const BattleUnitsDialog: React.FC<BattleUnitsDialogProps> = ({
                             maxHealth: '',
                             health: '',
                             armor: '',
-                            speed: '',
                             isInBattle: false,
                         };
 

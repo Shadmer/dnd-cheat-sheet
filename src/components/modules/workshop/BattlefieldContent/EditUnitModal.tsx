@@ -9,7 +9,7 @@ import {
     FormControlLabel,
     Switch,
 } from '@mui/material';
-import { IUnit } from './interfaces';
+import { IUnit, UnitSections } from './interfaces';
 
 interface EditUnitModalProps {
     unit: IUnit | null;
@@ -32,9 +32,10 @@ export const EditUnitModal: React.FC<EditUnitModalProps> = ({
             armor: '',
             health: '',
             maxHealth: '',
-            isInBattle: false,
-            section: '',
+            isInBattle: null,
+            section: UnitSections.custom,
             parentId: '',
+            isCurrentMove: false,
         }
     );
 
@@ -115,7 +116,7 @@ export const EditUnitModal: React.FC<EditUnitModalProps> = ({
                 <FormControlLabel
                     control={
                         <Switch
-                            checked={editedUnit.isInBattle}
+                            checked={!!editedUnit.isInBattle}
                             onChange={handleSwitchChange}
                             name="isInBattle"
                             color="primary"
@@ -126,10 +127,10 @@ export const EditUnitModal: React.FC<EditUnitModalProps> = ({
                 />
             </DialogContent>
             <DialogActions>
-                <Button variant="contained" onClick={handleSave}>
+                <Button variant="text" color="inherit" onClick={handleSave}>
                     Сохранить
                 </Button>
-                <Button variant="outlined" onClick={onClose}>
+                <Button variant="outlined" color="inherit" onClick={onClose}>
                     Отмена
                 </Button>
             </DialogActions>

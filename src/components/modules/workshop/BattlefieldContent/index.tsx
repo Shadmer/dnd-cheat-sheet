@@ -10,46 +10,53 @@ import {
     Tooltip,
     Unstable_Grid2 as Grid,
 } from '@mui/material';
-import { GiAxeSword, GiBattleGear } from 'react-icons/gi';
+import { GiAxeSword, GiBattleGear, GiSandsOfTime } from 'react-icons/gi';
 import { CodexService } from '@src/services/CodexService';
 import { useStores } from '@src/providers/RootStoreContext';
-import { BattleUnitsDialog } from './BattleUnitsDialog';
-import { IUnit } from './interfaces';
 import { useCampaign } from '@src/providers/CampaignProvider';
+import { useDialog } from '@src/providers/DialogProvider';
+
+import { CreatureCard } from '@src/components/modules/codex/CreatureContent';
+
+import { IUnit, UnitSections } from './interfaces';
 import { UnitCard } from './UnitCard';
+import { BattleUnitsModal } from './BattleUnitsModal';
 import { EditUnitModal } from './EditUnitModal';
+import { InitiativeUnitsModal } from './InitiativeUnitsModal';
 
 export const BattlefieldContent: React.FC = () => {
+    const theme = useTheme();
+    const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
+
     const { fetchPage } = CodexService();
     const { currentCampaign } = useCampaign();
+    const { openDialog } = useDialog();
     const {
         codex: { menuList },
     } = useStores();
 
     const [selectedUnits, setSelectedUnits] = React.useState<IUnit[]>([]);
-    const [open, setOpen] = React.useState<boolean>(false);
+    const [battleModalOpen, setBattleModalOpen] =
+        React.useState<boolean>(false);
     const [editModalOpen, setEditModalOpen] = React.useState<boolean>(false);
     const [unitToEdit, setUnitToEdit] = React.useState<IUnit | null>(null);
+    const [initiativeModalOpen, setInitiativeModalOpen] =
+        React.useState<boolean>(false);
 
-    const theme = useTheme();
-    const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
+    const isSomeIsInBattle = React.useMemo(
+        () => selectedUnits.some((unit) => unit.isInBattle),
+        [selectedUnits]
+    );
 
-    React.useEffect(() => {
-        const savedUnits = localStorage.getItem('selectedUnits');
-        if (savedUnits) {
-            setSelectedUnits(JSON.parse(savedUnits));
-        }
-    }, []);
+    const handleUnitModalOpen = async (unitIt: string, section: string) => {
+        const unit = (await fetchPage(currentCampaign, section, unitIt))
+            .creature;
 
-    React.useEffect(() => {
-        localStorage.setItem('selectedUnits', JSON.stringify(selectedUnits));
-    }, [selectedUnits]);
+        if (!unit) return;
 
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+        const unitContent = <CreatureCard creature={unit} />;
 
-    const handleUnitClick = async (unit: IUnit) => {
-        console.log('Selected Unit:', unit);
+        openDialog(unit.name.rus, unitContent);
     };
 
     const calculateInitiative = (dex: number): string => {
@@ -75,7 +82,7 @@ export const BattlefieldContent: React.FC = () => {
         const uniqueBestiaryUnits = Array.from(
             new Set(
                 selectedUnits
-                    .filter((unit) => unit.section === 'bestiary')
+                    .filter((unit) => unit.section === UnitSections.bestiary)
                     .map((unit) => unit.parentId)
             )
         );
@@ -83,7 +90,7 @@ export const BattlefieldContent: React.FC = () => {
         const uniqueCharacters = Array.from(
             new Set(
                 selectedUnits
-                    .filter((unit) => unit.section === 'characters')
+                    .filter((unit) => unit.section === UnitSections.characters)
                     .map((unit) => unit.parentId)
             )
         );
@@ -103,15 +110,19 @@ export const BattlefieldContent: React.FC = () => {
         const updateUnits = async () => {
             const unitUpdates = await Promise.all([
                 ...uniqueBestiaryUnits.map((id) =>
-                    fetchUnitData(id, 'bestiary')
+                    fetchUnitData(id, UnitSections.bestiary)
                 ),
                 ...uniqueCharacters.map((id) =>
-                    fetchUnitData(id, 'characters')
+                    fetchUnitData(id, UnitSections.characters)
                 ),
             ]);
 
             const newSelectedUnits = selectedUnits.map((unit) => {
-                if (!['bestiary', 'characters'].includes(unit.section)) {
+                if (
+                    ![UnitSections.bestiary, UnitSections.characters].includes(
+                        unit.section
+                    )
+                ) {
                     return unit;
                 }
 
@@ -153,7 +164,7 @@ export const BattlefieldContent: React.FC = () => {
                     maxHealth: unit.maxHealth || maxHealth,
                     health: unit.health || health,
                     armor: unit.armor || creature.armorClass.toString(),
-                    isInBattle: true,
+                    isInBattle: unit.isInBattle ?? true,
                 };
             });
 
@@ -229,9 +240,9 @@ export const BattlefieldContent: React.FC = () => {
                         <Grid xs={12} sm={6} lg={4} key={unit.id}>
                             <UnitCard
                                 unit={unit}
-                                handleUnitClick={handleUnitClick}
-                                handleDamage={handleDamage}
-                                handleHeal={handleHeal}
+                                openUnitModal={handleUnitModalOpen}
+                                makeDamage={handleDamage}
+                                makeHeal={handleHeal}
                                 openEditModal={openEditModal}
                             />
                         </Grid>
@@ -241,13 +252,23 @@ export const BattlefieldContent: React.FC = () => {
         );
     };
 
+    React.useEffect(() => {
+        const savedUnits = localStorage.getItem('selectedUnits');
+        if (savedUnits) {
+            setSelectedUnits(JSON.parse(savedUnits));
+        }
+    }, []);
+
+    React.useEffect(() => {
+        localStorage.setItem('selectedUnits', JSON.stringify(selectedUnits));
+    }, [selectedUnits]);
+
     return (
         <Box>
             <Stack
                 direction={isSmUp ? 'row' : 'column'}
                 justifyContent="space-between"
                 alignItems={isSmUp ? 'center' : 'flex-start'}
-                borderBottom="1px solid #ccc"
                 py={2}
                 mb={2}
                 spacing={isSmUp ? 0 : 2}
@@ -255,36 +276,58 @@ export const BattlefieldContent: React.FC = () => {
                 <Box>
                     <Typography variant="h5">Управление битвой</Typography>
                     <Typography variant="body2" color="textSecondary">
-                        Выберите участников и начните сражение
+                        Выберите участников, начните сражение и отслеживайте
+                        очередь хода
                     </Typography>
                 </Box>
                 <Stack direction="row" spacing={1}>
-                    <Tooltip title="Выбрать участников битвы">
-                        <IconButton onClick={handleOpen}>
+                    <Tooltip title="Выбрать участников">
+                        <IconButton onClick={() => setBattleModalOpen(true)}>
                             <GiBattleGear size={24} />
                         </IconButton>
                     </Tooltip>
                     <Tooltip title="Начать битву">
-                        <IconButton onClick={startBattle}>
-                            <GiAxeSword size={24} />
-                        </IconButton>
+                        <Box>
+                            <IconButton
+                                onClick={startBattle}
+                                disabled={!selectedUnits.length}
+                            >
+                                <GiAxeSword size={24} />
+                            </IconButton>
+                        </Box>
+                    </Tooltip>
+                    <Tooltip title="Очередь хода">
+                        <Box>
+                            <IconButton
+                                onClick={() => setInitiativeModalOpen(true)}
+                                disabled={!isSomeIsInBattle}
+                            >
+                                <GiSandsOfTime size={24} />
+                            </IconButton>
+                        </Box>
                     </Tooltip>
                 </Stack>
             </Stack>
 
             <Box>
-                {renderUnitsBySection('players', 'Игроки')}
-                {renderUnitsBySection('custom', 'Созданные персонажи')}
+                {renderUnitsBySection(UnitSections.players, 'Игроки')}
                 {renderUnitsBySection(
-                    'characters',
+                    UnitSections.custom,
+                    'Созданные персонажи'
+                )}
+                {renderUnitsBySection(
+                    UnitSections.characters,
                     'Именные персонажи мастера'
                 )}
-                {renderUnitsBySection('bestiary', 'Обычные персонажи мастера')}
+                {renderUnitsBySection(
+                    UnitSections.bestiary,
+                    'Обычные персонажи мастера'
+                )}
             </Box>
 
-            <BattleUnitsDialog
-                open={open}
-                onClose={handleClose}
+            <BattleUnitsModal
+                open={battleModalOpen}
+                onClose={() => setBattleModalOpen(false)}
                 menuList={menuList}
                 selectedUnits={selectedUnits}
                 setSelectedUnits={setSelectedUnits}
@@ -295,6 +338,13 @@ export const BattlefieldContent: React.FC = () => {
                 open={editModalOpen}
                 onClose={closeEditModal}
                 handleEditChange={handleEditChange}
+            />
+
+            <InitiativeUnitsModal
+                open={initiativeModalOpen}
+                onClose={() => setInitiativeModalOpen(false)}
+                selectedUnits={selectedUnits}
+                setSelectedUnits={setSelectedUnits}
             />
         </Box>
     );

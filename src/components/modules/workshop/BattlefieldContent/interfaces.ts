@@ -1,11 +1,19 @@
+export enum UnitSections {
+    players = 'players',
+    custom = 'custom',
+    characters = 'characters',
+    bestiary = 'bestiary',
+}
+
 export interface IUnit {
     id: string;
     name: string;
-    section: string;
+    section: UnitSections;
     parentId: string;
     initiative: string;
     maxHealth: string;
     health: string;
     armor: string;
-    isInBattle: boolean;
+    isInBattle: boolean | null;
+    isCurrentMove: boolean;
 }

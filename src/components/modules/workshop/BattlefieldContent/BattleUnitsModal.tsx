@@ -18,6 +18,7 @@ import {
     ListItemText,
     ListItemIcon,
     Divider,
+    ButtonGroup,
 } from '@mui/material';
 import { Close } from '@mui/icons-material';
 import {
@@ -28,9 +29,9 @@ import {
 } from 'react-icons/ai';
 import { PiCaretLeftThin, PiCaretRightThin } from 'react-icons/pi';
 import { IMenuItem, IMenuList } from '@src/interfaces/common';
-import { IUnit } from './interfaces';
+import { IUnit, UnitSections } from './interfaces';
 
-interface BattleUnitsDialogProps {
+interface BattleUnitsModalProps {
     open: boolean;
     onClose: () => void;
     menuList: IMenuList[];
@@ -38,7 +39,7 @@ interface BattleUnitsDialogProps {
     setSelectedUnits: (units: IUnit[]) => void;
 }
 
-export const BattleUnitsDialog: React.FC<BattleUnitsDialogProps> = ({
+export const BattleUnitsModal: React.FC<BattleUnitsModalProps> = ({
     open,
     onClose,
     menuList,
@@ -54,7 +55,7 @@ export const BattleUnitsDialog: React.FC<BattleUnitsDialogProps> = ({
         `${name}-${Math.random().toString(36).slice(2, 9)}`;
 
     const handleUnitSelectionChange =
-        (section: string) =>
+        (section: UnitSections) =>
         (_: React.ChangeEvent<object>, newValue: IMenuItem[]) => {
             const newSelectedUnits = [
                 ...selectedUnits.filter((item) => item.section !== section),
@@ -66,7 +67,8 @@ export const BattleUnitsDialog: React.FC<BattleUnitsDialogProps> = ({
                     maxHealth: '',
                     health: '',
                     armor: '',
-                    isInBattle: false,
+                    isInBattle: null,
+                    isCurrentMove: false,
                 })),
             ];
 
@@ -87,13 +89,14 @@ export const BattleUnitsDialog: React.FC<BattleUnitsDialogProps> = ({
         const newUnit: IUnit = {
             id: generateUniqueId(customUnitName),
             name: customUnitName,
-            section: 'custom',
+            section: UnitSections.custom,
             parentId: '',
             initiative: '',
             maxHealth: '',
             health: '',
             armor: '',
-            isInBattle: false,
+            isInBattle: null,
+            isCurrentMove: false,
         };
 
         setSelectedUnits([...selectedUnits, newUnit]);
@@ -112,13 +115,14 @@ export const BattleUnitsDialog: React.FC<BattleUnitsDialogProps> = ({
         const newUnit: IUnit = {
             id: generateUniqueId(item.id),
             name: newUnitName,
-            section: 'bestiary',
+            section: UnitSections.bestiary,
             parentId: item.id,
             initiative: '',
             maxHealth: '',
             health: '',
             armor: '',
-            isInBattle: false,
+            isInBattle: null,
+            isCurrentMove: false,
         };
 
         setSelectedUnits([...selectedUnits, newUnit]);
@@ -131,7 +135,7 @@ export const BattleUnitsDialog: React.FC<BattleUnitsDialogProps> = ({
         for (let i = newSelectedUnits.length - 1; i >= 0; i--) {
             if (
                 newSelectedUnits[i].parentId === unitId &&
-                newSelectedUnits[i].section === 'bestiary'
+                newSelectedUnits[i].section === UnitSections.bestiary
             ) {
                 index = i;
                 break;
@@ -148,7 +152,18 @@ export const BattleUnitsDialog: React.FC<BattleUnitsDialogProps> = ({
         setSelectedUnits(
             selectedUnits.filter(
                 (unit) =>
-                    !(unit.parentId === unitId && unit.section === 'bestiary')
+                    !(
+                        unit.parentId === unitId &&
+                        unit.section === UnitSections.bestiary
+                    )
+            )
+        );
+    };
+
+    const handleRemoveAllBestiary = () => {
+        setSelectedUnits(
+            selectedUnits.filter(
+                (unit) => unit.section !== UnitSections.bestiary
             )
         );
     };
@@ -163,7 +178,9 @@ export const BattleUnitsDialog: React.FC<BattleUnitsDialogProps> = ({
 
     const getBestiaryUnitCount = (unitId: string) => {
         return selectedUnits.filter(
-            (unit) => unit.parentId === unitId && unit.section === 'bestiary'
+            (unit) =>
+                unit.parentId === unitId &&
+                unit.section === UnitSections.bestiary
         ).length;
     };
 
@@ -177,142 +194,146 @@ export const BattleUnitsDialog: React.FC<BattleUnitsDialogProps> = ({
         </IconButton>
     );
 
-    const renderedSections = ['players', 'characters', 'bestiary'].map(
-        (section) => {
-            const sectionMenu = menuList.find(
-                (menu) => menu.section === section
-            );
-            if (!sectionMenu || !sectionMenu.content.length) return null;
+    const renderedSections = [
+        UnitSections.players,
+        UnitSections.characters,
+        UnitSections.bestiary,
+    ].map((section) => {
+        const sectionMenu = menuList.find((menu) => menu.section === section);
+        if (!sectionMenu || !sectionMenu.content.length) return null;
 
-            const sectionTitle = sectionMenu.title;
+        const sectionTitle = sectionMenu.title;
 
-            if (section === 'bestiary') {
-                return (
-                    <Box key={section}>
+        if (section === UnitSections.bestiary) {
+            return (
+                <Box key={section}>
+                    <ButtonGroup fullWidth>
                         <Button
                             color="inherit"
                             variant="outlined"
                             onClick={handleMenuOpen}
-                            fullWidth
-                            sx={{ padding: '10px 14px' }}
+                            sx={{ flexGrow: 1, padding: '10px 14px' }}
                         >
                             Бестиарий
                         </Button>
-                        <Menu
-                            anchorEl={anchorEl}
-                            open={Boolean(anchorEl)}
-                            onClose={handleMenuClose}
-                            sx={{ maxHeight: 300 }}
-                        >
-                            {sectionMenu.content.map((item) => (
-                                <MenuItem key={item.id}>
-                                    <ListItemIcon
-                                        sx={{
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                        }}
+                        <Tooltip title="Очистить бестиарий">
+                            <Button
+                                color="inherit"
+                                variant="outlined"
+                                onClick={handleRemoveAllBestiary}
+                                sx={{ maxWidth: 50, padding: '10px 14px' }}
+                            >
+                                <AiOutlineDelete />
+                            </Button>
+                        </Tooltip>
+                    </ButtonGroup>
+                    <Menu
+                        anchorEl={anchorEl}
+                        open={Boolean(anchorEl)}
+                        onClose={handleMenuClose}
+                        sx={{ maxHeight: 300 }}
+                    >
+                        {sectionMenu.content.map((item) => (
+                            <MenuItem key={item.id}>
+                                <ListItemIcon
+                                    sx={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                    }}
+                                >
+                                    <IconButton
+                                        size="small"
+                                        onClick={() =>
+                                            handleRemoveBestiaryUnit(item.id)
+                                        }
+                                    >
+                                        <PiCaretLeftThin />
+                                    </IconButton>
+                                    <Typography>
+                                        {getBestiaryUnitCount(item.id)}
+                                    </Typography>
+                                    <IconButton
+                                        size="small"
+                                        onClick={() =>
+                                            handleAddBestiaryUnit(item)
+                                        }
+                                    >
+                                        <PiCaretRightThin />
+                                    </IconButton>
+                                </ListItemIcon>
+                                <ListItemText sx={{ pr: 2 }}>
+                                    {item.name}
+                                </ListItemText>
+                                <ListItemIcon>
+                                    <Tooltip
+                                        title="Удалить всех"
+                                        placement="left"
                                     >
                                         <IconButton
                                             size="small"
                                             onClick={() =>
-                                                handleRemoveBestiaryUnit(
+                                                handleRemoveAllBestiaryUnits(
                                                     item.id
                                                 )
                                             }
                                         >
-                                            <PiCaretLeftThin />
+                                            <AiOutlineDelete />
                                         </IconButton>
-                                        <Typography>
-                                            {getBestiaryUnitCount(item.id)}
-                                        </Typography>
-                                        <IconButton
-                                            size="small"
-                                            onClick={() =>
-                                                handleAddBestiaryUnit(item)
-                                            }
-                                        >
-                                            <PiCaretRightThin />
-                                        </IconButton>
-                                    </ListItemIcon>
-                                    <ListItemText sx={{ pr: 2 }}>
-                                        {item.name}
-                                    </ListItemText>
-                                    <ListItemIcon>
-                                        <Tooltip
-                                            title="Удалить всех"
-                                            placement="left"
-                                        >
-                                            <IconButton
-                                                size="small"
-                                                onClick={() =>
-                                                    handleRemoveAllBestiaryUnits(
-                                                        item.id
-                                                    )
-                                                }
-                                            >
-                                                <AiOutlineDelete />
-                                            </IconButton>
-                                        </Tooltip>
-                                    </ListItemIcon>
-                                </MenuItem>
-                            ))}
-                        </Menu>
-                    </Box>
-                );
-            }
-
-            return (
-                <Autocomplete
-                    key={section}
-                    multiple
-                    disableCloseOnSelect
-                    options={sectionMenu.content}
-                    getOptionLabel={(option) => option.name}
-                    value={selectedUnits.filter(
-                        (unit) => unit.section === section
-                    )}
-                    onChange={handleUnitSelectionChange(section)}
-                    isOptionEqualToValue={(option, value) =>
-                        option.id === value.id
-                    }
-                    renderInput={(params) => (
-                        <TextField
-                            {...params}
-                            label={sectionTitle}
-                            variant="outlined"
-                        />
-                    )}
-                    renderOption={(props, option) => {
-                        const unit: IUnit = {
-                            ...option,
-                            section,
-                            parentId: option.id,
-                            initiative: '',
-                            maxHealth: '',
-                            health: '',
-                            armor: '',
-                            isInBattle: false,
-                        };
-
-                        return (
-                            <li {...props}>
-                                {isSelected(unit) ? (
-                                    <AiFillCheckCircle
-                                        style={{ marginRight: 8 }}
-                                    />
-                                ) : (
-                                    <AiOutlineCheckCircle
-                                        style={{ marginRight: 8 }}
-                                    />
-                                )}
-                                <Typography>{option.name}</Typography>
-                            </li>
-                        );
-                    }}
-                />
+                                    </Tooltip>
+                                </ListItemIcon>
+                            </MenuItem>
+                        ))}
+                    </Menu>
+                </Box>
             );
         }
-    );
+
+        return (
+            <Autocomplete
+                key={section}
+                multiple
+                disableCloseOnSelect
+                options={sectionMenu.content}
+                getOptionLabel={(option) => option.name}
+                value={selectedUnits.filter((unit) => unit.section === section)}
+                onChange={handleUnitSelectionChange(section)}
+                isOptionEqualToValue={(option, value) => option.id === value.id}
+                renderInput={(params) => (
+                    <TextField
+                        {...params}
+                        label={sectionTitle}
+                        variant="outlined"
+                    />
+                )}
+                renderOption={(props, option) => {
+                    const unit: IUnit = {
+                        ...option,
+                        section,
+                        parentId: option.id,
+                        initiative: '',
+                        maxHealth: '',
+                        health: '',
+                        armor: '',
+                        isInBattle: null,
+                        isCurrentMove: false,
+                    };
+
+                    return (
+                        <li {...props}>
+                            {isSelected(unit) ? (
+                                <AiFillCheckCircle style={{ marginRight: 8 }} />
+                            ) : (
+                                <AiOutlineCheckCircle
+                                    style={{ marginRight: 8 }}
+                                />
+                            )}
+                            <Typography>{option.name}</Typography>
+                        </li>
+                    );
+                }}
+            />
+        );
+    });
 
     const hasNoResults = renderedSections.every((section) => section === null);
 
@@ -357,13 +378,15 @@ export const BattleUnitsDialog: React.FC<BattleUnitsDialogProps> = ({
                             multiple
                             disableCloseOnSelect
                             options={selectedUnits.filter(
-                                (unit) => unit.section === 'custom'
+                                (unit) => unit.section === UnitSections.custom
                             )}
                             getOptionLabel={(option) => option.name}
                             value={selectedUnits.filter(
-                                (unit) => unit.section === 'custom'
+                                (unit) => unit.section === UnitSections.custom
                             )}
-                            onChange={handleUnitSelectionChange('custom')}
+                            onChange={handleUnitSelectionChange(
+                                UnitSections.custom
+                            )}
                             isOptionEqualToValue={(option, value) =>
                                 option.id === value.id
                             }
@@ -377,7 +400,7 @@ export const BattleUnitsDialog: React.FC<BattleUnitsDialogProps> = ({
                             renderOption={(props, option) => {
                                 const unit: IUnit = {
                                     ...option,
-                                    section: 'custom',
+                                    section: UnitSections.custom,
                                 };
 
                                 return (

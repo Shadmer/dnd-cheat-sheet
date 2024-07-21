@@ -60,7 +60,7 @@ export const CreatureCard: React.FC<CreatureCardProps> = ({ creature }) => {
                 </Typography>
                 <Grid container spacing={1}>
                     {Object.entries(creature.ability).map(([key, value]) => (
-                        <Grid key={key} xs={4} md={4} lg={1}>
+                        <Grid key={key} xs={6} md={4} lg={2}>
                             <Typography
                                 align="center"
                                 p={0.5}

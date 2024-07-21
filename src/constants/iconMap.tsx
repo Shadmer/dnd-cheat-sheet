@@ -5,6 +5,7 @@ import {
     FaMapMarkedAlt,
     FaGavel,
     FaStickyNote,
+    FaMapSigns,
 } from 'react-icons/fa';
 
 export const iconMap: Record<string, React.ReactNode> = {
@@ -14,4 +15,5 @@ export const iconMap: Record<string, React.ReactNode> = {
     places: <FaMapMarkedAlt />,
     artifacts: <FaGavel />,
     notes: <FaStickyNote />,
+    process: <FaMapSigns />,
 };

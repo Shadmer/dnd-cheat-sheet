@@ -59,10 +59,6 @@ export const PrinterPage: React.FC = observer(() => {
         content: () => componentRef.current,
     });
 
-    React.useEffect(() => {
-        getPrintMenuList(currentCampaign, menuList);
-    }, [currentCampaign, getPrintMenuList, menuList]);
-
     const isImageLoaded = React.useCallback(
         (id: string) => loadedImages.includes(id),
         [loadedImages]
@@ -71,6 +67,10 @@ export const PrinterPage: React.FC = observer(() => {
     const handleDrawerToggle = () => {
         setDrawerOpen((prevState) => !prevState);
     };
+
+    React.useEffect(() => {
+        getPrintMenuList(currentCampaign, menuList);
+    }, [currentCampaign, getPrintMenuList, menuList]);
 
     const drawerHeader = (
         <Stack direction="row" alignItems="center" p={2}>
@@ -99,50 +99,52 @@ export const PrinterPage: React.FC = observer(() => {
                     </Box>
                 ) : (
                     <List sx={{ padding: 2 }}>
-                        {sections.map((sectionItem) => (
-                            <Box key={sectionItem.section} mb={4}>
-                                <Typography variant="h4" gutterBottom>
-                                    {sectionItem.title}
-                                </Typography>
-                                <Divider />
-                                {sectionItem.content.map((contentItem) => (
-                                    <ListItem key={contentItem.id}>
-                                        <ListItemText
-                                            primary={contentItem.name}
-                                        />
-                                        <ListItemSecondaryAction>
-                                            <Tooltip
-                                                placement="right"
-                                                title={
-                                                    isImageLoaded(
-                                                        contentItem.id
-                                                    )
-                                                        ? 'Удалить'
-                                                        : 'Загрузить'
-                                                }
-                                            >
-                                                <IconButton
-                                                    onClick={() =>
-                                                        toggleImageLoad(
-                                                            contentItem
+                        {sections.length ? (
+                            sections.map((sectionItem) => (
+                                <Box key={sectionItem.section} mb={4}>
+                                    <Typography variant="h4" gutterBottom>
+                                        {sectionItem.title}
+                                    </Typography>
+                                    <Divider />
+                                    {sectionItem.content.map((contentItem) => (
+                                        <ListItem key={contentItem.id}>
+                                            <ListItemText
+                                                primary={contentItem.name}
+                                            />
+                                            <ListItemSecondaryAction>
+                                                <Tooltip
+                                                    placement="right"
+                                                    title={
+                                                        isImageLoaded(
+                                                            contentItem.id
                                                         )
+                                                            ? 'Удалить'
+                                                            : 'Загрузить'
                                                     }
-                                                    edge="end"
                                                 >
-                                                    {isImageLoaded(
-                                                        contentItem.id
-                                                    ) ? (
-                                                        <Delete />
-                                                    ) : (
-                                                        <CloudDownload />
-                                                    )}
-                                                </IconButton>
-                                            </Tooltip>
-                                        </ListItemSecondaryAction>
-                                    </ListItem>
-                                ))}
-                            </Box>
-                        )) && (
+                                                    <IconButton
+                                                        onClick={() =>
+                                                            toggleImageLoad(
+                                                                contentItem
+                                                            )
+                                                        }
+                                                        edge="end"
+                                                    >
+                                                        {isImageLoaded(
+                                                            contentItem.id
+                                                        ) ? (
+                                                            <Delete />
+                                                        ) : (
+                                                            <CloudDownload />
+                                                        )}
+                                                    </IconButton>
+                                                </Tooltip>
+                                            </ListItemSecondaryAction>
+                                        </ListItem>
+                                    ))}
+                                </Box>
+                            ))
+                        ) : (
                             <Typography variant="body2" gutterBottom>
                                 Ничего не найдено
                             </Typography>
@@ -167,7 +169,10 @@ export const PrinterPage: React.FC = observer(() => {
                     Изображения для печати
                 </Typography>
                 <Tooltip title="Загрузить всё">
-                    <IconButton onClick={loadAllImages}>
+                    <IconButton
+                        onClick={loadAllImages}
+                        disabled={menuListLoading}
+                    >
                         <Downloading />
                     </IconButton>
                 </Tooltip>
@@ -275,11 +280,26 @@ export const PrinterPage: React.FC = observer(() => {
         </Stack>
     );
 
+    const loader = (
+        <ScrollableBox>
+            <Box
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    height: '100%',
+                }}
+            >
+                <CircularProgress />
+            </Box>
+        </ScrollableBox>
+    );
+
     return (
         <Box>
             <FlexHeightContainer
                 header={header}
-                content={content}
+                content={menuListLoading ? loader : content}
                 footer={footer}
             />
             <Drawer

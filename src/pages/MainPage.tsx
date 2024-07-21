@@ -5,10 +5,8 @@ import { Theme, alpha } from '@mui/material/styles';
 
 import { useCampaign } from '@src/providers/CampaignProvider';
 import { useStores } from '@src/providers/RootStoreContext';
-import { useDialog } from '@src/providers/DialogProvider';
 
 import { MainNavigation } from '@src/components/shared/MainNavigation';
-import { PlotCard } from '@src/components/modules/plot/PlotCard';
 import { UserMenu } from '@src/components/shared/UserMenu';
 
 import bg from '@src/assets/img/bg.jpg';
@@ -21,9 +19,6 @@ export const MainPage = () => {
     const {
         codex: { loadMenuList },
     } = useStores();
-    const { openDialog } = useDialog();
-
-    const dialogContent = <PlotCard />;
 
     React.useEffect(() => {
         loadMenuList(currentCampaign);
@@ -65,9 +60,6 @@ export const MainPage = () => {
                     zIndex: 1,
                 }}
             >
-                {/* <button onClick={() => openDialog(dialogContent)}>
-                    Открыть диалог
-                </button> */}
                 <Container
                     maxWidth="xl"
                     sx={{

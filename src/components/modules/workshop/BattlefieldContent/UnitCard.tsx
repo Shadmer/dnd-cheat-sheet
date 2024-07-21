@@ -19,24 +19,24 @@ import {
     GiHalfHeart,
     Gi3dHammer,
 } from 'react-icons/gi';
-import { IUnit } from './interfaces';
+import { IUnit, UnitSections } from './interfaces';
 
 interface UnitCardProps {
     unit: IUnit;
-    handleUnitClick: (unit: IUnit) => void;
-    handleDamage: (id: string, amount: number) => void;
-    handleHeal: (id: string, amount: number) => void;
+    makeDamage: (id: string, amount: number) => void;
+    makeHeal: (id: string, amount: number) => void;
+    openUnitModal: (unitId: string, section: string) => void;
     openEditModal: (unit: IUnit) => void;
 }
 
 export const UnitCard: React.FC<UnitCardProps> = ({
     unit,
-    handleUnitClick,
-    handleDamage,
-    handleHeal,
+    openUnitModal,
+    makeDamage,
+    makeHeal,
     openEditModal,
 }) => {
-    const [amount, setAmount] = React.useState<number>(0);
+    const [amount, setAmount] = React.useState<number | ''>('');
     const isInBattle = unit.isInBattle;
     const isWounded = parseInt(unit.health) === 0;
     const healthIsNumber = !isNaN(parseInt(unit.health));
@@ -111,7 +111,7 @@ export const UnitCard: React.FC<UnitCardProps> = ({
                 <TextField
                     variant="outlined"
                     type="number"
-                    label="Урон / Лечение"
+                    label="HP"
                     value={amount}
                     onChange={(e) => setAmount(Number(e.target.value))}
                     size="small"
@@ -124,8 +124,8 @@ export const UnitCard: React.FC<UnitCardProps> = ({
                                         <IconButton
                                             size="small"
                                             onClick={() => {
-                                                handleHeal(unit.id, amount);
-                                                setAmount(0);
+                                                makeHeal(unit.id, +amount);
+                                                setAmount('');
                                             }}
                                             disabled={!healthIsNumber}
                                         >
@@ -138,8 +138,8 @@ export const UnitCard: React.FC<UnitCardProps> = ({
                                         <IconButton
                                             size="small"
                                             onClick={() => {
-                                                handleDamage(unit.id, amount);
-                                                setAmount(0);
+                                                makeDamage(unit.id, +amount);
+                                                setAmount('');
                                             }}
                                             disabled={!healthIsNumber}
                                         >
@@ -153,14 +153,20 @@ export const UnitCard: React.FC<UnitCardProps> = ({
                     disabled={!healthIsNumber}
                 />
 
-                <Tooltip title="Информация">
-                    <IconButton
-                        size="small"
-                        onClick={() => handleUnitClick(unit)}
-                    >
-                        <GiInfo />
-                    </IconButton>
-                </Tooltip>
+                {[UnitSections.bestiary, UnitSections.characters].includes(
+                    unit.section
+                ) && (
+                    <Tooltip title="Информация">
+                        <IconButton
+                            size="small"
+                            onClick={() =>
+                                openUnitModal(unit.parentId, unit.section)
+                            }
+                        >
+                            <GiInfo />
+                        </IconButton>
+                    </Tooltip>
+                )}
                 <Tooltip title="Редактировать">
                     <IconButton
                         size="small"

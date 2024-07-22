@@ -1,9 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import {
     Typography,
-    Link,
     Box,
     Divider,
     List,
@@ -22,10 +22,9 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
         <Markdown
             remarkPlugins={[remarkGfm]}
             components={{
-                // TODO: ссылку заменить на кнопку, которая вызывает всплывающее окно
                 a(props) {
                     return (
-                        <Link href={props.href} color="info.main">
+                        <Link to={props.href ?? ''} color="info.main">
                             {props.children}
                         </Link>
                     );

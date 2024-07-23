@@ -1,14 +1,17 @@
 import { BaseService } from '@src/services/BaseService';
 import { ENDPOINTS } from '@src/constants/endpoints';
 import { IPlotItemResponse, IPlotMenuItem } from '@src/interfaces/plot';
+import { campaignWithPrefix } from '@src/constants/constants';
 
 export const PlotService = () => {
     const fetchPlotMenuList = async (campaign: string) =>
-        BaseService<IPlotMenuItem[]>(campaign + ENDPOINTS.PLOT_MENU_LIST);
+        BaseService<IPlotMenuItem[]>(
+            campaignWithPrefix(campaign) + ENDPOINTS.PLOT_MENU_LIST
+        );
 
     const fetchScene = async (campaign: string, sceneId: string) =>
         BaseService<IPlotItemResponse>(
-            campaign + ENDPOINTS.PLOT_SCENE(sceneId)
+            campaignWithPrefix(campaign) + ENDPOINTS.PLOT_SCENE(sceneId)
         );
 
     return {

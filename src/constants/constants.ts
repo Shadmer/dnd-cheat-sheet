@@ -33,3 +33,6 @@ export const workshopMenuList: IMenuList[] = [
         ],
     },
 ];
+
+export const campaignWithPrefix = (campaign: string) =>
+    campaign ? `campaignListData/${campaign}` : '';

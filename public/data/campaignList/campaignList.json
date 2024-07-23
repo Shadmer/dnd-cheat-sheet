@@ -7,7 +7,7 @@
                 "id": "mrMarkdown",
                 "title": "Приключения Мистера Markdown",
                 "description": "История о Мистере Markdown от chatGPT, призванная стать основой тестирования D&D шпаргалки",
-                "image": "/campaignList/test/mr_markdown.jpg"
+                "image": "/campaignList/mr_markdown.jpg"
             }
         ]
     },
@@ -19,7 +19,7 @@
                 "id": "zoltarLair",
                 "title": "Логово Золтара",
                 "description": "Финальный рывок для героев - найти логово Золтара и освободить пленников",
-                "image": "/campaignList/daltonRuins/zoltarLair/zoltarLair.jpg"
+                "image": "/campaignList/zoltarLair.jpg"
             }
         ]
     }

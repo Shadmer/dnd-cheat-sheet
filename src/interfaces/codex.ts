@@ -131,6 +131,7 @@ export interface IShop {
 }
 
 export interface ICodexCard {
+    title: string;
     creature?: ICreature;
     artifact?: IArtifact;
     place?: IPlace;

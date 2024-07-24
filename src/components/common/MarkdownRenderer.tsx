@@ -1,15 +1,19 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import {
     Typography,
     Box,
     Divider,
+    Link,
     List,
     ListItem,
     ListItemText,
+    Button,
 } from '@mui/material';
+import { CodexService } from '@src/services/CodexService';
+import { useDialog } from '@src/providers/DialogProvider';
 
 type MarkdownRendererProps = {
     markdown: string;
@@ -18,15 +22,61 @@ type MarkdownRendererProps = {
 export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
     markdown,
 }) => {
+    const navigate = useNavigate();
+    const { fetchPage } = CodexService();
+    const { openDialog, closeDialog } = useDialog();
+
+    const handleModalOpen = async (
+        campaign: string,
+        section: string,
+        id: string
+    ) => {
+        const { title, description } = await fetchPage(campaign, section, id);
+        const content = <MarkdownRenderer markdown={description ?? ''} />;
+        const link = `/game/codex/${section}/${id}`;
+        const footerContent = (
+            <Button
+                onClick={() => {
+                    navigate(link);
+                    closeDialog();
+                }}
+            >
+                Перейти к странице
+            </Button>
+        );
+
+        openDialog(title, content, footerContent);
+    };
+
     return (
         <Markdown
             remarkPlugins={[remarkGfm]}
             components={{
                 a(props) {
+                    const parts =
+                        props.href?.split('/').filter((part) => part) ?? [];
+
+                    if (parts[0] === '#modal') {
+                        return (
+                            <Link
+                                sx={{ cursor: 'pointer' }}
+                                onClick={() =>
+                                    handleModalOpen(
+                                        parts[1],
+                                        parts[2],
+                                        parts[3]
+                                    )
+                                }
+                            >
+                                {props.children}
+                            </Link>
+                        );
+                    }
+
                     return (
-                        <Link to={props.href ?? ''} color="info.main">
+                        <RouterLink to={props.href ?? ''} color="info.main">
                             {props.children}
-                        </Link>
+                        </RouterLink>
                     );
                 },
                 blockquote(props) {

@@ -6,6 +6,7 @@ import {
     DialogTitle,
     DialogContent,
     Typography,
+    DialogActions,
 } from '@mui/material';
 import { Close } from '@mui/icons-material';
 import { useDialog } from '@src/providers/DialogProvider';
@@ -28,8 +29,14 @@ const StyledDialogContent = styled(DialogContent)(({ theme }) => ({
 }));
 
 export const DialogComponent = () => {
-    const { dialogOpen, dialogTitle, dialogContent, fullScreen, closeDialog } =
-        useDialog();
+    const {
+        dialogOpen,
+        dialogTitle,
+        dialogContent,
+        dialogFooter,
+        fullScreen,
+        closeDialog,
+    } = useDialog();
 
     return (
         <Dialog fullScreen={fullScreen} open={dialogOpen} onClose={closeDialog}>
@@ -50,6 +57,7 @@ export const DialogComponent = () => {
             <StyledDialogContent dividers>
                 <Box>{dialogContent}</Box>
             </StyledDialogContent>
+            {dialogFooter && <DialogActions>{dialogFooter}</DialogActions>}
         </Dialog>
     );
 };

@@ -40,7 +40,7 @@ class Workshop {
             );
 
             if (isWorkshopItem) {
-                const page = { [id]: true } as ICard;
+                const page = { title: '', [id]: true } as ICard;
 
                 runInAction(() => {
                     this.currentPage = page;

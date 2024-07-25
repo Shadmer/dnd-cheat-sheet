@@ -31,7 +31,6 @@ import { SkeletonLoading } from '@src/components/common/SkeletonLoading';
 import { CreatureCard } from '@src/components/modules/codex/CreatureContent';
 import { ArtifactContent } from '@src/components/modules/codex/ArtifactContent';
 import { CharacterContent } from '@src/components/modules/codex/CharacterContent';
-import { PlaceContent } from '@src/components/modules/codex/PlaceContent';
 import { ShopContent } from '@src/components/modules/codex/ShopContent';
 
 import { BattlefieldContent } from '@src/components/modules/workshop/BattlefieldContent';
@@ -109,14 +108,6 @@ export const MainCard = observer<MainCardProps>(
                 });
             }
 
-            if (currentPage.place) {
-                newTabData.push({
-                    id: 'place',
-                    label: 'Особенности',
-                    content: <PlaceContent place={currentPage.place} />,
-                });
-            }
-
             if (currentPage.character) {
                 newTabData.push({
                     id: 'character',
@@ -159,13 +150,18 @@ export const MainCard = observer<MainCardProps>(
                 });
             }
 
-            if (currentPage.maps && currentPage.maps.length) {
+            if (currentPage.maps?.images.length) {
+                const images = currentPage.maps.images;
+                const hints = currentPage.maps.hints;
                 const mapName = params.id ?? 'codexMap';
                 newTabData.push({
                     id: 'maps',
                     label: 'Карты',
                     content: (
-                        <ImageGallery images={currentPage.maps} alt={mapName} />
+                        <Stack spacing={2}>
+                            <ImageGallery images={images} alt={mapName} />
+                            {hints && <MarkdownRenderer markdown={hints} />}
+                        </Stack>
                     ),
                 });
             }

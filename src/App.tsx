@@ -28,13 +28,13 @@ export const App = () => {
                 <Navigate to="/" replace />
             ),
             children: [
-                { path: '', element: <Navigate to="plot" replace /> },
+                { path: '', element: <Navigate to="campaign" replace /> },
                 { path: 'plot/:scene?', element: <PlotPage /> },
                 { path: 'codex/:section?/:id?', element: <CodexPage /> },
                 { path: 'workshop/:section?/:id?', element: <WorkshopPage /> },
                 { path: 'printer', element: <PrinterPage /> },
                 { path: 'campaign', element: <CampaignPage /> },
-                { path: '*', element: <Navigate to="plot" replace /> },
+                { path: '*', element: <Navigate to="campaign" replace /> },
             ],
         },
         { path: '*', element: <Navigate to="/" replace /> },

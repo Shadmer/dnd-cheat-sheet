@@ -75,21 +75,25 @@ export const PlotMenuItem = ({
                 </CardContent>
             </CardActionArea>
 
-            <IconButton
-                sx={{
-                    position: 'absolute',
-                    top: 6,
-                    right: 6,
-                    transform: !expanded ? 'rotate(0deg)' : 'rotate(180deg)',
-                    transition: 'transform .3s',
-                }}
-                onClick={(e) => {
-                    e.stopPropagation();
-                    setExpanded(!expanded);
-                }}
-            >
-                <ExpandMore />
-            </IconButton>
+            {description && (
+                <IconButton
+                    sx={{
+                        position: 'absolute',
+                        top: 6,
+                        right: 6,
+                        transform: !expanded
+                            ? 'rotate(0deg)'
+                            : 'rotate(180deg)',
+                        transition: 'transform .3s',
+                    }}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        setExpanded(!expanded);
+                    }}
+                >
+                    <ExpandMore />
+                </IconButton>
+            )}
 
             <Collapse
                 in={expanded}

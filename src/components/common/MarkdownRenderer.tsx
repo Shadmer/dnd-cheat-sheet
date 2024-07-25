@@ -180,7 +180,7 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
                 },
                 li(props) {
                     return (
-                        <ListItem sx={{ display: 'list-item', pl: 2 }}>
+                        <ListItem sx={{ display: 'list-item', pl: 2, py: 0.1 }}>
                             <ListItemText>{props.children}</ListItemText>
                         </ListItem>
                     );

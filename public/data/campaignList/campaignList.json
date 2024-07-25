@@ -22,5 +22,17 @@
                 "image": "/campaignList/zoltarLair.jpg"
             }
         ]
+    },
+    {
+        "id": "oneShot",
+        "title": "Ваншоты",
+        "storyGameList": [
+            {
+                "id": "nightmareInFilldervile",
+                "title": "Кошмар в Филлдервиле",
+                "description": "Детективная история с элементами мистики с упором на взаимодействие игроков. Приключение рассчитано на партию из 4-5 игроков 1-2 уровня и подходит для новичков",
+                "image": "/campaignList/nightmareInFilldervile.jpg"
+            }
+        ]
     }
 ]

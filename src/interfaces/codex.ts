@@ -95,25 +95,6 @@ export interface ICharacter {
     };
 }
 
-export interface IPlace {
-    name: string;
-    location: string;
-    description: {
-        appearance: string;
-        atmosphere: string;
-        history: string;
-    };
-    inhabitants: {
-        mainInhabitants: string;
-        importantCharacters: IProperty[];
-    };
-    features: {
-        landmarks: string[];
-        dangers: string[];
-        resources: string[];
-    };
-}
-
 interface IShopItem {
     name: string;
     price: string;
@@ -130,14 +111,18 @@ export interface IShop {
     categories: IShopCategory[];
 }
 
+export interface IMap {
+    hints?: string;
+    images: string[];
+}
+
 export interface ICodexCard {
     title: string;
     creature?: ICreature;
     artifact?: IArtifact;
-    place?: IPlace;
     character?: ICharacter;
     shop?: IShop;
     description?: string;
+    maps?: IMap;
     images?: string[];
-    maps?: string[];
 }

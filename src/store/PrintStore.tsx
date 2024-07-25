@@ -46,12 +46,13 @@ class Print {
                     });
                 }
 
-                if (page.maps?.length) {
+                if (page.maps?.images.length) {
+                    const images = page.maps.images;
                     runInAction(() => {
                         mapSection.content.push({
                             id: `map_${item.id}`,
                             name: item.name,
-                            images: page.maps,
+                            images: images,
                         });
                     });
                 }

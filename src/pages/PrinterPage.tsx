@@ -168,18 +168,37 @@ export const PrinterPage: React.FC = observer(() => {
                 <Typography variant="h4" sx={{ flexGrow: 1 }} noWrap>
                     Изображения для печати
                 </Typography>
-                <Tooltip title="Загрузить всё">
-                    <IconButton
-                        onClick={loadAllImages}
-                        disabled={menuListLoading}
-                    >
-                        <Downloading />
-                    </IconButton>
+                <Tooltip
+                    title={
+                        sections.length
+                            ? 'Загрузить всё'
+                            : 'Нет изображений для загрузки'
+                    }
+                >
+                    <Box>
+                        <IconButton
+                            onClick={loadAllImages}
+                            disabled={menuListLoading || !sections.length}
+                        >
+                            <Downloading />
+                        </IconButton>
+                    </Box>
                 </Tooltip>
-                <Tooltip title="Удалить всё">
-                    <IconButton onClick={unloadAllImages}>
-                        <AutoDelete />
-                    </IconButton>
+                <Tooltip
+                    title={
+                        loadedImages.length
+                            ? 'Удалить всё'
+                            : 'Нет изображений для удаления'
+                    }
+                >
+                    <Box>
+                        <IconButton
+                            onClick={unloadAllImages}
+                            disabled={!loadedImages.length}
+                        >
+                            <AutoDelete />
+                        </IconButton>
+                    </Box>
                 </Tooltip>
             </Stack>
             <Divider />

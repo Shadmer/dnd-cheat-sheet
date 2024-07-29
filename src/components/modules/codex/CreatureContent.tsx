@@ -104,12 +104,29 @@ export const CreatureCard: React.FC<CreatureCardProps> = ({ creature }) => {
                     Спасброски
                 </Typography>
                 <Typography>
-                    {creature.savingThrows
-                        .map(
-                            (savingThrow) =>
-                                `${savingThrow.name}: ${savingThrow.value}`
-                        )
-                        .join(', ') || 'Нет'}
+                    {(creature.savingThrows &&
+                        creature.savingThrows
+                            .map(
+                                (savingThrow) =>
+                                    `${savingThrow.name}: ${savingThrow.value}`
+                            )
+                            .join(', ')) ||
+                        'Нет'}
+                </Typography>
+            </Box>
+
+            <Divider />
+
+            <Box>
+                <Typography variant="h6" fontWeight="bold" gutterBottom>
+                    Навыки
+                </Typography>
+                <Typography>
+                    {creature.skills &&
+                        (creature.skills
+                            .map((skills) => `${skills.name}: ${skills.value}`)
+                            .join(', ') ||
+                            'Нет')}
                 </Typography>
             </Box>
 
@@ -121,14 +138,20 @@ export const CreatureCard: React.FC<CreatureCardProps> = ({ creature }) => {
                 </Typography>
                 <Typography>
                     <b>К урону:</b>{' '}
-                    {creature.damageImmunities.length
+                    {creature.damageImmunities?.length
                         ? creature.damageImmunities.join(', ')
                         : 'Нет'}
                 </Typography>
                 <Typography>
                     <b>К состояниям:</b>{' '}
-                    {creature.conditionImmunities.length
+                    {creature.conditionImmunities?.length
                         ? creature.conditionImmunities.join(', ')
+                        : 'Нет'}
+                </Typography>
+                <Typography>
+                    <b>Сопротивление:</b>{' '}
+                    {creature.damageResistances?.length
+                        ? creature.conditionImmunities?.join(', ')
                         : 'Нет'}
                 </Typography>
             </Box>

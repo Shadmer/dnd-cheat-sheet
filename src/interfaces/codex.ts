@@ -24,9 +24,11 @@ export interface ICreature {
         wiz: number;
         cha: number;
     };
-    savingThrows: IProperty[];
-    damageImmunities: string[];
-    conditionImmunities: string[];
+    savingThrows?: IProperty[];
+    skills?: IProperty[];
+    damageResistances?: string[];
+    damageImmunities?: string[];
+    conditionImmunities?: string[];
     senses: {
         passivePerception: string;
         senses: IProperty[];

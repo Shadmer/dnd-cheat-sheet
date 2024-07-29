@@ -11,6 +11,26 @@
             {
                 "id": "anton_brooks_jr",
                 "name": "Энтон Брукс Младший"
+            },
+            {
+                "id": "olivia_brooks",
+                "name": "Оливия Брукс"
+            },
+            {
+                "id": "innkeeper",
+                "name": "Трактирщик"
+            },
+            {
+                "id": "healer",
+                "name": "Знахарка"
+            },
+            {
+                "id": "gravedigger",
+                "name": "Могильщик"
+            },
+            {
+                "id": "kit",
+                "name": "Шкет"
             }
         ]
     },

@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import { ICreature } from '@src/interfaces/codex';
+import { MarkdownRenderer } from '@src/components/common/MarkdownRenderer';
 
 interface CreatureCardProps {
     creature: ICreature;
@@ -108,7 +109,7 @@ export const CreatureCard: React.FC<CreatureCardProps> = ({ creature }) => {
                             (savingThrow) =>
                                 `${savingThrow.name}: ${savingThrow.value}`
                         )
-                        .join(', ')}
+                        .join(', ') || 'Нет'}
                 </Typography>
             </Box>
 
@@ -154,7 +155,9 @@ export const CreatureCard: React.FC<CreatureCardProps> = ({ creature }) => {
                 <Typography variant="h6" fontWeight="bold" gutterBottom>
                     Языки
                 </Typography>
-                <Typography>{creature.languages.join(', ')}</Typography>
+                <Typography>
+                    {creature.languages.join(', ') || 'Не владеет'}
+                </Typography>
             </Box>
 
             <Divider />
@@ -208,9 +211,11 @@ export const CreatureCard: React.FC<CreatureCardProps> = ({ creature }) => {
                                             component="span"
                                             fontWeight="bold"
                                         >
-                                            {action.name}
+                                            {`${action.name}: `}
                                         </Typography>
-                                        {`: ${action.value}`}
+                                        <MarkdownRenderer
+                                            markdown={action.value.toString()}
+                                        />
                                     </Typography>
                                 }
                             />

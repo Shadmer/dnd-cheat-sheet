@@ -11,6 +11,11 @@ import {
     ListItem,
     ListItemText,
     Button,
+    Table,
+    TableHead,
+    TableBody,
+    TableRow,
+    TableCell,
 } from '@mui/material';
 import { CodexService } from '@src/services/CodexService';
 import { useDialog } from '@src/providers/DialogProvider';
@@ -252,6 +257,85 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
                         >
                             {props.children}
                         </Typography>
+                    );
+                },
+                table(props) {
+                    return (
+                        <Box
+                            sx={{
+                                width: '100%',
+                                overflowX: 'auto',
+                                '&::-webkit-scrollbar-thumb': {
+                                    background: (theme) =>
+                                        theme.palette.primary.main,
+                                    borderRadius: '3px',
+                                },
+                                '&::-webkit-scrollbar': {
+                                    height: 'calc(var(--border-width) * 1.5)',
+                                },
+                            }}
+                        >
+                            <Table
+                                sx={{
+                                    minWidth: '650px',
+                                    borderCollapse: 'collapse',
+                                }}
+                            >
+                                {props.children}
+                            </Table>
+                        </Box>
+                    );
+                },
+                thead(props) {
+                    return <TableHead>{props.children}</TableHead>;
+                },
+                tbody(props) {
+                    return <TableBody>{props.children}</TableBody>;
+                },
+                tr(props) {
+                    return (
+                        <TableRow
+                            sx={{
+                                borderBottom: '1px solid',
+                                borderColor: 'divider',
+                            }}
+                        >
+                            {props.children}
+                        </TableRow>
+                    );
+                },
+                th(props) {
+                    return (
+                        <TableCell
+                            sx={{
+                                textAlign: 'left',
+                                padding: '8px',
+                                borderBottom: '1px solid',
+                                borderRight: '1px solid',
+                                borderColor: 'divider',
+                                backgroundColor: 'background.default',
+                                fontWeight: 'bold',
+                                minWidth: '120px',
+                            }}
+                        >
+                            {props.children}
+                        </TableCell>
+                    );
+                },
+                td(props) {
+                    return (
+                        <TableCell
+                            sx={{
+                                textAlign: 'left',
+                                padding: '8px',
+                                borderBottom: '1px solid',
+                                borderRight: '1px solid',
+                                borderColor: 'divider',
+                                minWidth: '120px',
+                            }}
+                        >
+                            {props.children}
+                        </TableCell>
                     );
                 },
             }}

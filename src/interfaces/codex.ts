@@ -31,7 +31,7 @@ export interface ICreature {
     conditionImmunities?: string[];
     senses: {
         passivePerception: string;
-        senses: IProperty[];
+        senses?: IProperty[];
     };
     languages: string[];
     feats: IProperty[];

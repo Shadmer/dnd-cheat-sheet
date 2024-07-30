@@ -15,7 +15,7 @@ import { CodexService } from '@src/services/CodexService';
 import { useStores } from '@src/providers/RootStoreContext';
 import { useCampaign } from '@src/providers/CampaignProvider';
 import { useDialog } from '@src/providers/DialogProvider';
-
+import { ICreature } from '@src/interfaces/codex';
 import { CreatureCard } from '@src/components/modules/codex/CreatureContent';
 
 import { IUnit, UnitSections } from './interfaces';
@@ -25,9 +25,11 @@ import { EditUnitModal } from './EditUnitModal';
 import { InitiativeUnitsModal } from './InitiativeUnitsModal';
 
 export const BattlefieldContent: React.FC = () => {
+    // Получение темы и определение точки прерывания для рендеринга
     const theme = useTheme();
     const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
 
+    // Получение необходимых функций и данных из контекстов
     const { fetchPage } = CodexService();
     const { currentCampaign } = useCampaign();
     const { openDialog } = useDialog();
@@ -35,6 +37,7 @@ export const BattlefieldContent: React.FC = () => {
         codex: { menuList },
     } = useStores();
 
+    // Определение состояний для модальных окон и выбранных юнитов
     const [selectedUnits, setSelectedUnits] = React.useState<IUnit[]>([]);
     const [battleModalOpen, setBattleModalOpen] =
         React.useState<boolean>(false);
@@ -43,13 +46,15 @@ export const BattlefieldContent: React.FC = () => {
     const [initiativeModalOpen, setInitiativeModalOpen] =
         React.useState<boolean>(false);
 
+    // Проверка, есть ли среди выбранных юнитов те, которые участвуют в битве
     const isSomeIsInBattle = React.useMemo(
         () => selectedUnits.some((unit) => unit.isInBattle),
         [selectedUnits]
     );
 
-    const handleUnitModalOpen = async (unitIt: string, section: string) => {
-        const unit = (await fetchPage(currentCampaign, section, unitIt))
+    // Функция для открытия модального окна с информацией о юните
+    const handleUnitModalOpen = async (unitId: string, section: string) => {
+        const unit = (await fetchPage(currentCampaign, section, unitId))
             .creature;
 
         if (!unit) return;
@@ -59,12 +64,14 @@ export const BattlefieldContent: React.FC = () => {
         openDialog(unit.name.rus, unitContent);
     };
 
+    // Функция для вычисления инициативы
     const calculateInitiative = (dex: number): string => {
         const randomRoll = Math.floor(Math.random() * 20) + 1;
         const dexModifier = Math.floor((dex - 10) / 2);
         return (randomRoll + dexModifier).toString();
     };
 
+    // Функция для парсинга формулы здоровья
     const parseHealthFormula = (formula: string): number | null => {
         const match = formula.match(/(\d+)к(\d+)(?:\s*\+\s*(\d+))?/);
         if (!match) return null;
@@ -78,100 +85,103 @@ export const BattlefieldContent: React.FC = () => {
         return diceRolls + (modifier || 0);
     };
 
-    const startBattle = async () => {
-        const uniqueBestiaryUnits = Array.from(
+    // Функция для получения уникальных ID юнитов из выбранных
+    const getUniqueUnitIds = (units: IUnit[], section: string): string[] => {
+        return Array.from(
             new Set(
-                selectedUnits
-                    .filter((unit) => unit.section === UnitSections.bestiary)
+                units
+                    .filter((unit) => unit.section === section)
                     .map((unit) => unit.parentId)
             )
         );
+    };
 
-        const uniqueCharacters = Array.from(
-            new Set(
-                selectedUnits
-                    .filter((unit) => unit.section === UnitSections.characters)
-                    .map((unit) => unit.parentId)
-            )
-        );
-
-        const fetchUnitData = async (unitId: string, section: string) => {
-            try {
-                return await fetchPage(currentCampaign, section, unitId);
-            } catch (error) {
-                console.error(
-                    `Ошибка загрузки данных для юнита ${unitId}:`,
-                    error
-                );
-                return null;
+    // Функция для загрузки данных о юнитах
+    const fetchUnitData = async (unitIds: string[], section: string) => {
+        const unitDataMap: { [key: string]: ICreature } = {};
+        const promises = unitIds.map(async (id) => {
+            const data = await fetchPage(currentCampaign, section, id);
+            if (data && data.creature) {
+                unitDataMap[id] = data.creature;
             }
-        };
+        });
+        await Promise.all(promises);
+        return unitDataMap;
+    };
 
-        const updateUnits = async () => {
-            const unitUpdates = await Promise.all([
-                ...uniqueBestiaryUnits.map((id) =>
-                    fetchUnitData(id, UnitSections.bestiary)
-                ),
-                ...uniqueCharacters.map((id) =>
-                    fetchUnitData(id, UnitSections.characters)
-                ),
-            ]);
+    // Функция для обновления выбранных юнитов
+    const updateSelectedUnits = (
+        units: IUnit[],
+        bestiaryData: { [key: string]: ICreature },
+        characterData: { [key: string]: ICreature }
+    ): IUnit[] => {
+        return units.map((unit) => {
+            let creature;
+            if (unit.section === UnitSections.bestiary) {
+                creature = bestiaryData[unit.parentId];
+            } else if (unit.section === UnitSections.characters) {
+                creature = characterData[unit.parentId];
+            }
 
-            const newSelectedUnits = selectedUnits.map((unit) => {
-                if (
-                    ![UnitSections.bestiary, UnitSections.characters].includes(
-                        unit.section
-                    )
-                ) {
-                    return unit;
-                }
+            if (!creature) {
+                return unit;
+            }
 
-                const unitData = unitUpdates.find(
-                    (data) => data && data.creature
+            const initiative =
+                unit.initiative || calculateInitiative(creature.ability.dex);
+            let maxHealth: string;
+            let health: string;
+
+            if (creature.hits.formula) {
+                const calculatedHealth = parseHealthFormula(
+                    creature.hits.formula
                 );
-
-                if (!unitData || !unitData.creature) {
-                    return unit;
-                }
-
-                const { creature } = unitData;
-
-                const initiative =
-                    unit.initiative ||
-                    calculateInitiative(creature.ability.dex);
-                let maxHealth: string;
-                let health: string;
-
-                if (creature.hits.formula) {
-                    const calculatedHealth = parseHealthFormula(
-                        creature.hits.formula
-                    );
-                    if (calculatedHealth !== null) {
-                        maxHealth = calculatedHealth.toString();
-                        health = calculatedHealth.toString();
-                    } else {
-                        maxHealth = creature.hits.average.toString();
-                        health = creature.hits.average.toString();
-                    }
+                if (calculatedHealth !== null) {
+                    maxHealth = calculatedHealth.toString();
+                    health = calculatedHealth.toString();
                 } else {
                     maxHealth = creature.hits.average.toString();
                     health = creature.hits.average.toString();
                 }
+            } else {
+                maxHealth = creature.hits.average.toString();
+                health = creature.hits.average.toString();
+            }
 
-                return {
-                    ...unit,
-                    initiative: unit.initiative || initiative,
-                    maxHealth: unit.maxHealth || maxHealth,
-                    health: unit.health || health,
-                    armor: unit.armor || creature.armorClass.toString(),
-                    isInBattle: unit.isInBattle ?? true,
-                };
-            });
+            return {
+                ...unit,
+                initiative: unit.initiative || initiative,
+                maxHealth: unit.maxHealth || maxHealth,
+                health: unit.health || health,
+                armor: unit.armor || creature.armorClass.toString(),
+                isInBattle: unit.isInBattle ?? true,
+            };
+        });
+    };
 
-            setSelectedUnits(newSelectedUnits);
-        };
+    // Функция для начала битвы
+    const startBattle = async () => {
+        const uniqueBestiaryUnits = getUniqueUnitIds(
+            selectedUnits,
+            UnitSections.bestiary
+        );
+        const uniqueCharacters = getUniqueUnitIds(
+            selectedUnits,
+            UnitSections.characters
+        );
 
-        await updateUnits();
+        const [bestiaryData, characterData] = await Promise.all([
+            fetchUnitData(uniqueBestiaryUnits, UnitSections.bestiary),
+            fetchUnitData(uniqueCharacters, UnitSections.characters),
+        ]);
+
+        const newSelectedUnits = updateSelectedUnits(
+            selectedUnits,
+            bestiaryData,
+            characterData
+        );
+
+        setSelectedUnits(newSelectedUnits);
     };
 
     const handleDamage = (id: string, amount: number) => {
@@ -252,6 +262,7 @@ export const BattlefieldContent: React.FC = () => {
         );
     };
 
+    // Загрузка сохраненных юнитов из localStorage при первой загрузке компонента
     React.useEffect(() => {
         const savedUnits = localStorage.getItem('selectedUnits');
         if (savedUnits) {
@@ -259,6 +270,7 @@ export const BattlefieldContent: React.FC = () => {
         }
     }, []);
 
+    // Сохранение выбранных юнитов в localStorage при их изменении
     React.useEffect(() => {
         localStorage.setItem('selectedUnits', JSON.stringify(selectedUnits));
     }, [selectedUnits]);

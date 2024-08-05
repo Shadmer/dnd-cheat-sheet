@@ -15,22 +15,6 @@
             {
                 "id": "olivia_brooks",
                 "name": "Оливия Брукс"
-            },
-            {
-                "id": "innkeeper",
-                "name": "Трактирщик"
-            },
-            {
-                "id": "healer",
-                "name": "Знахарка"
-            },
-            {
-                "id": "gravedigger",
-                "name": "Могильщик"
-            },
-            {
-                "id": "kit",
-                "name": "Шкет"
             }
         ]
     },
@@ -95,6 +79,10 @@
             {
                 "id": "filldervile",
                 "name": "Филлдервиль"
+            },
+            {
+                "id": "brooks_mansion",
+                "name": "Особняк Бруксов"
             }
         ]
     },

@@ -31,11 +31,7 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
     const { fetchPage } = CodexService();
     const { openDialog, closeDialog } = useDialog();
 
-    const handleModalOpen = async (
-        campaign: string,
-        section: string,
-        id: string
-    ) => {
+    const modalOpen = async (campaign: string, section: string, id: string) => {
         const { title, description } = await fetchPage(campaign, section, id);
         const content = <MarkdownRenderer markdown={description ?? ''} />;
         const link = `/game/codex/${section}/${id}`;
@@ -53,35 +49,29 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
         openDialog(title, content, footerContent);
     };
 
+    const handleLink = (href: string) => {
+        const parts = href.split('/').filter((part) => part) ?? [];
+        if (parts[0] === '#modal') {
+            modalOpen(parts[1], parts[2], parts[3]);
+        } else {
+            navigate(href);
+        }
+    };
+
     return (
         <Markdown
             remarkPlugins={[remarkGfm]}
             components={{
                 a(props) {
-                    const parts =
-                        props.href?.split('/').filter((part) => part) ?? [];
-
-                    if (parts[0] === '#modal') {
-                        return (
-                            <Link
-                                sx={{ cursor: 'pointer' }}
-                                onClick={() =>
-                                    handleModalOpen(
-                                        parts[1],
-                                        parts[2],
-                                        parts[3]
-                                    )
-                                }
-                            >
-                                {props.children}
-                            </Link>
-                        );
-                    }
-
                     return (
-                        <RouterLink to={props.href ?? ''} color="info.main">
+                        <Link
+                            sx={{ cursor: 'pointer' }}
+                            onClick={() =>
+                                props?.href && handleLink(props.href)
+                            }
+                        >
                             {props.children}
-                        </RouterLink>
+                        </Link>
                     );
                 },
                 blockquote(props) {

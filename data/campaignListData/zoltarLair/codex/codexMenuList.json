@@ -1,0 +1,32 @@
+[
+    {
+        "section": "players",
+        "title": "Игроки",
+        "content": []
+    },
+    {
+        "section": "characters",
+        "title": "Персонажи мастера",
+        "content": []
+    },
+    {
+        "section": "bestiary",
+        "title": "Бестиарий",
+        "content": []
+    },
+    {
+        "section": "places",
+        "title": "Интересные места",
+        "content": []
+    },
+    {
+        "section": "artifacts",
+        "title": "Артефакты",
+        "content": []
+    },
+    {
+        "section": "notes",
+        "title": "Заметки",
+        "content": []
+    }
+]

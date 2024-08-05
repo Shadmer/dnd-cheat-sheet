@@ -1,0 +1,4 @@
+{
+    "title": "Мудрые слова",
+    "description": "```\nconst hero = 'Мистер Markdown';\nfunction embarkOnAdventure() {\n    console.log('Приключение начинается!');\n}\nembarkOnAdventure();\n```"
+}

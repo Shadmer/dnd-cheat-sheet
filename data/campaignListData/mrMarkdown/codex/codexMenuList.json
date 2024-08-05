@@ -1,0 +1,98 @@
+[
+    {
+        "section": "players",
+        "title": "Игроки",
+        "content": [
+            {
+                "id": "mr_markdown",
+                "name": "Мистер Markdown"
+            }
+        ]
+    },
+    {
+        "section": "characters",
+        "title": "Персонажи мастера",
+        "content": [
+            {
+                "id": "wise_elder",
+                "name": "Мудрый старец"
+            }
+        ]
+    },
+    {
+        "section": "bestiary",
+        "title": "Бестиарий",
+        "content": [
+            {
+                "id": "brave_knight",
+                "name": "Смелый Рыцарь"
+            },
+            {
+                "id": "italic_rogue",
+                "name": "Курсивный Разбойник"
+            },
+            {
+                "id": "strikethrough_samurai",
+                "name": "Зачеркнутый Самурай"
+            }
+        ]
+    },
+    {
+        "section": "places",
+        "title": "Интересные места",
+        "content": [
+            {
+                "id": "distant_land",
+                "name": "Далекая страна"
+            },
+            {
+                "id": "mysterious_site",
+                "name": "Таинственный сайт"
+            },
+            {
+                "id": "forest",
+                "name": "Лес"
+            }
+        ]
+    },
+    {
+        "section": "artifacts",
+        "title": "Артефакты",
+        "content": [
+            {
+                "id": "magic_quill",
+                "name": "Волшебное перо"
+            },
+            {
+                "id": "enchanted_scroll",
+                "name": "Заколдованный свиток"
+            },
+            {
+                "id": "punctuation_bag",
+                "name": "Мешок с пунктуационными знаками"
+            },
+            {
+                "id": "markdown_tome",
+                "name": "Том Markdown"
+            },
+            {
+                "id": "path_separator",
+                "name": "Разделитель Путей"
+            }
+        ]
+    },
+    {
+        "section": "notes",
+        "title": "Заметки",
+        "content": [
+            {
+                "id": "sage_words",
+                "name": "Слова мудреца"
+            },
+            {
+                "id": "mysterious_message",
+                "name": "Загадочное сообщение"
+            }
+        ]
+    }
+]

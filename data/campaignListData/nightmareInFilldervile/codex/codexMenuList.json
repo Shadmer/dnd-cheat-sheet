@@ -1,0 +1,104 @@
+[
+    {
+        "section": "players",
+        "title": "Игроки",
+        "content": []
+    },
+    {
+        "section": "characters",
+        "title": "Персонажи мастера",
+        "content": [
+            {
+                "id": "anton_brooks_jr",
+                "name": "Энтон Брукс Младший"
+            },
+            {
+                "id": "olivia_brooks",
+                "name": "Оливия Брукс"
+            }
+        ]
+    },
+    {
+        "section": "bestiary",
+        "title": "Бестиарий",
+        "content": [
+            {
+                "id": "carrion_crawler",
+                "name": "Ползающий падальщик"
+            },
+            {
+                "id": "death_dog",
+                "name": "Пёс смерти"
+            },
+            {
+                "id": "giant_spider",
+                "name": "Гигантский паук"
+            },
+            {
+                "id": "giant_boar",
+                "name": "Гигантский кабан"
+            },
+            {
+                "id": "giant_goat",
+                "name": "Гигантский козёл"
+            },
+            {
+                "id": "diseased_giant_rat",
+                "name": "Больная гигантская крыса"
+            },
+            {
+                "id": "giant_bat",
+                "name": "Гигантская летучая мышь"
+            },
+            {
+                "id": "wolf",
+                "name": "Волк"
+            },
+            {
+                "id": "giant_vulture",
+                "name": "Гигантский гриф"
+            },
+            {
+                "id": "swarm_of_ravens",
+                "name": "Рой воронов"
+            },
+            {
+                "id": "animated_armor",
+                "name": "Оживлённый доспех"
+            },
+            {
+                "id": "commoner",
+                "name": "Обыватель"
+            }
+        ]
+    },
+    {
+        "section": "places",
+        "title": "Интересные места",
+        "content": [
+            {
+                "id": "filldervile",
+                "name": "Филлдервиль"
+            },
+            {
+                "id": "brooks_mansion",
+                "name": "Особняк Бруксов"
+            }
+        ]
+    },
+    {
+        "section": "artifacts",
+        "title": "Артефакты",
+        "content": []
+    },
+    {
+        "section": "notes",
+        "title": "Заметки",
+        "content": [
+            {
+                "id": "night_village",
+                "name": "Таблица тварей"
+            }
+        ]
+    }
+]

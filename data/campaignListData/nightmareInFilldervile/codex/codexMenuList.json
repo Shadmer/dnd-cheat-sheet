@@ -89,7 +89,12 @@
     {
         "section": "artifacts",
         "title": "Артефакты",
-        "content": []
+        "content": [
+            {
+                "id": "dagger_of_memory",
+                "name": "Кинжал Памяти"
+            }
+        ]
     },
     {
         "section": "notes",

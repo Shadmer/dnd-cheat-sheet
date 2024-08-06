@@ -232,7 +232,7 @@ export const ArtifactContent: React.FC<ArtifactContentProps> = ({
                         <ListItemText
                             primary={
                                 <Typography textAlign="justify">
-                                    {condition}
+                                    - {condition}
                                 </Typography>
                             }
                         />

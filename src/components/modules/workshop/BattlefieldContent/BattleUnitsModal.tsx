@@ -242,7 +242,6 @@ export const BattleUnitsModal: React.FC<BattleUnitsModalProps> = ({
                                     }}
                                 >
                                     <IconButton
-                                        size="small"
                                         onClick={() =>
                                             handleRemoveBestiaryUnit(item.id)
                                         }
@@ -253,7 +252,6 @@ export const BattleUnitsModal: React.FC<BattleUnitsModalProps> = ({
                                         {getBestiaryUnitCount(item.id)}
                                     </Typography>
                                     <IconButton
-                                        size="small"
                                         onClick={() =>
                                             handleAddBestiaryUnit(item)
                                         }

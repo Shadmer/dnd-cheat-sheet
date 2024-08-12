@@ -61,13 +61,12 @@ export const ArtifactContent: React.FC<ArtifactContentProps> = ({
 
     const blessings = (!!artifact.blessings.small.length ||
         !!artifact.blessings.basic.length) && (
-        <>
-            <Box>
-                <Typography variant="h6" fontWeight="bold" gutterBottom>
-                    Благословения
-                </Typography>
-
-                {!!artifact.blessings.small.length && (
+        <Box>
+            {!!artifact.blessings.small.length && (
+                <>
+                    <Typography variant="h6" fontWeight="bold" gutterBottom>
+                        Малые благословления
+                    </Typography>
                     <List dense>
                         {artifact.blessings.small.map((blessing, index) => (
                             <ListItem
@@ -75,13 +74,6 @@ export const ArtifactContent: React.FC<ArtifactContentProps> = ({
                                 disableGutters
                                 sx={{ paddingTop: 0, paddingBottom: 0 }}
                             >
-                                <ListItemIcon sx={{ minWidth: 30 }}>
-                                    <Tooltip title="Малое благословение">
-                                        <Typography>
-                                            <GiHeartPlus />
-                                        </Typography>
-                                    </Tooltip>
-                                </ListItemIcon>
                                 <ListItemText
                                     primary={
                                         <Typography textAlign="justify">
@@ -98,9 +90,20 @@ export const ArtifactContent: React.FC<ArtifactContentProps> = ({
                             </ListItem>
                         ))}
                     </List>
-                )}
+                    <Divider />
+                </>
+            )}
 
-                {!!artifact.blessings.basic.length && (
+            {!!artifact.blessings.basic.length && (
+                <>
+                    <Typography
+                        variant="h6"
+                        fontWeight="bold"
+                        mt={2}
+                        gutterBottom
+                    >
+                        Обычные благословления
+                    </Typography>
                     <List dense>
                         {artifact.blessings.basic.map((blessing, index) => (
                             <ListItem
@@ -108,13 +111,6 @@ export const ArtifactContent: React.FC<ArtifactContentProps> = ({
                                 disableGutters
                                 sx={{ paddingTop: 0, paddingBottom: 0 }}
                             >
-                                <ListItemIcon sx={{ minWidth: 30 }}>
-                                    <Tooltip title="Основное благословение">
-                                        <Typography>
-                                            <GiHolySymbol />
-                                        </Typography>
-                                    </Tooltip>
-                                </ListItemIcon>
                                 <ListItemText
                                     primary={
                                         <Typography textAlign="justify">
@@ -131,22 +127,20 @@ export const ArtifactContent: React.FC<ArtifactContentProps> = ({
                             </ListItem>
                         ))}
                     </List>
-                )}
-            </Box>
-
-            <Divider />
-        </>
+                    <Divider />
+                </>
+            )}
+        </Box>
     );
 
     const curses = (!!artifact.curses.small.length ||
         !!artifact.curses.basic.length) && (
-        <>
-            <Box>
-                <Typography variant="h6" fontWeight="bold" gutterBottom>
-                    Проклятия
-                </Typography>
-
-                {!!artifact.curses.small.length && (
+        <Box>
+            {!!artifact.curses.small.length && (
+                <>
+                    <Typography variant="h6" fontWeight="bold" gutterBottom>
+                        Малые проклятия
+                    </Typography>
                     <List dense>
                         {artifact.curses.small.map((curse, index) => (
                             <ListItem
@@ -154,13 +148,6 @@ export const ArtifactContent: React.FC<ArtifactContentProps> = ({
                                 disableGutters
                                 sx={{ paddingTop: 0, paddingBottom: 0 }}
                             >
-                                <ListItemIcon sx={{ minWidth: 30 }}>
-                                    <Tooltip title="Малое проклятие">
-                                        <Typography>
-                                            <GiCursedStar />
-                                        </Typography>
-                                    </Tooltip>
-                                </ListItemIcon>
                                 <ListItemText
                                     primary={
                                         <Typography textAlign="justify">
@@ -177,9 +164,20 @@ export const ArtifactContent: React.FC<ArtifactContentProps> = ({
                             </ListItem>
                         ))}
                     </List>
-                )}
+                    <Divider />
+                </>
+            )}
 
-                {!!artifact.curses.basic.length && (
+            {!!artifact.curses.basic.length && (
+                <>
+                    <Typography
+                        variant="h6"
+                        fontWeight="bold"
+                        mt={2}
+                        gutterBottom
+                    >
+                        Обычные проклятия
+                    </Typography>
                     <List dense>
                         {artifact.curses.basic.map((curse, index) => (
                             <ListItem
@@ -187,13 +185,6 @@ export const ArtifactContent: React.FC<ArtifactContentProps> = ({
                                 disableGutters
                                 sx={{ paddingTop: 0, paddingBottom: 0 }}
                             >
-                                <ListItemIcon sx={{ minWidth: 30 }}>
-                                    <Tooltip title="Основное проклятие">
-                                        <Typography>
-                                            <SiCurseforge />
-                                        </Typography>
-                                    </Tooltip>
-                                </ListItemIcon>
                                 <ListItemText
                                     primary={
                                         <Typography textAlign="justify">
@@ -210,11 +201,10 @@ export const ArtifactContent: React.FC<ArtifactContentProps> = ({
                             </ListItem>
                         ))}
                     </List>
-                )}
-            </Box>
-
-            <Divider />
-        </>
+                    <Divider />
+                </>
+            )}
+        </Box>
     );
 
     const destruction = !!artifact.destruction.length && (

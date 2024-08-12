@@ -55,6 +55,7 @@ export const MainPage = () => {
                     position: 'fixed',
                     bottom: 0,
                     width: '100%',
+                    paddingBottom: '5px',
                     background: (theme) =>
                         alpha(theme.palette.primary.main, 0.6),
                     zIndex: 1,

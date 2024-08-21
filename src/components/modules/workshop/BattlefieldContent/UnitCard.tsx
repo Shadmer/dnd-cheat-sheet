@@ -36,10 +36,15 @@ export const UnitCard: React.FC<UnitCardProps> = ({
     makeHeal,
     openEditModal,
 }) => {
-    const [amount, setAmount] = React.useState<number | ''>('');
+    const [amount, setAmount] = React.useState<number | string>('');
     const isInBattle = unit.isInBattle;
     const isWounded = parseInt(unit.health) === 0;
     const healthIsNumber = !isNaN(parseInt(unit.health));
+
+    const hpChangeHandler = (value: string) => {
+        const filteredValue = value.replace(/\D/g, '');
+        setAmount(filteredValue);
+    };
 
     return (
         <Card
@@ -110,10 +115,10 @@ export const UnitCard: React.FC<UnitCardProps> = ({
             <CardActions>
                 <TextField
                     variant="outlined"
-                    type="number"
+                    // type="number"
                     label="HP"
                     value={amount}
-                    onChange={(e) => setAmount(Number(e.target.value))}
+                    onChange={(e) => hpChangeHandler(e.target.value)}
                     size="small"
                     sx={{ mr: 1 }}
                     InputProps={{

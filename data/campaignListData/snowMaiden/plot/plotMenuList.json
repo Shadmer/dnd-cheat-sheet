@@ -1,0 +1,57 @@
+[
+    {
+        "sceneId": "scene_1",
+        "part": "Часть 1",
+        "title": "Вступление"
+    },
+    {
+        "sceneId": "scene_2",
+        "part": "Часть 1",
+        "title": "Древняя история"
+    },
+    {
+        "sceneId": "scene_3",
+        "part": "Часть 1",
+        "title": "Следы мертвеца"
+    },
+    {
+        "sceneId": "scene_4",
+        "part": "Часть 1",
+        "title": "Случайная встреча"
+    },
+    {
+        "sceneId": "place_1",
+        "part": "Часть 2",
+        "title": "Деревенские улицы"
+    },
+    {
+        "sceneId": "place_2",
+        "part": "Часть 2",
+        "title": "Хижина старейшины"
+    },
+    {
+        "sceneId": "place_3",
+        "part": "Часть 2",
+        "title": "Дом травницы Агаты"
+    },
+    {
+        "sceneId": "place_4",
+        "part": "Часть 2",
+        "title": "Кузня Ивара"
+    },
+    {
+        "sceneId": "place_5",
+        "part": "Часть 2",
+        "title": "Дом Окотуса"
+    },
+    {
+        "sceneId": "place_6",
+        "part": "Часть 2",
+        "title": "Заброшенный колодец"
+    },
+    {
+        "sceneId": "place_7",
+        "part": "Часть 2",
+        "title": "Молчаливый камень"
+    }
+]

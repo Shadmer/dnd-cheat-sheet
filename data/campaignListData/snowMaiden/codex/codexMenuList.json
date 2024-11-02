@@ -1,0 +1,117 @@
+[
+    {
+        "section": "players",
+        "title": "Игроки",
+        "content": [
+            {
+                "id": "player_1",
+                "name": "Профессор"
+            },
+            {
+                "id": "player_2",
+                "name": "Студент 1"
+            },
+            {
+                "id": "player_3",
+                "name": "Студент 2"
+            },
+            {
+                "id": "player_4",
+                "name": "Младший брат"
+            },
+            {
+                "id": "player_5",
+                "name": "Старший брат"
+            }
+        ]
+    },
+    {
+        "section": "characters",
+        "title": "Персонажи мастера",
+        "content": [
+            {
+                "id": "likho",
+                "name": "Лихо"
+            },
+            {
+                "id": "octotus_shadow",
+                "name": "Призрачное видение Окотуса"
+            }
+        ]
+    },
+    {
+        "section": "bestiary",
+        "title": "Бестиарий",
+        "content": [
+            {
+                "id": "monster_1",
+                "name": "Теневые стражи"
+            },
+            {
+                "id": "monster_2",
+                "name": "Маленький ребёнок Лихо"
+            },
+            {
+                "id": "monster_3",
+                "name": "Крупный ребёнок Лихо"
+            }
+        ]
+    },
+    {
+        "section": "places",
+        "title": "Интересные места",
+        "content": [
+            {
+                "id": "marry",
+                "name": "Маррь"
+            }
+        ]
+    },
+    {
+        "section": "artifacts",
+        "title": "Артефакты",
+        "content": [
+            {
+                "id": "item_1",
+                "name": "Заточенный топор"
+            },
+            {
+                "id": "item_2",
+                "name": "Амулет Ловчих"
+            },
+            {
+                "id": "item_3",
+                "name": "Камень Духов"
+            },
+            {
+                "id": "item_4",
+                "name": "Кожаная Повязка Зоркости"
+            },
+            {
+                "id": "item_5",
+                "name": "Кольцо Ветра"
+            },
+            {
+                "id": "item_6",
+                "name": "Перо Лекаря"
+            },
+            {
+                "id": "item_7",
+                "name": "Камень Спокойствия"
+            },
+            {
+                "id": "item_8",
+                "name": "Лесной Медальон"
+            },
+            {
+                "id": "item_9",
+                "name": "Гримуар Окотуса"
+            }
+        ]
+    },
+    {
+        "section": "notes",
+        "title": "Заметки",
+        "content": []
+    }
+]

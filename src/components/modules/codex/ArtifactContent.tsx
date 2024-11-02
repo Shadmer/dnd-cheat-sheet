@@ -23,7 +23,7 @@ interface ArtifactContentProps {
 export const ArtifactContent: React.FC<ArtifactContentProps> = ({
     artifact,
 }) => {
-    const features = !!artifact.features.length && (
+    const features = !!artifact.features?.length && (
         <>
             <Box>
                 <Typography variant="h6" fontWeight="bold" gutterBottom>
@@ -59,10 +59,10 @@ export const ArtifactContent: React.FC<ArtifactContentProps> = ({
         </>
     );
 
-    const blessings = (!!artifact.blessings.small.length ||
-        !!artifact.blessings.basic.length) && (
+    const blessings = (!!artifact.blessings.small?.length ||
+        !!artifact.blessings.basic?.length) && (
         <Box>
-            {!!artifact.blessings.small.length && (
+            {!!artifact.blessings.small?.length && (
                 <>
                     <Typography variant="h6" fontWeight="bold" gutterBottom>
                         Малые благословления
@@ -94,7 +94,7 @@ export const ArtifactContent: React.FC<ArtifactContentProps> = ({
                 </>
             )}
 
-            {!!artifact.blessings.basic.length && (
+            {!!artifact.blessings.basic?.length && (
                 <>
                     <Typography
                         variant="h6"
@@ -133,10 +133,10 @@ export const ArtifactContent: React.FC<ArtifactContentProps> = ({
         </Box>
     );
 
-    const curses = (!!artifact.curses.small.length ||
-        !!artifact.curses.basic.length) && (
+    const curses = (!!artifact.curses.small?.length ||
+        !!artifact.curses.basic?.length) && (
         <Box>
-            {!!artifact.curses.small.length && (
+            {!!artifact.curses.small?.length && (
                 <>
                     <Typography variant="h6" fontWeight="bold" gutterBottom>
                         Малые проклятия
@@ -168,7 +168,7 @@ export const ArtifactContent: React.FC<ArtifactContentProps> = ({
                 </>
             )}
 
-            {!!artifact.curses.basic.length && (
+            {!!artifact.curses.basic?.length && (
                 <>
                     <Typography
                         variant="h6"
@@ -207,7 +207,7 @@ export const ArtifactContent: React.FC<ArtifactContentProps> = ({
         </Box>
     );
 
-    const destruction = !!artifact.destruction.length && (
+    const destruction = !!artifact.destruction?.length && (
         <Box>
             <Typography variant="h6" fontWeight="bold" gutterBottom>
                 Условия уничтожения

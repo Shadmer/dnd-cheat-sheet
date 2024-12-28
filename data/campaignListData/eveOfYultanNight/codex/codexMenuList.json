@@ -1,0 +1,12 @@
+[
+    {
+        "section": "places",
+        "title": "Интересные места",
+        "content": [
+            {
+                "id": "norheim",
+                "name": "Норхейм"
+            }
+        ]
+    }
+]

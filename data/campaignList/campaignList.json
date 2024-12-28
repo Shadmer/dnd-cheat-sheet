@@ -38,6 +38,12 @@
                 "title": "Снегурочка",
                 "description": "На первый взгляд Маррь ничем не отличалась от других заброшенных деревушек...",
                 "image": "/campaignList/snowMaiden.jpg"
+            },
+            {
+                "id": "eveOfYultanNight",
+                "title": "Канун Юлтанской Ночи",
+                "description": "На первый взгляд Маррь ничем не отличалась от других заброшенных деревушек...",
+                "image": "/campaignList/eveOfYultanNight.jpg"
             }
         ]
     }

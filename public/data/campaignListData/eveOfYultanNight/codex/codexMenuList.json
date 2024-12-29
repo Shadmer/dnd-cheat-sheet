@@ -8,5 +8,63 @@
                 "name": "Норхейм"
             }
         ]
+    },
+    {
+        "section": "characters",
+        "title": "Персонажи мастера",
+        "content": [
+            {
+                "id": "bard",
+                "name": "Бард"
+            },
+            {
+                "id": "barbarian",
+                "name": "Варвар"
+            },
+            {
+                "id": "fighter",
+                "name": "Воин"
+            },
+            {
+                "id": "wizard",
+                "name": "Волшебник"
+            },
+            {
+                "id": "druid",
+                "name": "Друид"
+            },
+            {
+                "id": "cleric",
+                "name": "Жрец"
+            },
+            {
+                "id": "artificer",
+                "name": "Изобретатель"
+            },
+            {
+                "id": "warlock",
+                "name": "Колдун"
+            },
+            {
+                "id": "monk",
+                "name": "Монах"
+            },
+            {
+                "id": "paladin",
+                "name": "Паладин"
+            },
+            {
+                "id": "rogue",
+                "name": "Плут"
+            },
+            {
+                "id": "ranger",
+                "name": "Следопыт"
+            },
+            {
+                "id": "sorcerer",
+                "name": "Чародей"
+            }
+        ]
     }
 ]

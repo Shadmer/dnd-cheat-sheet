@@ -1,0 +1,68 @@
+{
+    "title": "Варвар",
+    "creature": {
+        "name": {
+            "rus": "Варвар",
+            "eng": "barbarian"
+        },
+        "size": "Средняя",
+        "type": "Гуманоид",
+        "alignment": "Любой",
+        "challengeRating": "2",
+        "proficiencyBonus": "2",
+        "armorClass": 14,
+        "hits": {
+            "average": 28,
+            "formula": "3d10 + 9"
+        },
+        "speed": "30 футов",
+        "ability": {
+            "str": 16,
+            "dex": 12,
+            "con": 15,
+            "int": 10,
+            "wiz": 10,
+            "cha": 8
+        },
+        "savingThrows": [
+            {
+                "name": "Сила",
+                "value": "+5"
+            },
+            {
+                "name": "Телосложение",
+                "value": "+4"
+            }
+        ],
+        "skills": [
+            {
+                "name": "Атлетика",
+                "value": "+5"
+            },
+            {
+                "name": "Выживание",
+                "value": "+2"
+            }
+        ],
+        "damageResistances": [],
+        "damageImmunities": [],
+        "conditionImmunities": [],
+        "senses": {
+            "passivePerception": "10",
+            "senses": []
+        },
+        "languages": ["Общий"],
+        "feats": [
+            {
+                "name": "Ярость",
+                "value": "Варвар может впадать в ярость, получая преимущество на броски Силы, сопротивление урону от оружия и бонус к урону (+2). Длительность 1 минута."
+            }
+        ],
+        "actions": [
+            {
+                "name": "Большой топор",
+                "value": "Рукопашная атака оружием: +5 к попаданию, досягаемость 5 футов, одна цель. Попадание: 9 (1d12 + 3) рубящего урона."
+            }
+        ]
+    }
+}

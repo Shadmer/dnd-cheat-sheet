@@ -42,9 +42,10 @@ export const InitiativeUnitsModal: React.FC<InitiativeUnitsModalProps> = ({
 
     const isWounded = (unit: IUnit) => parseInt(unit.health) === 0;
 
-    const [currentMoveUnit, setCurrentMoveUnit] = React.useState<IUnit | null>(
-        sortedUnits.find((unit) => unit.isCurrentMove) || sortedUnits[0] || null
-    );
+    const currentMoveUnit =
+        sortedUnits.find((unit) => unit.isCurrentMove) ||
+        sortedUnits[0] ||
+        null;
 
     const handleNextMove = () => {
         if (currentMoveUnit) {
@@ -60,7 +61,6 @@ export const InitiativeUnitsModal: React.FC<InitiativeUnitsModalProps> = ({
                     isCurrentMove: unit.id === nextUnit?.id,
                 }))
             );
-            setCurrentMoveUnit(nextUnit);
         }
     };
 
@@ -71,26 +71,7 @@ export const InitiativeUnitsModal: React.FC<InitiativeUnitsModalProps> = ({
                 isCurrentMove: unit.id === id,
             }))
         );
-        setCurrentMoveUnit(sortedUnits.find((unit) => unit.id === id) || null);
     };
-
-    React.useEffect(() => {
-        if (sortedUnits.length) {
-            const initialMoveUnit =
-                sortedUnits.find((unit) => unit.isCurrentMove) ||
-                sortedUnits[0] ||
-                null;
-            setCurrentMoveUnit(initialMoveUnit);
-            setSelectedUnits((units) =>
-                units.map((unit) => ({
-                    ...unit,
-                    isCurrentMove: unit.id === initialMoveUnit?.id,
-                }))
-            );
-        } else {
-            setCurrentMoveUnit(null);
-        }
-    }, [selectedUnits, setSelectedUnits, sortedUnits]);
 
     return (
         <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>

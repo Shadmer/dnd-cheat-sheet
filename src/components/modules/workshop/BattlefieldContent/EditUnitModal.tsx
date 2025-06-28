@@ -47,7 +47,11 @@ export const EditUnitModal: React.FC<EditUnitModalProps> = ({
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        setEditedUnit({ ...editedUnit, [name]: value });
+        setEditedUnit({
+            ...editedUnit,
+            [name]: value,
+            isInBattle: name === 'initiative' ? !!value : editedUnit.isInBattle,
+        });
     };
 
     const handleSwitchChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -59,11 +63,10 @@ export const EditUnitModal: React.FC<EditUnitModalProps> = ({
         onClose();
     };
 
-    const isReadyForBattle =
-        editedUnit.initiative !== '' &&
-        editedUnit.armor !== '' &&
-        editedUnit.health !== '' &&
-        editedUnit.maxHealth !== '';
+    const isReadyForBattle = editedUnit.initiative !== '';
+    // && editedUnit.armor !== '' &&
+    // editedUnit.health !== '' &&
+    // editedUnit.maxHealth !== '';
 
     return (
         <Dialog open={open} onClose={onClose}>

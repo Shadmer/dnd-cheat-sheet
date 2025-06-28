@@ -57,9 +57,13 @@ export const BattleUnitsModal: React.FC<BattleUnitsModalProps> = ({
     const handleUnitSelectionChange =
         (section: UnitSections) =>
         (_: React.ChangeEvent<object>, newValue: IMenuItem[]) => {
-            const newSelectedUnits = [
-                ...selectedUnits.filter((item) => item.section !== section),
-                ...newValue.map((item) => ({
+            const existingUnitIds = selectedUnits
+                .filter((unit) => unit.section === section)
+                .map((unit) => unit.parentId);
+
+            const newUnitsToAdd = newValue
+                .filter((item) => !existingUnitIds.includes(item.id))
+                .map((item) => ({
                     ...item,
                     section,
                     parentId: item.id,
@@ -69,8 +73,9 @@ export const BattleUnitsModal: React.FC<BattleUnitsModalProps> = ({
                     armor: '',
                     isInBattle: null,
                     isCurrentMove: false,
-                })),
-            ];
+                }));
+
+            const newSelectedUnits = [...selectedUnits, ...newUnitsToAdd];
 
             setSelectedUnits(newSelectedUnits);
         };

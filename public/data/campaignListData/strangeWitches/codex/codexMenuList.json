@@ -1,0 +1,100 @@
+[
+    {
+        "section": "players",
+        "title": "Игроки",
+        "content": [
+            {
+                "id": "player_1",
+                "name": "Воин"
+            },
+            {
+                "id": "player_2",
+                "name": "Плут"
+            },
+            {
+                "id": "player_3",
+                "name": "Бард"
+            },
+            {
+                "id": "player_4",
+                "name": "Артефактор"
+            },
+            {
+                "id": "player_5",
+                "name": "Рейнджер"
+            }
+        ]
+    },
+    {
+        "section": "characters",
+        "title": "Персонажи мастера",
+        "content": [
+            {
+                "id": "Lanir",
+                "name": "Ланир"
+            }
+        ]
+    },
+    {
+        "section": "bestiary",
+        "title": "Бестиарий",
+        "content": [
+            {
+                "id": "enemy_1",
+                "name": "Восставший труп"
+            },
+            {
+                "id": "enemy_2",
+                "name": "Волкособ"
+            },
+            {
+                "id": "enemy_3",
+                "name": "Эльф Скаут"
+            }
+        ]
+    },
+    {
+        "section": "artifacts",
+        "title": "Артефакты",
+        "content": [
+            {
+                "id": "item_1",
+                "name": "Лесной Медальон"
+            },
+            {
+                "id": "item_2",
+                "name": "Амулет Ловчих"
+            },
+            {
+                "id": "item_3",
+                "name": "Камень Духов"
+            },
+            {
+                "id": "item_4",
+                "name": "Кожаная Повязка Зоркости"
+            },
+            {
+                "id": "item_5",
+                "name": "Кольцо Ветра"
+            },
+            {
+                "id": "item_6",
+                "name": "Перо Лекаря"
+            },
+            {
+                "id": "item_7",
+                "name": "Камень Спокойствия"
+            }
+        ]
+    },
+    {
+        "section": "notes",
+        "title": "Заметки",
+        "content": [
+            {
+                "id": "visions",
+                "name": "Видения"
+            }
+        ]
+    }
+]

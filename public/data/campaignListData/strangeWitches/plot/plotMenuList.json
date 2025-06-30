@@ -1,0 +1,52 @@
+[
+    {
+        "sceneId": "scene_1",
+        "part": "Пролог",
+        "title": "Завязка"
+    },
+    {
+        "sceneId": "scene_2",
+        "part": "Часть 1",
+        "title": "Тракт сквозь лес Тел’Квессир"
+    },
+    {
+        "sceneId": "scene_3",
+        "part": "Часть 1",
+        "title": "Двор таверны"
+    },
+    {
+        "sceneId": "scene_4",
+        "part": "Часть 1",
+        "title": "Ржавая Кега"
+    },
+    {
+        "sceneId": "scene_5",
+        "part": "Часть 2",
+        "title": "Недоброе утро"
+    },
+    {
+        "sceneId": "scene_6",
+        "part": "Часть 2",
+        "title": "Опустевший двор"
+    },
+    {
+        "sceneId": "scene_7",
+        "part": "Часть 2",
+        "title": "Лесопилка"
+    },
+    {
+        "sceneId": "scene_8",
+        "part": "Часть 2",
+        "title": "Поляна инсценировки"
+    },
+    {
+        "sceneId": "scene_9",
+        "part": "Часть 2",
+        "title": "Логово «Ведьмы»"
+    },
+    {
+        "sceneId": "scene_10",
+        "part": "Эпилог",
+        "title": "Дневник Ланир"
+    }
+]
